@@ -1,0 +1,22 @@
+<div class="custom-modal-overlay">
+  <div class="custom-modal-content">
+    <h3>Detalles del Producto</h3>
+    <div class="modal-body">
+      <div class="left-column">
+        <p><strong>Referencia:</strong> {{ productoSeleccionado?.referencia_producto }}</p>
+        <p><strong>Nombre:</strong> {{ productoSeleccionado?.nombre_producto }}</p>
+        <p><strong>Descripción:</strong> {{ productoSeleccionado?.descripcion_producto }}</p>
+        <p><strong>Precio:</strong> {{ productoSeleccionado?.precio_producto | currency }}</p>
+      </div>
+      <div class="right-column">
+        <img
+          *ngIf="productoSeleccionado?.imagen"
+          [src]="productoSeleccionado?.imagen"
+          alt="Imagen del producto"
+          class="product-image"
+        />
+      </div>
+    </div>
+    <button class="btn-close-modal" (click)="close()">Cerrar</button>
+  </div>
+</div>

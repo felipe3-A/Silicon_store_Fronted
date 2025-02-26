@@ -1,0 +1,54 @@
+<!-- Tabla de Usuarios -->
+<div class="my-5">
+  <div class="form-group mb-3">
+    <input type="text" class="form-control border-secondary rounded" placeholder="Buscar..." (input)="filtrarUusarios()"
+      [(ngModel)]="terminoBusqueda">
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead class="bg-primary text-white">
+        <tr>
+          <th>Identificación</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Dirección</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarioFiltrado">
+          <td>{{ usuario.identificacion }}</td>
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ usuario.direccion }}</td>
+          <td>{{ usuario.telefono }}</td>
+          <td>
+            <!-- Acciones -->
+            <div class="d-flex justify-content-evenly">
+              <!-- Ver más -->
+              <i class="bi bi-eye text-primary icono-accion" (click)="AbrirModalVerUser(usuario)" title="Ver más"></i>
+
+              <!-- Editar -->
+              <i class="bi bi-pencil-square text-warning icono-accion" (click)="AbrirModalEditarUser(usuarios)"
+                title="Editar"></i>
+
+              <!-- Eliminar -->
+              <i class="bi bi-trash text-danger icono-accion" (click)="eliminarUsuario(usuario.id)"
+                title="Eliminar"></i>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <edit-user *ngIf="verModalE" [usuarioSeleccionado]="usuarioSeleccionado" (close)="closeModalUser()"
+    (actualizarUsuario)="recargarUsuarios()">
+  </edit-user>
+
+
+  <see-user *ngIf="verModalS" [usuarioSeleccionado]="usuarioSeleccionado" (close)="closeModalUser()"
+    (actualizarUsuario)="recargarUsuarios()">
+  </see-user>

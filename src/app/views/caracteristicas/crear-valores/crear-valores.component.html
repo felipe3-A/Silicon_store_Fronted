@@ -1,0 +1,47 @@
+<p>crear-valores works!</p>
+<fieldset class="p-4 shadow-sm rounded bg-light">
+    <legend class="text-primary mb-3">Añadir Valores</legend>
+    <form [formGroup]="valoresForm" (ngSubmit)="crearValores()" class="row g-4">
+      <!-- Nombre de la característica -->
+      <div class="col-md-3">
+        <label for="valor" class="form-label">Valor Secundario</label>
+        <input id="valor" class="form-control" formControlName="valor" placeholder="Ej: Tipo de color" />
+        <div *ngIf="valoresForm.get('valor')?.invalid && valoresForm.get('valor')?.touched" class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+  
+      <!-- Categoría -->
+      <div class="col-md-3">
+        <label for="id_imagen" class="form-label">Caracteristica</label>
+        <select id="id_imagen" class="form-control" formControlName="id_imagen">
+          <option value="" disabled selected>Seleccione el producto creado</option>
+          <option *ngFor="let   producto   of productosForm" [value]="producto.id_imagen">
+            {{ producto.nombre_producto }}
+          </option>
+        </select>
+        <div *ngIf="valoresForm.get('id_imagen')?.invalid && valoresForm.get('id_imagen')?.touched" class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+
+            <!-- Categoría -->
+            <div class="col-md-3">
+                <label for="id_subcaracteristica" class="form-label">Caracteristica</label>
+                <select id="id_subcaracteristica" class="form-control" formControlName="id_subcaracteristica">
+                  <option value="" disabled selected>Seleccione las caracteristicas</option>
+                  <option *ngFor="let   subcaracteristica   of subcaracteristicasFor" [value]="subcaracteristica.id_subcaracteristica">
+                    {{ subcaracteristica.nombre_subcaracteristica }}
+                  </option>
+                </select>
+                <div *ngIf="valoresForm.get('id_subcaracteristica')?.invalid && valoresForm.get('id_subcaracteristica')?.touched" class="text-danger">
+                  Este campo es obligatorio
+                </div>
+              </div>
+  
+      <!-- Botón Crear -->
+      <div class="col-md-12 d-grid">
+        <button type="submit" class="btn btn-primary" [disabled]="valoresForm.invalid">Terminar Proceso</button>
+      </div>
+    </form>
+  </fieldset>

@@ -1,0 +1,26 @@
+<div *ngIf="productos.length > 0">
+    <h2 class="text-center">Productos de la Categoría</h2>
+    <div class="row">
+      <div class="col-md-3 mb-4" *ngFor="let producto of productos">
+        <div class="card">
+          <img [src]="producto.url_imagen" class="card-img-top" alt="{{ producto.nombre_producto }}" />
+          <div class="card-body">
+            <h5 class="card-title">{{ producto.nombre_producto }}</h5>
+            <p class="card-text">{{ producto.descripcion_producto }}</p>
+            <div class="price-container">
+              <span class="price-old text-muted text-decoration-line-through">${{ producto.precio_anterior }}</span>
+              <span class="price-new fw-bold">${{ producto.precio_producto }}</span>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            <button class="btn btn-primary" (click)="agregarAlCarrito(producto)">Agregar al Carrito</button>
+            <button class="btn btn-link" (click)="verDetalles(producto)">Ver Detalles</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="productos.length === 0" class="text-center">
+    <h3>No hay productos disponibles en esta categoría.</h3>
+  </div>

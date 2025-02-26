@@ -1,0 +1,89 @@
+<div class="container d-flex justify-content-center mt-5 mb-2">
+    <div class="card" style="width: 60rem; margin: 80px;">
+      <div class="card-header card-header-sena-azul">
+        <h4 class="card-title">Crear Módulo</h4>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="onSubmit()" #moduloForm="ngForm">
+          <div class="form-group">
+            <label for="id_modulo_padre">ID Módulo Padre:</label>
+            <input 
+              type="number" 
+              id="id_modulo_padre" 
+              name="id_modulo_padre" 
+              [(ngModel)]="moduloData.id_modulo_padre" 
+              class="form-control"
+              placeholder="Ingresa el ID del modulo"
+              required>
+          </div>
+          
+          <div class="form-group">
+            <label for="modulo">Módulo:</label>
+            <input 
+              type="text" 
+              id="modulo" 
+              name="modulo" 
+              [(ngModel)]="moduloData.modulo" 
+              class="form-control"
+              placeholder="Escribir el nombre del contenedor principal"
+              required>
+          </div>
+          
+          <div class="form-group">
+            <label for="url_modulo">URL Módulo:</label>
+            <select 
+              id="url_modulo" 
+              name="url_modulo" 
+              [(ngModel)]="moduloData.url_modulo" 
+              class="form-control"
+              required>
+              <option value="" disabled selected>Selecciona una URL</option>
+              <option *ngFor="let ruta of rutas" [value]="'/'+ruta">{{ '/' + ruta }}</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="icono">Icono:</label>
+            <div class="icon-grid">
+              <div 
+                *ngFor="let icono of iconos" 
+                class="icon-item" 
+                [class.selected]="icono === iconoSeleccionado" 
+                (click)="seleccionarIcono(icono)">
+                <i class="fa" [ngClass]="icono"></i>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="orden">Orden:</label>
+            <input 
+              type="number" 
+              id="orden" 
+              name="orden" 
+              [(ngModel)]="moduloData.orden" 
+              placeholder="Escribe el orden del modulo"
+              class="form-control"
+              required>
+          </div>
+          
+          <div class="form-group">
+            <label for="hijos">Hijos:</label>
+            <input 
+              type="number" 
+              id="hijos" 
+              name="hijos" 
+              [(ngModel)]="moduloData.hijos" 
+              class="form-control"
+              placeholder="Escribe la cantidad de hijos de este modulo"
+              required>
+          </div>
+          
+          <button 
+            type="submit" 
+            class="btn btn-danger" 
+           >Crear Módulo</button>
+        </form>
+      </div>
+    </div>
+  </div>

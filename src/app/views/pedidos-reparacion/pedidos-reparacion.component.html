@@ -1,0 +1,90 @@
+<p>pedidos-reparacion works!</p>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Crear Solicitud de Reparación</h2>
+    <form [formGroup]="solicitudesForm" (ngSubmit)="crearSolicitud()" class="row g-3">
+      <!-- Descripción de la falla -->
+      <div class="col-md-6">
+        <label for="descripcion_falla" class="form-label">Descripción de la falla</label>
+        <textarea
+          id="descripcion_falla"
+          class="form-control"
+          formControlName="descripcion_falla"
+          placeholder="Describe la falla del artículo"
+          rows="3"
+        ></textarea>
+        <div *ngIf="solicitudesForm.get('descripcion_falla')?.invalid && solicitudesForm.get('descripcion_falla')?.touched" class="text-danger">
+          Este campo es obligatorio.
+        </div>
+      </div>
+  
+      <!-- Fecha de compra -->
+      <div class="col-md-6">
+        <label for="fecha_compra" class="form-label">Fecha de compra</label>
+        <input type="date" id="fecha_compra" class="form-control" formControlName="fecha_compra" />
+        <div *ngIf="solicitudesForm.get('fecha_compra')?.invalid && solicitudesForm.get('fecha_compra')?.touched" class="text-danger">
+          Este campo es obligatorio.
+        </div>
+      </div>
+  
+      <!-- Fecha de vencimiento de la garantía -->
+      <div class="col-md-6">
+        <label for="fecha_vendimiento_garantia" class="form-label">Fecha de vencimiento de la garantía</label>
+        <input type="date" id="fecha_vendimiento_garantia" class="form-control" formControlName="fecha_vendimiento_garantia" />
+        <div *ngIf="solicitudesForm.get('fecha_vendimiento_garantia')?.invalid && solicitudesForm.get('fecha_vendimiento_garantia')?.touched" class="text-danger">
+          Este campo es obligatorio.
+        </div>
+      </div>
+  
+      <!-- Número de factura -->
+      <div class="col-md-6">
+        <label for="numero_factura" class="form-label">Número de factura</label>
+        <input type="text" id="numero_factura" class="form-control" formControlName="numero_factura" placeholder="Ingresa el número de factura" />
+        <div *ngIf="solicitudesForm.get('numero_factura')?.invalid && solicitudesForm.get('numero_factura')?.touched" class="text-danger">
+          Este campo es obligatorio.
+        </div>
+      </div>
+  
+      <!-- Garantía -->
+      <div class="col-md-6">
+        <label for="garantia" class="form-label">Garantía</label>
+        <select id="garantia" class="form-select" formControlName="garantia">
+          <option value="">Seleccione una opción</option>
+          <option value="Sí">Sí</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+  
+      <!-- Tipo de Solicitud -->
+      <div class="col-md-6">
+        <label for="tipo_solicitud" class="form-label">Tipo de Solicitud</label>
+        <select id="tipo_solicitud" class="form-select" formControlName="tipo_solicitud">
+          <option value="">Seleccione una opción</option>
+          <option *ngFor="let tipo of TipoServicioForm" [value]="tipo.id">{{ tipo.nombre }}</option>
+        </select>
+      </div>
+  
+      <!-- Marca -->
+      <div class="col-md-6">
+        <label for="id_marca" class="form-label">Marca</label>
+        <select id="id_marca" class="form-select" formControlName="id_marca">
+          <option value="">Seleccione una opción</option>
+          <option *ngFor="let marca of marcasForm" [value]="marca.id">{{ marca.nombre }}</option>
+        </select>
+      </div>
+  
+      <!-- Tipo de Artículo -->
+      <div class="col-md-6">
+        <label for="id_tipo_articulo" class="form-label">Tipo de Artículo</label>
+        <select id="id_tipo_articulo" class="form-select" formControlName="id_tipo_articulo">
+          <option value="">Seleccione una opción</option>
+          <option *ngFor="let articulo of TipoArticuloForm" [value]="articulo.id">{{ articulo.nombre }}</option>
+        </select>
+      </div>
+  
+      <!-- Botón de Enviar -->
+      <div class="col-12 text-center">
+        <button type="submit" class="btn btn-primary" [disabled]="solicitudesForm.invalid">Crear Solicitud</button>
+      </div>
+    </form>
+  </div>
+  

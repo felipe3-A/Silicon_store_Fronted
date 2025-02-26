@@ -1,0 +1,31 @@
+<div class="custom-modal-overlay" *ngIf="mostrarModalEditar">
+  <div class="custom-modal-content">
+    <div class="modal-header d-flex justify-content-center align-items-center">
+      <h5 class="modal-title" id="editarModalLabel">Editar Producto: {{ productoSeleccionado?.nombre_producto }}</h5>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="productForm" (ngSubmit)="actuProducto()">
+        <!-- Aquí van los campos del formulario -->
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="nombreProducto">Nombre Producto:</label>
+              <input type="text" class="form-control" id="nombreProducto" formControlName="nombre_producto">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="precioProducto">Precio:</label>
+              <input type="number" class="form-control" id="precioProducto" formControlName="precio_producto">
+            </div>
+          </div>
+        </div>
+        <!-- Agrega más campos según sea necesario -->
+      </form>
+    </div>
+    <div class="modal-footer d-flex justify-content-center align-items-center">
+      <button type="button" class="btn btn-primary btn-animate" (click)="actuProducto()">Actualizar</button>
+      <button type="button" class="btn btn-secondary btn-animate" (click)="close()">Cerrar</button>
+    </div>
+  </div>
+</div>

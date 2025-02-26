@@ -1,0 +1,54 @@
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Lista de Pedidos de Reparación</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Descripción de Falla</th>
+            <th>Fecha de Compra</th>
+            <th>Fecha de Vencimiento de Garantía</th>
+            <th>Número de Factura</th>
+            <th>Número de Garantía</th>
+            <th>Tipo de Solicitud</th>
+            <th>Marca</th>
+            <th>Tipo de Servicio</th>
+            <th>Tipo de Artículo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let solicitud of solicitudes">
+            <td>{{ solicitud.id }}</td>
+            <td>{{ solicitud.descripcion_falla }}</td>
+            <td>{{ solicitud.fecha_compra }}</td>
+            <td>{{ solicitud.fecha_vencimiento_garantia }}</td>
+            <td>{{ solicitud.numero_factura }}</td>
+            <td>{{ solicitud.numero_garantia }}</td>
+            <td>{{ solicitud.tipo_solicitud }}</td>
+            <td>{{ solicitud.marca }}</td>
+            <td>{{ solicitud.tipo_servicio }}</td>
+            <td>{{ solicitud.tipo_articulo }}</td>
+            <td>
+              <button
+                class="btn btn-primary btn-sm me-2"
+                (click)="editarSolicitud(solicitud.id)"
+              >
+                Editar
+              </button>
+              <button
+                class="btn btn-danger btn-sm"
+                (click)="eliminarSolicitud(solicitud.id)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="solicitudes.length === 0">
+            <td colspan="11" class="text-center">No hay solicitudes registradas</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

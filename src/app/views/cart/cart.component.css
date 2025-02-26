@@ -1,0 +1,156 @@
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.list-group-item {
+  background-color: #f8f9fa;
+  border: none;
+}
+
+.list-group-item:nth-child(even) {
+  background-color: #f1f3f5;
+}
+
+.btn-warning {
+  background-color: #ffb400;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-warning:hover {
+  background-color: #ffa000;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+/*Estilos añadidos para las cardas de procustos*/
+.grupo1 {
+  height: 60%;
+}
+
+.grupo2 {
+  height: 20%;
+  margin: 5px;
+  padding: 5px;
+}
+
+.imagen_producto {
+  padding: 20px;
+}
+
+.grupo2 img {
+  margin: 10px;
+  padding: 10px;
+  max-width: 80%;
+  /* La imagen no será más grande que su contenedor */
+  height: auto;
+  /* Mantendrá las proporciones originales de la imagen */
+  display: block;
+  /* Para eliminar espacios extra si es un elemento inline */
+  object-fit: cover;
+  /* Opcional: ajusta cómo se escala la imagen */
+  border-radius: 8px;
+  /* Opcional: bordes redondeados si lo deseas */
+}
+
+.grupo3 {
+  height: 20%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.card-title{
+  font-size: 15px;
+
+}
+/* Centrar imagen dentro de las tarjetas */
+.imagen-centrada {
+  display: block;
+  margin: auto;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  /* Escala correctamente la imagen */
+}
+
+/* Iconos del botón */
+.btn i {
+  font-size: 1.2rem;
+}
+
+/* Mejoras generales para las tarjetas */
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* List group */
+.list-group-item {
+  background-color: #f8f9fa;
+  border: none;
+}
+
+.list-group-item:nth-child(even) {
+  background-color: #f1f3f5;
+}
+
+/* Botón de advertencia */
+.btn-warning {
+  background-color: #ffb400;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+p, li,ul, span ,h1,h2,h3, button {
+  font-family: 'Poppins', sans-serif;
+
+}
+
+
+.btn-warning:hover {
+  background-color: #ffa000;
+}
+
+/*Botones del carrito*/
+.btn-transparent {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+
+
+.material-icons {
+  font-size: 16px;
+}
+
+.text-info:hover{
+color: white;
+}
+
+.text-success:hover{
+  color: white;
+
+}
+
+text-danger:hover{
+  color: white;
+
+}

@@ -1,0 +1,262 @@
+<div *ngIf="loading" class="loading-overlay">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+</div>
+
+
+<div class="container my-5">
+
+  <!-- Formulario para crear producto -->
+  <fieldset class="p-4 shadow-sm rounded bg-light">
+    <legend class="text-primary mb-3">Crear Producto</legend>
+    <form [formGroup]="productForm" class="row g-4">
+      <!-- Referencia -->
+      <div class="col-md-3">
+        <label for="referencia_producto" class="form-label">Referencia</label>
+        <input id="referencia_producto" class="form-control" formControlName="referencia_producto"
+          placeholder="Ej: REF001" />
+        <div *ngIf="productForm.get('referencia_producto')?.invalid && productForm.get('referencia_producto')?.touched"
+          class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+
+      <!-- Envío -->
+      <div class="col-md-3">
+        <label for="envio_producto" class="form-label">Envío</label>
+        <input id="envio_producto" class="form-control" formControlName="envio_producto" placeholder="Ej: Nacional" />
+        <div *ngIf="productForm.get('envio_producto')?.invalid && productForm.get('envio_producto')?.touched"
+          class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+
+      <!-- Garantía -->
+      <div class="col-md-3">
+        <label for="garantia_producto" class="form-label">Tiempo de Garantía</label>
+        <input id="garantia_producto" class="form-control" formControlName="garantia_producto"
+          placeholder="Ej: 12 meses" />
+        <div *ngIf="productForm.get('garantia_producto')?.invalid && productForm.get('garantia_producto')?.touched"
+          class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+
+
+      <!-- Categoría -->
+      <div class="col-md-3">
+        <label for="id_grupo" class="form-label">Enlazar a Grupo</label>
+        <select id="id_grupo" class="form-control" formControlName="id_grupo">
+          <option value="" disabled selected>Seleccione una Grupo</option>
+          <option *ngFor="let grupo of gruposForm" [value]="grupo.id_grupo">
+            {{grupo.nombre_grupo}}
+          </option>
+
+        </select>
+        <div *ngIf="productForm.get('id_grupo')?.invalid && productForm.get('id_grupo')?.touched" class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+
+      <!-- Categoría -->
+      <div class="col-md-3">
+        <label for="id_categoria" class="form-label">Categoría</label>
+        <select id="id_categoria" class="form-control" formControlName="id_categoria">
+          <option value="" disabled selected>Seleccione una categoría</option>
+          <option *ngFor="let categoria of categoriasForm" [value]="categoria.id_categoria">
+            {{categoria.categoria}}
+          </option>
+
+        </select>
+        <div *ngIf="productForm.get('id_categoria')?.invalid && productForm.get('id_categoria')?.touched"
+          class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <label for="estado_producto" class="form-label">Selecciona estado</label>
+        <select id="estado_producto" class="form-control" formControlName="estado_producto">
+            <option value="" disabled selected>Seleccione un estado</option>
+            <option value="disponible">Disponible</option>
+            <option value="agotado">Agotado</option>
+            <option value="pocas_unidades">Pocas unidades</option>
+        </select>
+    </div>
+    
+
+      <!-- Marca -->
+      <div class="col-md-3">
+        <label for="id_marca" class="form-label">Seleccione la marca</label>
+        <select id="id_marca" class="form-control" formControlName="id_marca">
+          <option value="" disabled selected>Seleccione una marca</option>
+          <option *ngFor="let marca of marcasForm" [value]="marca.id_marca">
+            {{ marca.marca }}
+          </option>
+        </select>
+
+        <div *ngIf="productForm.get('id_marca')?.invalid && productForm.get('id_marca')?.touched" class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+
+      <!-- cantidad_producto -->
+      <div class="col-md-3">
+        <label for="cantidad_producto" class="form-label">Unidades Disponibles</label>
+        <input id="cantidad_producto" class="form-control" type="number" formControlName="cantidad_producto"
+          placeholder="Ej: 10" />
+        <div *ngIf="productForm.get('cantidad_producto')?.invalid && productForm.get('cantidad_producto')?.touched"
+          class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+
+      <!-- Nombre del producto -->
+      <div class="col-md-3">
+        <label for="nombre_producto" class="form-label">Nombre del producto</label>
+        <input id="nombre_producto" class="form-control" formControlName="nombre_producto"
+          placeholder="Ej: Televisor 4K" />
+        <div *ngIf="productForm.get('nombre_producto')?.invalid && productForm.get('nombre_producto')?.touched"
+          class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+
+      <!-- Descripción -->
+      <div class="col-md-12">
+        <label for="descripcion_producto" class="form-label">Descripción</label>
+        <textarea id="descripcion_producto" class="form-control" formControlName="descripcion_producto"
+          placeholder="Descripción del producto"></textarea>
+        <div
+          *ngIf="productForm.get('descripcion_producto')?.invalid && productForm.get('descripcion_producto')?.touched"
+          class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+
+
+
+      <!-- Precio -->
+      <div class="col-md-3">
+        <label for="precio_producto" class="form-label">Precio Producto</label>
+        <input id="precio_producto" class="form-control" formControlName="precio_producto" type="number" step="0.01"
+          placeholder="Ej: 1500.00" />
+        <div *ngIf="productForm.get('precio_producto')?.invalid && productForm.get('precio_producto')?.touched"
+          class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+
+  <!-- Campos de características -->
+  <div *ngIf="selectedCaracteristicas.length > 0" class="col-md-12">
+    <h5>Características</h5>
+    <div *ngFor="let caracteristica of selectedCaracteristicas">
+      <label [for]="caracteristica.id" class="form-label">{{ caracteristica.nombre_caracteristica }}</label>
+      <input id="{{ caracteristica.id }}" class="form-control" [(ngModel)]="caracteristica.valor" placeholder="Valor de {{ caracteristica.nombre_caracteristica }}" />
+    </div>
+  </div>
+
+
+
+      <div class="col-md-6">
+        <label for="url_imagen" class="form-label">Imagen Principal</label>
+        <input id="url_imagen" (change)="capturarFile($event)" name="url_imagen" class="form-control"
+          formControlName="url_imagen" type="file" />
+        <div *ngIf="productForm.get('url_imagen')?.invalid && productForm.get('url_imagen')?.touched"
+          class="text-danger">
+          Este campo es obligatorio
+        </div>
+        <div class="mt-3" *ngIf="previsualizacion">
+          <p>Previsualización:</p>
+          <img [src]="previsualizacion" class="img-thumbnail" alt="Previsualización" style="max-height: 200px;" />
+        </div>
+      </div>
+
+
+     <!-- Campo de búsqueda para galerías -->
+<div class="col-md-3">
+  <label for="galeriaSearch" class="form-label">Buscar Galería</label>
+  <input type="text" id="galeriaSearch" class="form-control" (input)="onSearchChange($event)" placeholder="Buscar galería...">
+</div>
+
+<!-- Selector de Galerías -->
+<div class="col-md-3">
+  <label for="id_galeria" class="form-label">Seleccione su galería</label>
+  <select id="id_galeria" class="form-control" formControlName="id_galeria" (change)="onGaleriaChange($event)">
+    <option value="" disabled selected>Seleccione una Galería</option>
+    <option *ngFor="let galeria of filteredGalerias" [value]="galeria.id_galeria">
+      {{ galeria.titulo_grupo }}
+    </option>
+  </select>
+  <div *ngIf="productForm.get('id_galeria')?.invalid && productForm.get('id_galeria')?.touched" class="text-danger">
+    Este campo es obligatorio
+  </div>
+</div>
+
+      <!-- Contenedor para mostrar imágenes de la galería seleccionada -->
+      <!-- Contenedor para mostrar imágenes de la galería seleccionada -->
+      <div *ngIf="imagenesGaleria.length > 0" class="mt-3">
+        <h5>Imágenes de la Galería Seleccionada:</h5>
+        <div class="row">
+          <div class="col-4" *ngFor="let imagen of imagenesGaleria">
+            <img [src]="imagen" class="img-fluid rounded" alt="Imagen de la galería">
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Botón Crear -->
+      <div class="col-md-12 d-grid">
+        <button type="submit" class="btn btn-primary" (click)="crearProducto()">Crear Producto</button>
+      </div>
+
+
+    </form>
+  </fieldset>
+
+  <!-- Tabla de productos -->
+  <div class="my-5">
+    <div class="form-group mb-3">
+      <input type="text" class="form-control border-secondary rounded" placeholder="Buscar..."
+        (input)="filtrarProductos()" [(ngModel)]="terminoBusqueda">
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="bg-primary text-white">
+          <tr>
+            <th>Referencia</th>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of productosFiltrados">
+            <td>{{ producto.referencia_producto }}</td>
+            <td>
+              <img *ngIf="producto.imagen" [src]="producto.imagen" alt="Imagen del producto" width="100px" />
+            </td>
+            <td>{{ producto.nombre_producto }}</td>
+            <td>{{ producto.descripcion_producto }}</td>
+            <td>${{ producto.precio_producto }}</td>
+            <td>
+              <div class="d-flex justify-content-evenly">
+                <i class="bi bi-eye text-primary icono-accion" (click)="abrirModalVer(producto.id_imagen)" title="Ver más"></i>
+                <i class="bi bi-pencil-square text-warning icono-accion" (click)="abrirModaEditar(producto              )"
+                  title="Editar"></i>
+                <i class="bi bi-trash text-danger icono-accion" (click)="eliminarProducto(producto.id_imagen)"
+                  title="Eliminar"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+

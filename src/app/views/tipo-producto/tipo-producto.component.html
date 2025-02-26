@@ -1,0 +1,51 @@
+<fieldset class="p-4 shadow-sm rounded bg-light">
+  <legend class="text-primary mb-3">Crear Marca</legend>
+  <form [formGroup]="TiposForm" (ngSubmit)="crearTipo()" class="row g-4">
+    <!-- marca -->
+    <div class="col-md-3">
+      <label for="tipo_imagen" class="form-label">Nuevo tipo de Imagen</label>
+      <input id="tipo_imagen" class="form-control" formControlName="tipo_imagen" placeholder="Ejm: Chagenger, kalley" />
+      <div *ngIf="TiposForm.get('tipo_imagen')?.invalid && TiposForm.get('tipo_imagen')?.touched" class="text-danger">
+        Este campo es obligatorio
+      </div>
+    </div>
+
+
+
+    <!-- Botón Crear -->
+    <div class="col-md-12 d-grid">
+      <button type="submit" class="btn btn-primary" [disabled]="TiposForm.invalid">Crear Producto</button>
+    </div>
+  </form>
+</fieldset>
+
+<div class="my-5">
+  <div class="form-group mb-3">
+    Buscador
+  </div>
+  <div class=" table-responsive">
+    <table class="table">
+      <thead class="bg-primary text-white">
+        <th>Tipo de Imagenes Existentes</th>
+        <th>Acciones</th>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let tipo of tipos; let i = index">
+          <td>
+            <input *ngIf="tipo.editando" [(ngModel)]="tipo.tipo_imagen" class="form-control" />
+            <span *ngIf="!tipo.editando">{{ tipo.tipo_imagen }}</span>
+          </td>
+          <td>
+            <button *ngIf="!tipo.editando" class="btn btn-warning btn-sm" (click)="editartipo(i)">Editar</button>
+            <button *ngIf="tipo.editando" class="btn btn-success btn-sm" (click)="guardarCambios(i)">Guardar</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteTipo(tipo.id_tipo_imagen)">Eliminar</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+
+  </div>
+</div>

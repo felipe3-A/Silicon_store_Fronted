@@ -1,0 +1,87 @@
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro con transparencia */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* Inicia invisible */
+    visibility: hidden; /* Inicia oculto */
+    animation: fadeIn 0.5s ease-out forwards; /* Animación de aparición */
+  }
+  
+  .custom-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%; /* Ajusta el tamaño del modal */
+    max-width: 800px; /* Ajusta el tamaño máximo */
+    display: flex;
+    flex-direction: column;
+    opacity: 0; /* Inicia invisible */
+    transform: translateY(-20px); /* Inicia un poco arriba */
+    animation: slideIn 0.5s ease-out forwards 0.2s; /* Desplazamiento hacia abajo */
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      visibility: hidden;
+    }
+    100% {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .modal-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .left-column {
+    flex: 1;
+    padding-right: 20px;
+  }
+  
+  .right-column {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .product-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .btn-close-modal {
+    background-color: #ff8800;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-close-modal:hover {
+    background-color: #ff6600;
+  }
+  

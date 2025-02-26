@@ -1,0 +1,103 @@
+<div class="container-fluid contenedor-cards" style="background-color: #2c2c2c;">
+  <div class="card-container">
+    <div class="card_row">
+      <i class="bi bi-person-circle icon-card"></i>
+      <p class="title_card" style="width: 90%;">Atención al cliente</p>
+      <h3>24434343 - 2433533</h3>
+    </div>
+    <div class="card_row">
+      <i class="bi bi-whatsapp icon-card"></i>
+      <p class="title_card">WhatsApp</p>
+      <h3>3244256345</h3>
+    </div>
+    <div class="card_row">
+      <i class="bi bi-house-door icon-card"></i>
+      <p class="title_card">Dirección</p>
+      <h3>Cl. 6 # 15-35, Popayán, Cauca</h3>
+    </div>
+    <div class="card_row">
+      <i class="bi bi-telephone icon-card"></i>
+      <p class="title_card">Teléfonos</p>
+      <h3>3267364773 - 42425362653</h3>
+    </div>
+    <div class="card_row">
+      <i class="bi bi-person-check icon-card"></i>
+      <p class="title_card" style="width: 150px">Atención al Cliente</p>
+      <h3>AtencionCliente.silicon.com.co</h3>
+    </div>
+  </div>
+</div>
+
+
+<div class="d-flex justify-content-between align-items-center vh-15 orange m-0">
+  <!-- Contenedor Izquierdo: Logo -->
+  <div class="d-flex align-items-center store" [routerLink]="['/store']">
+    <img src="assets/img/Silicon_Store.png" class="image" alt="Logo Silicon">
+  </div>
+
+
+  <div class="d-flex flex-row w-100" id="menuAccordion">
+
+    <ng-container *ngFor="let moduleRoute of moduleRoutes">
+      <li class="nav-item position-relative opciones_menu"> <!-- Agregamos `position-relative` para el contenedor -->
+        <a class="nav-link d-flex justify-content-between align-items-center"
+          (click)="toggleDropdown(moduleRoute.module)" role="button">
+          <p class="m-0 modulo_text">{{ moduleRoute.module }}</p>
+          <i class="v"> < </i>
+        </a>
+        <div class="menu-dropdown" [ngClass]="{ 'show': isDropdownOpen(moduleRoute.module) }">
+          <ul class="nav flex-column ms-3">
+            <ng-container *ngFor="let route of moduleRoute.routes">
+              <li routerLinkActive="active" class="nav-item" *ngIf="route.permiso === 'si'">
+                <a class="nav-link" [routerLink]="[route.url_modulo]">
+                  <p class="m-0">{{ route.url_modulo.slice(1) }}</p>
+                </a>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+      </li>
+    </ng-container>
+  </div>
+
+  <div class="content d-flex m-0">
+    <div class="text-white text-center datos1" (click)="abrirCarrito()">
+      <ng-container *ngIf="isLoggedIn; else notLoggedIn">
+        <div class="message_login">
+          <i class="fas fa-shopping-cart mt-4"></i>
+          <p class="welcome me-0">Carrito</p>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Contenedor Derecho: Bienvenida y Carrito -->
+    <div class="text-white text-center datos" (click)="cerrarSesion()">
+      <ng-container *ngIf="isLoggedIn; else notLoggedIn">
+
+        <div class="message_login align-items-center justify-content-center">
+          <i class="fas fa-user mt-4 m-0"></i>
+          <p class="welcome me-0">Bienvenido</p>
+          <p class="name_user me-0 ">{{ nombre }}</p>
+        </div>
+
+      </ng-container>
+    </div>
+  </div>
+
+
+
+</div>
+
+
+<div class="d-flex flex-row w-10 position-relative" id="menuAccordion">
+  <ng-template #notLoggedIn>
+    <div class="welcome-box">
+      <h2 class="welcome-text">Descubre todo lo que hemos reparado para ti</h2>
+      <div class="button-container">
+        <button class="btn btn-primary" (click)="irALogin()">Login</button>
+        <button class="btn btn-secondary" (click)="irARegister()">Registro</button>
+      </div>
+    </div>
+  </ng-template>
+
+</div>

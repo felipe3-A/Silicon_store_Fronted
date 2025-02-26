@@ -1,0 +1,32 @@
+<fieldset class="p-4 shadow-sm rounded bg-light">
+    <legend class="text-primary mb-3">Crear Característica</legend>
+    <form [formGroup]="caracteristicasForm" (ngSubmit)="crearCaracteristica()" class="row g-4">
+      <!-- Nombre de la característica -->
+      <div class="col-md-3">
+        <label for="nombre_caracteristica" class="form-label">Nombre característica</label>
+        <input id="nombre_caracteristica" class="form-control" formControlName="nombre_caracteristica" placeholder="Ej: Chagenger, Kalley" />
+        <div *ngIf="caracteristicasForm.get('nombre_caracteristica')?.invalid && caracteristicasForm.get('nombre_caracteristica')?.touched" class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+  
+      <!-- Categoría -->
+      <div class="col-md-3">
+        <label for="id_categoria" class="form-label">Categoría</label>
+        <select id="id_categoria" class="form-control" formControlName="id_categoria">
+          <option value="" disabled selected>Seleccione una categoría</option>
+          <option *ngFor="let categoria of categoriasForm" [value]="categoria.id_categoria">
+            {{ categoria.categoria }}
+          </option>
+        </select>
+        <div *ngIf="caracteristicasForm.get('id_categoria')?.invalid && caracteristicasForm.get('id_categoria')?.touched" class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+  
+      <!-- Botón Crear -->
+      <div class="col-md-12 d-grid">
+        <button type="submit" class="btn btn-primary" [disabled]="caracteristicasForm.invalid">Crear Característica</button>
+      </div>
+    </form>
+  </fieldset>

@@ -1,0 +1,119 @@
+<div class="navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/home">Mi Tienda</a>
+  </div>
+</div>
+
+<div class="container mt-5">
+
+  <div class="card floating-info">
+    <h4>Beneficios de registrarte</h4>
+    <ul>
+      <li class="bi-text">
+        <i class="bi bi-check-circle benefit-icon"></i>
+        Al momento de registrarte no deberás volver a hacerlo al solicitar un servicio.
+      </li>
+      <li class="bi-text">
+        <i class="bi bi-cart-check benefit-icon"></i>
+        Compras más eficientes.
+      </li>
+      <li class="bi-text">
+        <i class="bi bi-shield-lock benefit-icon"></i>
+        Consultas rápidas y seguras.
+      </li>
+      <li class="bi-text">
+        <i class="bi bi-basket benefit-icon"></i>
+        Manejo de tu propio carrito.
+      </li>
+      <li class="bi-text">
+        <i class="bi bi-door-open benefit-icon"></i>
+        Puedes cerrar tu sesión cuando quieras.
+      </li>
+    </ul>
+  </div>
+
+  <div class="card p-4 shadow content_float animated-card">
+    <h2 class="text-center mb-4">Registro de Usuario</h2>
+    <form [formGroup]="registroForm" (ngSubmit)="registrarUsuario()">
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-person-fill"></i>
+          </span>
+          <input type="text" id="nombre" class="form-control animated-input" formControlName="nombre" />
+        </div>
+        <div *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched" class="text-danger error-message">
+          El nombre es requerido.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-envelope-fill"></i>
+          </span>
+          <input type="email" id="email" class="form-control animated-input" formControlName="email" />
+        </div>
+        <div *ngIf="registroForm.get('email')?.invalid && registroForm.get('email')?.touched" class="text-danger error-message">
+          Email inválido.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="identificacion" class="form-label">Identificación</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-card-text"></i>
+          </span>
+          <input type="text" id="identificacion" class="form-control animated-input" formControlName="identificacion" />
+        </div>
+        <div *ngIf="registroForm.get('identificacion')?.invalid && registroForm.get('identificacion')?.touched" class="text-danger error-message">
+          La identificación es requerida.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="direccion" class="form-label">Dirección</label>
+        <input type="text" id="direccion" class="form-control animated-input" formControlName="direccion" [value]="ubicacionActual" readonly />
+      </div>
+
+      <div class="mb-3">
+        <label for="telefono" class="form-label">Teléfono</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-telephone-fill"></i>
+          </span>
+          <input type="text" id="telefono" class="form-control animated-input" formControlName="telefono" />
+        </div>
+        <div *ngIf="registroForm.get('telefono')?.invalid && registroForm.get('telefono')?.touched" class="text-danger error-message">
+          Teléfono inválido.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-lock-fill"></i>
+          </span>
+          <input type="password" id="password" class="form-control animated-input" formControlName="password" />
+        </div>
+        <div *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched" class="text-danger error-message">
+          La contraseña debe tener al menos 6 caracteres.
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary animated-button send" [disabled]="registroForm.invalid">
+          Registrar
+        </button>
+      </div>
+
+      <div class="text-center mt-3">
+        <a routerLink="/login" class="btn btn-link">¿Ya estás registrado? Inicia sesión aquí</a>
+      </div>
+    </form>
+  </div>
+</div>

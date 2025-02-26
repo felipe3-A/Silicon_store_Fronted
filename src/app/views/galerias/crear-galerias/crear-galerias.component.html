@@ -1,0 +1,26 @@
+<!-- Galería de imágenes -->
+<div class="col-md-6">
+    <form [formGroup]="galeriaForm" (ngSubmit)="crearGaleria()">
+        <label>Nombre del Producto:</label>
+        <input formControlName="titulo_grupo" type="text" required />
+        <div *ngIf="galeriaForm.get('titulo_grupo')?.invalid && galeriaForm.get('titulo_grupo')?.touched"
+            class="text-danger">
+            Este campo es obligatorio
+        </div>
+
+        <label>Subir Imágenes:</label>
+        <input type="file" (change)="capturarGaleria($event)" name="url_imagenes" class="form-control" formControlName="url_imagenes" multiple />
+        
+        <p>Previsualización:</p>
+        <div *ngFor="let archivo of archivos">
+            <img [src]="archivo.url" alt="Imagen del Producto" width="100" />
+        </div>
+        
+        <div *ngIf="galeriaForm.get('url_imagenes')?.invalid && galeriaForm.get('url_imagenes')?.touched"
+            class="text-danger">
+            Este campo es obligatorio
+        </div>
+        
+        <button type="submit"  class="btn btn-primary">Crear Galería</button>
+    </form>
+</div>

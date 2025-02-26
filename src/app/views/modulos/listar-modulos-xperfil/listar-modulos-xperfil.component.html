@@ -1,0 +1,59 @@
+<div class="container d-flex justify-content-center mt-5 mb-2">
+    <div class="card" style="width: 90rem; margin: 80px;">
+      <div class="card-header card-header-sena-azul">
+        <h4 class="card-title">Gestionar Permisos</h4>
+      </div>
+      <div class="card-body">
+        <!-- Icono de carga en pantalla completa -->
+        <div *ngIf="cargando" class="loading-overlay">
+          <div class="loading-content">
+            <img src="assets/img/loading.gif" class="loading" alt="Cargando...">
+            <div class="loading-text">Listando datos..</div>
+          </div>
+        </div>
+        <div *ngIf="!cargando">
+          <div class="form-group" style="margin: 20px 10px; border: 2px solid #ccc; border-radius: 5px; padding: 0;">
+            <input type="text" class="form-control" style="border: none;" placeholder="Buscar..." (input)="filtrarMxP()"
+              [(ngModel)]="terminoBusqueda">
+          </div>
+          <div *ngIf="errorMessage" class="error">
+            {{ errorMessage }}
+          </div>
+  
+          <div *ngIf="!errorMessage">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>URL Módulo</th>
+                  <th *ngFor="let perfil of perfiles">{{ perfil }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!noResultados; else noResults">
+                  <tr
+                    *ngFor="let modulo of modulosXperfilFitrados | paginate: { itemsPerPage: pageSize, currentPage: currentPage }; let i = index">
+                    <td>{{ modulo }}</td>
+                    <td *ngFor="let perfil of perfiles">
+                      <label class="switch">
+                        <input type="checkbox" [checked]="permissionsMatrix[modulo][perfil] === 'si'"
+                          (change)="togglePermission(modulo, perfil, $event)">
+                        <span class="slider round"></span>
+                      </label>
+                    </td>
+                  </tr>
+  
+  
+  
+                </ng-container>
+  
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <pagination-controls (pageChange)="pageChange($event)" previousLabel="Anterior"
+          nextLabel="Siguiente"></pagination-controls>
+  
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,16 @@
+<!-- Sección de marcas -->
+<div class="fila5">
+    <div class="brands-container">
+      <h3 class="text-center text-orange fw-bold mb-4">Trabajamos con las Mejores Marcas</h3>
+      <div class="container d-flex flex-column align-items-center">
+        <div class="row">
+          <div class="col-12" *ngFor="let marca of marcas">
+            <div class="brand text-center">
+                <p>{{marca.marca}}</p>
+              <img [src]="marca.imagen" alt="Imagen del producto" class="img">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

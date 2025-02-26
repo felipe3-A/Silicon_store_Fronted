@@ -1,0 +1,74 @@
+<fieldset class="p-4 shadow-sm rounded bg-light">
+  <legend class="text-primary mb-3">Crear Grupo General</legend>
+  <form [formGroup]="gruposForm" (ngSubmit)="crearGrupo()" class="row g-4">
+    <!-- Nombre del Grupo -->
+    <div class="col-md-3">
+      <label for="nombre_grupo" class="form-label">Nombre del Grupo</label>
+      <input id="nombre_grupo" class="form-control" formControlName="nombre_grupo" placeholder="Ejm: Equipos Linea Blanca, Ofertas etc.." />
+      <div *ngIf="gruposForm.get('nombre_grupo')?.invalid && gruposForm.get('nombre_grupo')?.touched" class="text-danger">
+        Este campo es obligatorio
+      </div>
+    </div>
+
+    <!-- Checkboxes para las categorías -->
+    <div class="col-md-3">
+      <label class="form-label">Seleccionar Categorías</label>
+      <div *ngFor="let tipo of tipos">
+        <input type="checkbox" [value]="tipo.id_categoria" (change)="seleccionarCategoria(tipo.id_categoria, $event)" />
+        {{ tipo.categoria }}
+      </div>
+    </div>
+
+    <!-- Imagen -->
+    <div class="col-md-6">
+      <label for="icono_grupo" class="form-label">Imagen de la Categoria</label>
+      <input id="icono_grupo" (change)="capturarFile($event)" class="form-control" type="file" />
+      <div *ngIf="gruposForm.get('icono_grupo')?.invalid && gruposForm.get('icono_grupo')?.touched" class="text-danger">
+        Este campo es obligatorio
+      </div>
+      
+      <div class="mt-3" *ngIf="previsualizacion">
+        <p>Previsualización:</p>
+        <img [src]="previsualizacion" class="img-thumbnail" alt="Previsualización" style="max-height: 200px;" />
+      </div>
+    </div>
+
+    <!-- Botón Crear -->
+<!-- Botón Crear -->
+<div class="col-md-12 d-grid">
+  <button type="submit" class="btn btn-primary" [disabled]="gruposForm.invalid || categoriasSeleccionadas.length === 0">Crear Grupo</button>
+</div>
+  </form>
+</fieldset>
+
+<div class="my-5">
+  <div class="form-group mb-3">
+    Buscador
+  </div>  
+  <div class="table-responsive">
+    <table class="table">
+      <thead class="bg-primary text-white">
+        <th>Nombre del Grupo</th>
+        <th>Imagen del Grupo</th>
+        <th>Categorías</th>
+        <th>Acciones</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let grupoGeneral of grupos"> 
+          <td>{{ grupoGeneral.nombre_grupo }}</td>
+          <td>
+            <img [src]="grupoGeneral.imagen" alt="Imagen de la publicidad" width="100px" *ngIf="grupoGeneral.imagen" />
+          </td>
+          <td>{{ grupoGeneral.categorias?.join(', ') }}</td>
+                    <td>
+            <div class="d-flex justify-content-evenly">
+              <i class="bi bi-eye text-primary icono-accion" (click)="abrirModalVer(grupoGeneral)" title="Ver más"></i>
+              <i class="bi bi-pencil-square text-warning icono-accion" (click)="abrirModalEditar(grupoGeneral)" title="Editar"></i>
+              <i class="bi bi-trash text-danger icono-accion" (click)="eliminarGrupo(grupoGeneral.id_grupo)" title="Eliminar"></i>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+/* Navbar - 100% de la altura de la pantalla */
+nav.navbar {
+    height: 100vh; /* 100% de la altura de la pantalla */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra los elementos en el navbar */
+    background-color: red; /* Aplica el color rojo al fondo */
+}
+
+/* Ajustes generales para el layout */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Asegura que la altura total ocupe el 100% de la pantalla */
+    margin: 0; /* Elimina márgenes que puedan interferir */
+}
+
+/* Asegurarse de que el contenido principal ocupe el resto del espacio */
+.main-panel {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Para que el contenido ocupe el espacio restante después del navbar */
+    background-color: #f4f4f4; /* Color de fondo para el contenido principal */
+}

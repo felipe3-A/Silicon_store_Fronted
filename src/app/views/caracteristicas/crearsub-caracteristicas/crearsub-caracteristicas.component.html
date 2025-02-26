@@ -1,0 +1,33 @@
+<p>crearsub-caracteristicas works!</p>
+<fieldset class="p-4 shadow-sm rounded bg-light">
+    <legend class="text-primary mb-3">Crear SubCaracteristica</legend>
+    <form [formGroup]="subcaracteristicaForm" (ngSubmit)="crearSubcaracteristica()" class="row g-4">
+      <!-- Nombre de la característica -->
+      <div class="col-md-3">
+        <label for="nombre_subcaracteristica" class="form-label">Nombre característica</label>
+        <input id="nombre_subcaracteristica" class="form-control" formControlName="nombre_subcaracteristica" placeholder="Ej: Tipo de color" />
+        <div *ngIf="subcaracteristicaForm.get('nombre_subcaracteristica')?.invalid && subcaracteristicaForm.get('nombre_subcaracteristica')?.touched" class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+  
+      <!-- Categoría -->
+      <div class="col-md-3">
+        <label for="id_caracteristica" class="form-label">Caracteristica</label>
+        <select id="id_caracteristica" class="form-control" formControlName="id_caracteristica">
+          <option value="" disabled selected>Seleccione la Caracteristica Creada anteriormente</option>
+          <option *ngFor="let   caracteristica   of caracteristicasForm" [value]="caracteristica.id_caracteristica">
+            {{ caracteristica.nombre_caracteristica }}
+          </option>
+        </select>
+        <div *ngIf="subcaracteristicaForm.get('id_caracteristica')?.invalid && subcaracteristicaForm.get('id_caracteristica')?.touched" class="text-danger">
+          Este campo es obligatorio
+        </div>
+      </div>
+  
+      <!-- Botón Crear -->
+      <div class="col-md-12 d-grid">
+        <button type="submit" class="btn btn-primary" [disabled]="subcaracteristicaForm.invalid">Crear Característica</button>
+      </div>
+    </form>
+  </fieldset>

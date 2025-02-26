@@ -1,0 +1,101 @@
+.menu-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.menu-title {
+  color: #dc143c;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+h1, h2,h3, span, p, span{
+  font-family: 'Poppins', sans-serif;
+
+}
+
+.icon-card:hover {
+  transform: scale(1.05);
+}
+
+.icon-card i {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.icon-card p {
+  margin: 0;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.menu-footer {
+  font-family: 'poppins', sans-serif;
+  color: #dc143c;
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.container {
+  padding: 5px;
+  width: 80%; /* Limitar el ancho para centrar las cards */
+  margin: 0 auto; /* Centrar el contenedor */
+}
+
+.image_card {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 8px;
+}
+
+
+
+
+
+.col-md-3 {
+  flex: 0 0 23%; /* Hacer que las cards ocupen un 23% del contenedor */
+  max-width: 23%; /* Limitar el ancho máximo */
+}
+
+
+
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Espacio uniforme */
+}
+
+.col-5 {
+  flex: 0 0 20%; /* Cada card ocupa el 20% del contenedor */
+  max-width: 20%;
+  box-sizing: border-box;
+}
+
+.icon-card {
+  background-color: #dc143c;
+  color: white;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 0 auto; /* Centra cada card */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
+  aspect-ratio: 1;
+  transition: transform 0.2s ease-in-out;
+  font-size: 14px;
+}
+
+.icon-card:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.image_card {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 8px;
+}

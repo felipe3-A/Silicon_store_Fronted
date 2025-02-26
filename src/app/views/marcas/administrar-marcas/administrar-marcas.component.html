@@ -1,0 +1,27 @@
+
+
+<div class="my-5">
+    <div class="form-group mb-3">
+     Buscador
+    </div>  
+     <div class=" table-responsive">
+        <table class="table">
+            <thead class="bg-primary text-white">
+                <th>Marca</th>
+                <th>Logo Marca</th>
+                <th>Acciones</th>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let marca of marcas"> 
+                    <td> {{marca.marca}} </td>
+                    <td>
+                        <img [src]="marca.imagen" alt="Imagen del producto" width="100px">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+     </div>
+  </div>

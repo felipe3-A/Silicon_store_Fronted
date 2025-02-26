@@ -1,0 +1,108 @@
+<p>publicidad works!</p>
+<fieldset class="p-4 shadow-sm rounded bg-light">
+  <legend class="text-primary mb-3">Crear Imagen Publicitaria</legend>
+  <form [formGroup]="PublicidadForm" (ngSubmit)="crearPublicidad()" class="row g-4">
+    <!-- Nombre de Imagen -->
+    <div class="col-md-3">
+      <label for="nombre_imagen_publicitaria" class="form-label">Nombre de Imagen</label>
+      <input id="nombre_imagen_publicitaria" class="form-control" formControlName="nombre_imagen_publicitaria" placeholder="Ejm: Imagen de oferta , etc" />
+      <div *ngIf="PublicidadForm.get('nombre_imagen_publicitaria')?.invalid && PublicidadForm.get('nombre_imagen_publicitaria')?.touched" class="text-danger">
+        Este campo es obligatorio
+      </div>
+    </div>
+
+    <!-- Tipo de Imagen -->
+    <div class="col-md-3">
+      <label for="id_tipo_imagen" class="form-label">Tipo de Imagen</label>
+      <select id="id_tipo_imagen" class="form-control" formControlName="id_tipo_imagen" (change)="onTipoChange('tipo')">
+        <option value="" disabled selected>Seleccione un tipo</option>
+        <option *ngFor="let tipo of tipos" [value]="tipo.id_tipo_imagen">{{ tipo.tipo_imagen }}</option>
+      </select>
+      <div *ngIf="PublicidadForm.get('id_tipo_imagen')?.invalid && PublicidadForm.get('id_tipo_imagen')?.touched" class="text-danger">
+        Este campo es obligatorio
+      </div>
+    </div>
+
+    <!-- Categoría -->
+    <div class="col-md-3" *ngIf="isCategoriaSelected">
+      <label for="id_categoria" class="form-label">Categoría</label>
+      <select id="id_categoria" class="form-control" formControlName="id_categoria">
+        <option value="" disabled selected>Seleccione una categoría</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{ categoria.categoria }}</option>
+      </select>
+    </div>
+
+    <!-- Grupo -->
+    <div class="col-md-3" *ngIf="isGrupoSelected">
+      <label for="id_grupo" class="form-label">Grupo</label>
+      <select id="id_grupo" class="form-control" formControlName="id_grupo">
+        <option value="" disabled selected>Seleccione un grupo</option>
+        <option *ngFor="let grupo of grupos" [value]="grupo.id_grupo">{{ grupo.nombre_grupo }}</option>
+      </select>
+    </div>
+
+    <!-- Producto -->
+    <div class="col-md-3" *ngIf="isProductSelected">
+      <label for="id_imagen" class="form-label">Producto</label>
+      <select id="id_imagen" class="form-control" formControlName="id_imagen">
+        <option value="" disabled selected>Seleccione un Producto</option>
+        <option *ngFor="let producto of productos" [value]="producto.id_imagen">{{ producto.nombre_producto }}</option>
+      </select>
+    </div>
+
+    <!-- Imagen Publicitaria -->
+    <div class="col-md-6">
+      <label for="url_imagen_publicitaria" class="form-label">Imagen Publicitaria</label>
+      <input id="url_imagen_publicitaria" (change)="capturarFile($event)" class="form-control" formControlName="url_imagen_publicitaria" type="file" />
+      <div *ngIf="PublicidadForm.get('url_imagen_publicitaria')?.invalid && PublicidadForm.get('url_imagen_publicitaria')?.touched" class="text-danger">
+        Este campo es obligatorio
+      </div>
+      <div class="mt-3" *ngIf="previsualizacion">
+        <p>Previsualización:</p>
+        <img [src]="previsualizacion" class="img-thumbnail" alt="Previsualización" style="max-height: 200px;" />
+      </div>
+    </div>
+
+    <!-- Botón Crear -->
+    <div class="col-md-12 d-grid">
+      <button type="submit" class="btn btn-primary">Crear Producto</button>
+    </div>
+  </form>
+</fieldset>
+
+<div class="my-5">
+  <div class="form-group mb-3">
+    Buscador
+  </div>
+  <div class=" table-responsive">
+    <table class="table">
+      <thead class="bg-primary text-white">
+        <th>Imagen Nombre</th>
+        <th>Imagen Publicitaria</th>
+        <th>Tipo Imagen Publicitaria</th>
+        <th>Acciones</th>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let publicidadImg of publicidad">
+          <td> {{publicidadImg.nombre_imagen_publicitaria}} </td>
+          <td>
+            <img [src]="publicidadImg.imagen" alt="Imagen de la publicidad" width="100px">
+          </td>
+          <td> {{publicidadImg.id_tipo_imagen}} </td>
+          <td>
+            <div class="d-flex justify-content-evenly">
+              <i class="bi bi-eye text-primary icono-accion" (click)="abrirModalVer(producto)" title="Ver más"></i>
+              <i class="bi bi-pencil-square text-warning icono-accion" (click)="abrirModalEditar(producto)"
+                title="Editar"></i>
+              <i class="bi bi-trash text-danger icono-accion"
+                (click)="eliminarImagenPublicitaria(publicidadImg.id_imagen_publicitaria)" title="Eliminar"></i>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+</div>

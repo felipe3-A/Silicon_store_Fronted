@@ -1,0 +1,70 @@
+<div class="custom-modal-overlay" *ngIf="usuarioSeleccionado">
+    <div class="custom-modal-content">
+      <div class="modal-header d-flex justify-content-center align-items-center">
+        <h5 class="modal-title">Editar Usuario {{ usuarioSeleccionado?.nombre }}</h5>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario -->
+        <div class="row">
+          <div class="col-6">
+            <label for="nombreUsuario">Nombre Usuario:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombreUsuario"
+              [(ngModel)]="usuarioSeleccionado.nombre" />
+          </div>
+          <div class="col-6">
+            <label for="identificacion">Identificación:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="identificacion"
+              [(ngModel)]="usuarioSeleccionado.identificacion" />
+          </div>
+
+          <div class="col-6">
+            <label for="identificacion">Email:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="identificacion"
+              [(ngModel)]="usuarioSeleccionado.email" />
+          </div>
+
+          <div class="col-6">
+            <label for="identificacion">Dirección:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="identificacion"
+              [(ngModel)]="usuarioSeleccionado.direccion" />
+          </div>
+
+          <div class="col-6">
+            <label for="identificacion">Telefono:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="identificacion"
+              [(ngModel)]="usuarioSeleccionado.telefono" />
+          </div>
+
+          <div class="col-6">
+            <label for="identificacion">Pago:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="identificacion"
+              [(ngModel)]="usuarioSeleccionado.Pago" />
+          </div>
+         
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-animate" (click)="actuUsuario()">Actualizar</button>
+        <button class="btn btn-secondary btn-animate" (click)="cerrarModalEU()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+  

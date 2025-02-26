@@ -1,0 +1,89 @@
+<div class="container d-flex justify-content-center mt-5 mb-2">
+    <div class="card" style="width: 60rem;">
+      <div class="card-header card-header-sena-azul">
+        <h4 class="card-title">Listar Módulo</h4>
+      </div>
+      <div class="card-body">
+  
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="onSubmit()" #moduloForm="ngForm">
+      <div class="form-group">
+        <label for="id_modulo_padre">ID Módulo Padre:</label>
+        <input 
+          type="number" 
+          id="id_modulo_padre" 
+          name="id_modulo_padre" 
+          [(ngModel)]="ModuloSeleccionado.id_modulo_padre" 
+          class="form-control"
+          required>
+      </div>
+      
+      <div class="form-group">
+        <label for="modulo">Módulo:</label>
+        <input 
+          type="text" 
+          id="modulo" 
+          name="modulo" 
+          [(ngModel)]="ModuloSeleccionado.modulo" 
+          class="form-control"
+          required>
+      </div>
+      
+      <div class="form-group">
+        <label for="url_modulo">URL Módulo:</label>
+        <input 
+          type="text" 
+          id="url_modulo" 
+          name="url_modulo" 
+          [(ngModel)]="ModuloSeleccionado.url_modulo" 
+          class="form-control"
+          required>
+      </div>
+      
+      <div class="form-group">
+        <label for="icono">Icono:</label>
+        <div class="icon-grid">
+          <div 
+            *ngFor="let icono of iconos" 
+            class="icon-item" 
+            [class.selected]="icono === iconoSeleccionado" 
+            (click)="seleccionarIcono(icono)">
+            <i class="fa" [ngClass]="icono"></i>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="orden">Orden:</label>
+        <input 
+          type="number" 
+          id="orden" 
+          name="orden" 
+          [(ngModel)]="ModuloSeleccionado.orden" 
+          class="form-control"
+          required>
+      </div>
+      
+      <div class="form-group">
+        <label for="hijos">Hijos:</label>
+        <input 
+          type="number" 
+          id="hijos" 
+          name="hijos" 
+          [(ngModel)]="ModuloSeleccionado.hijos" 
+          class="form-control"
+          required>
+      </div>
+      
+      <button 
+        type="submit" 
+        class="btn btn-danger" 
+        [disabled]="!moduloForm.form.valid">Actualizar Módulo</button>
+    </form>
+  </div>
+  
+  <button type="button" class="btn btn-secondary" (click)="close()">Cerrar</button>
+
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="custom-modal-overlay">
+  <div class="custom-modal-content">
+    <h2>Detalles del Usuario</h2>
+    <div class="modal-body">
+      <div class="left-column">
+        <p><strong>Nombre:</strong> {{ usuarioSeleccionado.nombre }}</p>
+        <p><strong>Identificacion:</strong> {{ usuarioSeleccionado.identificacion }}</p>
+        <p><strong>Dirección:</strong> {{ usuarioSeleccionado.direccion }}</p>
+        <p><strong>Correo Electronico:</strong> {{ usuarioSeleccionado.email }}</p>
+        <p><strong>Telefono:</strong> {{ usuarioSeleccionado.telefono }}</p>
+        <p><strong>Pago:</strong> {{ usuarioSeleccionado.pago }}</p>
+
+
+      </div>
+
+    </div>
+
+    <button (click)="cerrarModal()" class="btn-close-modal">Cerrar</button>
+  </div>
+</div>
