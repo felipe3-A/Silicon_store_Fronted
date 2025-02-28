@@ -65,6 +65,7 @@ import { CrearCaracteristicasComponent } from './views/caracteristicas/crear-car
 import { CrearsubCaracteristicasComponent } from './views/caracteristicas/crearsub-caracteristicas/crearsub-caracteristicas.component';
 import { CrearValoresComponent } from './views/caracteristicas/crear-valores/crear-valores.component';
 import { WelcomeProductComponent } from './views/before_store/welcome-product/welcome-product.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -73,6 +74,7 @@ export function tokenGetter() {
 @NgModule({
   imports: [
 
+    
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -150,11 +152,19 @@ export function tokenGetter() {
     
 
   ],
-  providers: [LoginService, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true, // Esto indica que puedes tener múltiples interceptores
-  },],
+  providers: [
+    LoginService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true // Esto indica que puedes tener múltiples interceptores
+    },
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    }
+  ],
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }
