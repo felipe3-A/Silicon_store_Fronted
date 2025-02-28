@@ -42,6 +42,7 @@
             ],
             "allowedCommonJsDependencies": [
               "rxjs/add/operator/filter",
+              "sweetalert2",
               "jquery",
               "chartist"
             ]

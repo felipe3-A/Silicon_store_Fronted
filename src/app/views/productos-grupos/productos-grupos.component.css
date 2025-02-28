@@ -1,0 +1,148 @@
+.product-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .product-card:hover {
+    transform: scale(1.05);
+  }
+  
+  /* ID en la parte superior */
+  .product-id {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: gray;
+  }
+  
+  /* Íconos de acciones */
+  .action-icons {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .icon-button {
+    background: white;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+  
+  .icon-button i {
+    font-size: 16px;
+    color: gray;
+  }
+  
+  /* Imagen del producto */
+  .image-container {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  
+  /* Info del producto */
+  .product-info {
+    margin-top: 10px;
+  }
+  
+  .product-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+  }
+  
+  .rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #ffcc00;
+    font-size: 14px;
+  }
+  
+  .reviews {
+    font-size: 12px;
+    color: gray;
+  }
+  
+  /* Precios */
+  .price-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  
+  .price-old {
+    font-size: 14px;
+    color: gray;
+    text-decoration: line-through;
+  }
+  
+  .discount {
+    font-size: 14px;
+    color: blue;
+    font-weight: bold;
+  }
+  
+  .price-new {
+    font-size: 22px;
+    font-weight: bold;
+    color: black;
+    display: block;
+    margin-top: 5px;
+  }
+  
+  /* Botón de carrito */
+  .cart-button {
+    background: blue;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  
+  .cart-button:hover {
+    background: darkblue;
+  }
+
+  p, a,li,ul, h1,h2,h3,h4, span{
+    font-family: 'Poppins', sans-serif;
+
+  }
+  

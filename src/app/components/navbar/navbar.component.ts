@@ -18,7 +18,7 @@ import { error } from "console";
 import { Subscription } from "rxjs";
 
 import { CartServiceService } from "app/services/Cart/cart-service.service";
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 import { ModulosxperfilComponent } from "app/views/modulosxperfil/modulosxperfil.component";
 import { ModuloxperfilServiceService } from "app/services/moduloxperfil/moduloxperfil-service.service";
 

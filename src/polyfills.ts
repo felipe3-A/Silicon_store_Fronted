@@ -28,6 +28,7 @@ import 'web-animations-js';  // Run `npm install --save webå-animations-js`.
 /** ALL Firefox browsers require the following to support `@angular/animation`. **/
 import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 
+(window as any).process = require('process/browser'); // Esto se agego dechatgpt par poder usra el Swalert
 
 
 /***************************************************************************************************

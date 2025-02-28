@@ -188,10 +188,10 @@
 
 .name_user {
   font-family: 'Poppins', sans-serif;
-  font-size: 10px;
+  font-size: 6px;
   align-items: center;
   text-align:center;
-  margin-top: -20px;
+  margin-top: -5px;
   justify-content: center;
 }
 
@@ -208,7 +208,7 @@ transform: rotate(-90deg);
 }
 
 .modulo_text{
-  font-size: 99px;
+  font-size: 130px;
   font-weight: 9000;
 }
 
@@ -218,7 +218,7 @@ transform: rotate(-90deg);
   background-color: #3F3F3F;
   align-items: center;
   width: 130px;
-  height: 100px;
+  height: 130px;
   justify-content: center;
   margin: 0;
   text-align: center;
@@ -238,7 +238,7 @@ transform: rotate(-90deg);
   align-items: center;
   width: 130px;
   margin: 0;
-  height: 100px;
+  height: 130px;
 }
 
 .dropdown-menu {

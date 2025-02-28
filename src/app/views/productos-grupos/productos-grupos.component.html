@@ -1,28 +1,53 @@
-<div class="container mt-5">
-    <h3 class="text-center">Productos del Grupo</h3>
-    <div class="row">
-      <div class="col-md-3 mb-4" *ngFor="let producto of productos">
-        <div class="card product-card" style="width: 250px; height: 340px;">
-          <img [src]="producto.url_imagen" class="card-img-top rounded-3" alt="Imagen del producto">
-          <div class="card-body d-flex flex-column p-3">
-            <h5 class="card-title">{{ producto.nombre_producto }}</h5>
-            <p class="card-text">{{ producto.descripcion_producto }}</p>
-            <div class="price-container">
-              <span class="price-new">${{ producto.precio_producto }}</span>
-            </div>
-          </div>
-          <div class="icons d-flex justify-content-center p-3">
-            <button class="btn btn-link btn-sm" (click)="navigateToCategoryandProduct(producto.id_imagen)">
-              <i class="material-icons">info</i>
-            </button>
-            <button class="btn btn-link btn-sm">
-              <i class="material-icons">favorite_border</i>
-            </button>
-            <button class="btn btn-link btn-sm">
-              <i class="material-icons">shopping_cart</i>
-            </button>
+<div *ngIf="productos.length > 0" class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-3 mb-4" *ngFor="let producto of productos">
+      <div class="product-card shadow-sm">
+        <span class="product-id">id: {{ producto.id }}</span>
+
+        <!-- Íconos de acciones -->
+        <div class="action-icons">
+          <button class="icon-button">
+            <i class="bi bi-sliders"></i>
+          </button>
+          <button class="icon-button">
+            <i class="bi bi-heart"></i>
+          </button>
+        </div>
+
+        <!-- Imagen del producto -->
+        <div class="image-container">
+          <img [src]="producto.url_imagen" alt="{{ producto.nombre_producto }}" />
+        </div>
+
+        <!-- Nombre y estrellas -->
+        <div class="product-info">
+          <h5 class="product-title">{{ producto.nombre_producto }}</h5>
+          <div class="rating">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-half"></i>
+            <span class="reviews">97</span>
           </div>
         </div>
+
+        <!-- Precio y descuento -->
+        <div class="price-container">
+          <span class="price-old">${{ producto.precio_anterior }}</span>
+          <span class="discount">-10%</span>
+        </div>
+        <span class="price-new">${{ producto.precio_producto }}</span>
+
+        <!-- Botón de carrito -->
+        <button class="cart-button" (click)="crearCarrito(producto)">
+          <i class="bi bi-cart"></i>
+        </button>
       </div>
     </div>
   </div>
+</div>
+
+<div *ngIf="productos.length === 0" class="text-center mt-5">
+  <h3>No hay productos disponibles en este grupo.</h3>
+</div>

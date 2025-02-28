@@ -1,26 +1,55 @@
-<div *ngIf="productos.length > 0">
-    <h2 class="text-center">Productos de la Categoría</h2>
-    <div class="row">
-      <div class="col-md-3 mb-4" *ngFor="let producto of productos">
-        <div class="card">
-          <img [src]="producto.url_imagen" class="card-img-top" alt="{{ producto.nombre_producto }}" />
-          <div class="card-body">
-            <h5 class="card-title">{{ producto.nombre_producto }}</h5>
-            <p class="card-text">{{ producto.descripcion_producto }}</p>
-            <div class="price-container">
-              <span class="price-old text-muted text-decoration-line-through">${{ producto.precio_anterior }}</span>
-              <span class="price-new fw-bold">${{ producto.precio_producto }}</span>
-            </div>
-          </div>
-          <div class="card-footer text-center">
-            <button class="btn btn-primary" (click)="agregarAlCarrito(producto)">Agregar al Carrito</button>
-            <button class="btn btn-link" (click)="verDetalles(producto)">Ver Detalles</button>
+<div *ngIf="productos.length > 0" class="container mt-4">
+  <h2 class="text-center fw-bold mb-4">Productos de la Categoría</h2>
+  <div class="row justify-content-center">
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let producto of productos">
+      <div class="product-card shadow-sm rounded-4 position-relative p-3">
+        <!-- ID del Producto -->
+        <span class="product-id">ID: {{ producto.id }}</span>
+
+        <!-- Íconos de acciones -->
+        <div class="action-icons">
+          <button class="icon-button">
+            <i class="bi bi-sliders"></i>
+          </button>
+          <button class="icon-button">
+            <i class="bi bi-heart"></i>
+          </button>
+        </div>
+
+        <!-- Imagen del producto -->
+        <div class="image-container">
+          <img [src]="producto.url_imagen" alt="{{ producto.nombre_producto }}" />
+        </div>
+
+        <!-- Nombre y estrellas -->
+        <div class="product-info text-center">
+          <h5 class="product-title fw-bold">{{ producto.nombre_producto }}</h5>
+          <div class="rating text-warning">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-half"></i>
+            <span class="reviews text-muted">97</span>
           </div>
         </div>
+
+        <!-- Precio y descuento -->
+        <div class="price-container text-center mt-2">
+          <span class="price-old text-muted text-decoration-line-through">${{ producto.precio_anterior }}</span>
+          <span class="discount bg-danger text-white px-2 py-1 rounded">-10%</span>
+        </div>
+        <span class="price-new d-block text-center text-success fw-bold fs-5">${{ producto.precio_producto }}</span>
+
+        <!-- Botón de carrito -->
+        <button class="cart-button" (click)="agregarAlCarrito(producto)">
+          <i class="bi bi-cart"></i>
+        </button>
       </div>
     </div>
   </div>
-  
-  <div *ngIf="productos.length === 0" class="text-center">
-    <h3>No hay productos disponibles en esta categoría.</h3>
-  </div>
+</div>
+
+<div *ngIf="productos.length === 0" class="text-center mt-5">
+  <h3 class="text-muted">No hay productos disponibles en esta categoría.</h3>
+</div>

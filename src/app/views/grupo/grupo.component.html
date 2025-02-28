@@ -1,26 +1,53 @@
-<div *ngIf="productos.length > 0">
-    <h2 class="text-center">Productos del Grupo</h2>
-    <div class="row">
-      <div class="col-md-3 mb-4" *ngFor="let producto of productos">
-        <div class="card">
-          <img [src]="producto.url_imagen" class="card-img-top" alt="{{ producto.nombre_producto }}" />
-          <div class="card-body">
-            <h5 class="card-title">{{ producto.nombre_producto }}</h5>
-            <p class="card-text">{{ producto.descripcion_producto }}</p>
-            <div class="price-container">
-              <span class="price-old text-muted text-decoration-line-through">${{ producto.precio_anterior }}</span>
-              <span class="price-new fw-bold">${{ producto.precio_producto }}</span>
-            </div>
-          </div>
-          <div class="card-footer text-center">
-            <button class="btn btn-primary" (click)="agregarAlCarrito(producto)">Agregar al Carrito</button>
-            <button class="btn btn-link" (click)="verDetalles(producto)">Ver Detalles</button>
+<div *ngIf="productos.length > 0" class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-3 mb-4" *ngFor="let producto of productos">
+      <div class="product-card shadow-sm">
+        <span class="product-id">id: {{ producto.id }}</span>
+
+        <!-- Íconos de acciones -->
+        <div class="action-icons">
+          <button class="icon-button">
+            <i class="bi bi-sliders"></i>
+          </button>
+          <button class="icon-button">
+            <i class="bi bi-heart"></i>
+          </button>
+        </div>
+
+        <!-- Imagen del producto -->
+        <div class="image-container">
+          <img [src]="producto.url_imagen" alt="{{ producto.nombre_producto }}" />
+        </div>
+
+        <!-- Nombre y estrellas -->
+        <div class="product-info">
+          <h5 class="product-title">{{ producto.nombre_producto }}</h5>
+          <div class="rating">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-half"></i>
+            <span class="reviews">97</span>
           </div>
         </div>
+
+        <!-- Precio y descuento -->
+        <div class="price-container">
+          <span class="price-old">${{ producto.precio_anterior }}</span>
+          <span class="discount">-10%</span>
+        </div>
+        <span class="price-new">${{ producto.precio_producto }}</span>
+
+        <!-- Botón de carrito -->
+        <button class="cart-button" (click)="crearCarrito(producto)">
+          <i class="bi bi-cart"></i>
+        </button>
       </div>
     </div>
   </div>
-  
-  <div *ngIf="productos.length === 0" class="text-center">
-    <h3>No hay productos disponibles en este grupo.</h3>
-  </div>
+</div>
+
+<div *ngIf="productos.length === 0" class="text-center mt-5">
+  <h3>No hay productos disponibles en este grupo.</h3>
+</div>
