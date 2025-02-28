@@ -14,9 +14,9 @@
             "customWebpackConfig": {
               "path": "./webpack.config.js"
             },
-            "outputPath": "dist",
-            "index": "src/index.html",
-            "main": "src/main.ts",
+            "outputPath": "docts",
+            "index": "app/views/main/main.component.html",
+            "main": "app/views/main/main.component.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
