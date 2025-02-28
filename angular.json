@@ -14,7 +14,7 @@
             "customWebpackConfig": {
               "path": "./webpack.config.js"
             },
-            "outputPath": "docts",
+            "outputPath": "docs",
             "index": "app/views/main/main.component.html",
             "main": "app/views/main/main.component.ts",
             "tsConfig": "src/tsconfig.app.json",
