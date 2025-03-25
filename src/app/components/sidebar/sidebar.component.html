@@ -1,0 +1,117 @@
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+    aria-controls="offcanvasScrolling">
+    <i class="bi bi-list"></i>
+</button>
+
+
+
+<div class="offcanvas offcanvas-start w-20" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+    id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Colored with scrolling</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="sidebar bg-dark text-white p-3">
+        <h4><i class="fa fa-user-shield"></i> Administrador</h4>
+
+        <div class="menu-container">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a routerLink="#" class="nav-link text-white" data-bs-toggle="collapse"
+                        data-bs-target="#dashboardSubmenu" aria-expanded="false">
+                        <i class="fa fa-tachometer"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" data-bs-toggle="collapse" data-bs-target="#userSubmenu"
+                        aria-expanded="false">
+                        <i class="fa fa-users"></i> Usuarios
+                    </a>
+                    <ul class="collapse" id="userSubmenu">
+                        <li class="nav-item"><a routerLink="/registro" class="nav-link text-white"><i
+                                    class="fa fa-eye"></i> Ver Usuarios</a></li>
+                        <li class="nav-item"><a routerLink="/login" class="nav-link text-white"><i
+                                    class="fa fa-user-plus"></i> Añadir Usuario</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="#" class="nav-link text-white" data-bs-toggle="collapse"
+                        data-bs-target="#productSubmenu" aria-expanded="false">
+                        <i class="fa fa-box"></i> Productos
+                    </a>
+                    <ul class="collapse" id="productSubmenu">
+                        <li class="nav-item"><a routerLink="/AdministarProductos" class="nav-link text-white"><i
+                                    class="fa fa-eye"></i> Ver
+                                Stock</a></li>
+                        <li class="nav-item"><a routerLink="#" class="nav-link text-white"><i class="fa fa-plus"></i>
+                                Añadir
+                                Artículo</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="#" class="nav-link text-white" data-bs-toggle="collapse"
+                        data-bs-target="#orderSubmenu" aria-expanded="false">
+                        <i class="fa fa-shopping-cart"></i> Pedidos
+                    </a>
+                    <ul class="collapse" id="orderSubmenu">
+                        <li class="nav-item"><a routerLink="#" class="nav-link text-white"><i class="fa fa-eye"></i> Ver
+                                Pedidos</a></li>
+                        <li class="nav-item"><a routerLink="#" class="nav-link text-white"><i class="fa fa-wrench"></i>
+                                Pedidos de Reparación</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="#" class="nav-link text-white" data-bs-toggle="collapse"
+                        data-bs-target="#reportSubmenu" aria-expanded="false">
+                        <i class="fa fa-chart-line"></i> Reportes
+                    </a>
+                    <ul class="collapse" id="reportSubmenu">
+                        <li class="nav-item"><a routerLink="#" class="nav-link text-white"><i class="fa fa-eye"></i> Ver
+                                Reportes</a></li>
+                        <li class="nav-item"><a routerLink="#" class="nav-link text-white"><i class="fa fa-file"></i>
+                                Generar
+                                Reporte</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="#" class="nav-link text-white" data-bs-toggle="collapse"
+                        data-bs-target="#advertisingSubmenu" aria-expanded="false">
+                        <i class="fa fa-bullhorn"></i> Publicidad
+                    </a>
+                    <ul class="collapse" id="advertisingSubmenu">
+                        <li class="nav-item"><a routerLink="#" class="nav-link text-white"><i class="fa fa-eye"></i> Ver
+                                Publicidad</a></li>
+                        <li class="nav-item"><a routerLink="#" class="nav-link text-white"><i class="fa fa-plus"></i>
+                                Añadir
+                                Publicidad</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="#" class="nav-link text-white" data-bs-toggle="collapse"
+                        data-bs-target="#socialMediaSubmenu" aria-expanded="false">
+                        <i class="fa fa-share-alt"></i> Administrar Redes Sociales
+                    </a>
+                    <ul class="collapse" id="socialMediaSubmenu">
+                        <li class="nav-item"><a routerLink="#" class="nav-link text-white"><i
+                                    class="fa fa-facebook"></i>
+                                Facebook</a></li>
+                        <li class="nav-item"><a routerLink="#" class="nav-link text-white"><i
+                                    class="fa fa-whatsapp"></i>
+                                WhatsApp</a></li>
+                        <li class="nav-item"><a routerLink="#" class="nav-link text-white"><i
+                                    class="fa fa-instagram"></i>
+                                Instagram</a></li>
+                        <li class="nav-item"><a routerLink="#" class="nav-link text-white"><i class="fa fa-globe"></i>
+                                Sitio
+                                Web</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="logout-container">
+            <button class="btn btn-danger"><i class="fa fa-sign-out"></i> Cerrar Sesión</button>
+        </div>
+    </div>
+</div>

@@ -19,7 +19,6 @@ import { Subscription } from "rxjs";
 
 import { CartServiceService } from "app/services/Cart/cart-service.service";
 import Swal from 'sweetalert2';
-import { ModulosxperfilComponent } from "app/views/modulosxperfil/modulosxperfil.component";
 import { ModuloxperfilServiceService } from "app/services/moduloxperfil/moduloxperfil-service.service";
 
 declare const $: any;
@@ -32,7 +31,7 @@ declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-  { path: "/store", title: "store", icon: "dashboard", class: "" },
+  { path: "/VerTienda", title: "store", icon: "dashboard", class: "" },
 ];
 
 @Component({

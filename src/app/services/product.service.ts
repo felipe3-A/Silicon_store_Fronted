@@ -14,7 +14,7 @@ export class ProductService {
 
   // Método para listar los productos
   listarProductos(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/api/imagenes/upload`); // Asumiendo que la ruta de los productos es /api/products
+    return this.http.get(`${this.baseUrl}items`); // Asumiendo que la ruta de los productos es /api/products
   }
 
   listarProductosPorGrupo(id_grupo: number): Observable<any> {

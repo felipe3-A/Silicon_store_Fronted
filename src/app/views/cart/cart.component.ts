@@ -32,34 +32,25 @@ export class CartComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.isLoggedIn = this.loginService.isLoggedIn();
-    if (this.isLoggedIn) {
-      const userId = this.loginService.getUserId();
-      this.usuarioId = userId ? parseInt(userId, 10) : null;
-      this.carritoId = 1; // Asegurar que tenga un carrito asignado
+    this.usuarioId = 1; // Asignar siempre el usuario con ID 1
+    this.carritoId = 1; // Asegurar que tenga un carrito asignado
   
-      this.listarProductos();
+    this.listarProductos();
   
-      try {
-        await this.obtenerProductosEnCarrito(); // Espera a obtener los productos
-        this.calcularTotal(); // Calcula el total correctamente
+    try {
+      await this.obtenerProductosEnCarrito(); // Espera a obtener los productos
+      this.calcularTotal(); // Calcula el total correctamente
   
-        if (this.totalAmount > 0) {
-          await this.initBoldCheckout(); // Inicializa BoldCheckout solo si hay total
-        } else {
-          console.warn("No se inicializó BoldCheckout porque el total es 0.");
-        }
-      } catch (error) {
-        console.error("Error al obtener productos del carrito:", error);
+      if (this.totalAmount > 0) {
+        await this.initBoldCheckout(); // Inicializa BoldCheckout solo si hay total
+      } else {
+        console.warn("No se inicializó BoldCheckout porque el total es 0.");
       }
-    } else {
-      Swal.fire(
-        "Atención",
-        "Por favor, inicia sesión o regístrate para ver tu carrito.",
-        "info"
-      );
+    } catch (error) {
+      console.error("Error al obtener productos del carrito:", error);
     }
   }
+  
   
   
   calcularTotal(): number {

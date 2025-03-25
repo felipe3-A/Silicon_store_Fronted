@@ -31,7 +31,7 @@
 
 <div class="d-flex justify-content-between align-items-center vh-15 orange m-0">
   <!-- Contenedor Izquierdo: Logo -->
-  <div class="d-flex align-items-center store" [routerLink]="['/store']">
+  <div class="d-flex align-items-center store" [routerLink]="['/VerTienda']">
     <img src="assets/img/Silicon_Store.png" class="image" alt="Logo Silicon">
   </div>
 
@@ -43,7 +43,8 @@
         <a class="nav-link d-flex justify-content-between align-items-center"
           (click)="toggleDropdown(moduleRoute.module)" role="button">
           <p class="m-0 modulo_text">{{ moduleRoute.module }}</p>
-          <i class="v"> < </i>
+          <i class="v">
+            < </i>
         </a>
         <div class="menu-dropdown" [ngClass]="{ 'show': isDropdownOpen(moduleRoute.module) }">
           <ul class="nav flex-column ms-3">
@@ -61,10 +62,11 @@
   </div>
 
   <div class="content d-flex m-0">
+
     <div class="text-white text-center datos1" (click)="abrirCarrito()">
       <ng-container *ngIf="isLoggedIn; else notLoggedIn">
         <div class="message_login">
-          <i class="fas fa-shopping-cart mt-4"></i>
+          <i class="fas fa-shopping-cart mt-4 m-0"></i>
           <p class="welcome me-0">Carrito</p>
         </div>
       </ng-container>
@@ -74,10 +76,10 @@
     <div class="text-white text-center datos" (click)="cerrarSesion()">
       <ng-container *ngIf="isLoggedIn; else notLoggedIn">
 
-        <div class="message_login align-items-center justify-content-center">
+        <div class=" align-items-center justify-content-center">
           <i class="fas fa-user mt-4 m-0"></i>
           <p class="welcome me-0">Bienvenido</p>
-          <p class="name_user me-0 ">{{ nombre }}</p>
+          <p class="name_user">{{ nombre }}</p>
         </div>
 
       </ng-container>
@@ -91,12 +93,11 @@
 
 <div class="d-flex flex-row w-10 position-relative" id="menuAccordion">
   <ng-template #notLoggedIn>
-    <div class="welcome-box">
-      <h2 class="welcome-text">Descubre todo lo que hemos reparado para ti</h2>
+   
       <div class="button-container">
         <button class="btn btn-primary" (click)="irALogin()">Login</button>
         <button class="btn btn-secondary" (click)="irARegister()">Registro</button>
-      </div>
+
     </div>
   </ng-template>
 

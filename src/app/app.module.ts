@@ -1,3 +1,4 @@
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -48,7 +49,6 @@ import { DetallesComponent } from './views/detalles/detalles.component';
 import { CategoriaComponent } from './views/categoria/categoria.component';
 import { GrupoComponent } from './views/grupo/grupo.component';
 import { ModulosComponent } from './views/modulos/modulos.component';
-import { ModulosxperfilComponent } from './views/modulosxperfil/modulosxperfil.component';
 import { CrearModulosXperfilComponent } from './views/modulos/crear-modulos-xperfil/crear-modulos-xperfil.component';
 import { ListarModulosXperfilComponent } from './views/modulos/listar-modulos-xperfil/listar-modulos-xperfil.component';
 import { CrearModulosComponent } from './views/modulos/crear-modulos/crear-modulos.component';
@@ -72,7 +72,7 @@ export function tokenGetter() {
 }
 
 @NgModule({
-  imports: [
+  imports: [ BrowserModule,
 
     
     JwtModule.forRoot({
@@ -132,7 +132,6 @@ export function tokenGetter() {
     CategoriaComponent,
     GrupoComponent,
     ModulosComponent,
-    ModulosxperfilComponent,
     CrearModulosXperfilComponent,
     ListarModulosXperfilComponent,
     CrearModulosComponent,

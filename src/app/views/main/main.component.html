@@ -27,7 +27,8 @@
 <div class="container  m-4">
   <div class="row gx-8 justify-content-center m-4">
     <div class="col-md-2 m-4" *ngFor="let grupo of grupos">
-      <div class="card card_grupo m-4" (click)="navigateToCategoryforGroups(grupo.id_grupo)"> <!-- Pasar el ID del grupo -->
+      <div class="card card_grupo m-4" (click)="navigateToCategoryforGroups(grupo.id_grupo)">
+        <!-- Pasar el ID del grupo -->
         <img [src]="grupo.imagen" class="card-img-top" alt="{{ grupo.nombre_grupo }}">
         <div class="card-body">
           <h5 class="card-title">{{ grupo.nombre_grupo }}</h5>
@@ -52,7 +53,7 @@
   <div class="container mt-5 content_category">
     <div class="title_category">Nuestro Contenido</div>
     <div class="contenedor_columnas">
-     
+
 
       <div class="columna1">
         <div id="ofertasCarousel" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-interval="5000">
@@ -134,34 +135,31 @@
 
 <div class="fila3">
   <h3 class="text-center"></h3>
-  <div *ngFor="let categoria of listCategorias">
-    <div class="gradient-header ">
-      <h4 class="mt-4">{{ categoria.categoria }}</h4>
-    </div><!-- Nombre de la categoría -->
-    <div class="row">
-      <div class="col-md-3 mb-4" *ngFor="let producto of categoria.productos">
-        <div class=" text-center">
-          <img [src]="producto.url_imagen" class="card-img-top img-fluid" alt="Imagen del producto">
+  <div class="row">
+    <div class="col-md-3 mb-4" *ngFor="let producto of productos">
+      <div class=" text-center card_product">
+        <img [src]="producto.imagen" class="card-img-top img-fluid" alt="Imagen del producto">
 
-          <h6 class="card-title fw-bold">{{ producto.nombre_producto }}</h6>
-          <p class="card-text text-muted">{{ producto.descripcion_producto }}</p>
-          <div class="price-container">
-            <span class="price-old text-muted text-decoration-line-through">${{ producto.precio_anterior }}</span>
-            <span class="price-new fw-bold">${{ producto.precio_producto }}</span>
-          </div>
+        <h6 class="card-title_2">{{ producto.name }}</h6>
+        <p class="card-text text-muted">
+        <div class="price-container d-flex mt-3">
+
+          <p class="card-title_3">Categoria: </p>
+          <p class="card-title_4">{{ producto.category }}</p>
         </div>
-        <div class="icons d-flex justify-content-center">
-          <button class="btn btn-link btn-sm" (click)="navigateToCategoryandProduct(producto.id_imagen)">
-            <i class="material-icons">info</i>
-          </button>
-          <button class="btn btn-link btn-sm">
-            <i class="material-icons">favorite_border</i>
-          </button>
-          <button class="btn btn-link btn-sm" (click)=" (producto)">
-            <i class="material-icons">shopping_cart</i>
-          </button>
+
+
+        <div class="price-container d-flex">
+          <span class="price-old text-muted text-decoration-line-through">
+            ${{ producto.cost_price | number }}
+          </span>
+          <span class="price-new fw-bold">
+            ${{ producto.unit_price | number }}
+          </span>
         </div>
+
       </div>
+
     </div>
   </div>
 </div>

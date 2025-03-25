@@ -12,13 +12,13 @@ export class ModuloServiceService {
   constructor(private httpClient: HttpClient) {}
 
   obtenerModulos(): Observable<any> {
-    const url = `${this.baseUrl}/api/obtenerModulos`;
+    const url = `${this.baseUrl}modulos`;
 
     return this.httpClient.get<any>(url);
   }
 
   crearModulo(moduloData: any): Observable<any> {
-    const url = `${this.baseUrl}/api/crearModulo`;
+    const url = `${this.baseUrl}modulos`;
     return this.httpClient.post<any>(url, moduloData);
   }
 

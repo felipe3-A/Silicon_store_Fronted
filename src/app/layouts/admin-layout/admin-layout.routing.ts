@@ -96,7 +96,7 @@ export const AdminLayoutRoutes: Routes = [
   //     }]
   // }
 
-  { path: "", redirectTo: "store", pathMatch: "full", component: MainComponent },
+  { path: "", redirectTo: "VerTienda", pathMatch: "full", component: MainComponent },
 
   { path: "dashboard", component: DashboardComponent },
   { path: "user-profile", component: UserProfileComponent },
@@ -106,7 +106,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "maps", component: MapsComponent },
   { path: "notifications", component: NotificationsComponent },
   { path: "upgrade", component: UpgradeComponent },
-  { path: "store", component: MainComponent },
+  { path: "VerTienda", component: MainComponent },
   //Rutas para los carruseles
   { path: "detalles/:id", component: DetallesComponent }, // Ruta para detalles
   { path: "categoria/:id", component: CategoriaComponent },
@@ -172,5 +172,4 @@ export const AdminLayoutRoutes: Routes = [
   {path: 'crearSubCaracteristica', component: CrearsubCaracteristicasComponent},
   {path: 'crearValores', component: CrearValoresComponent},
 // {path:'login', component: LoginComponent},
-{path:'AdministarTienda', component: WelcomeProductComponent}
 ];

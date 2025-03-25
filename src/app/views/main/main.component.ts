@@ -85,8 +85,6 @@ export class MainComponent implements OnInit {
     this.obtenerImagenesDescuentos("3");
     this.listarMarcas();
     this.obtenerCategorias();
-    this.obtenerCategoriasConProductos();
-
     this.listarGrupos();
   }
 
@@ -147,18 +145,7 @@ export class MainComponent implements OnInit {
     this.router.navigate(["/groups", id_grupo]); // Pasar las categorías como un objeto
   }
 
-  obtenerCategoriasConProductos(): void {
-    this.serviceCategoria.listarCategoriasConProductos().subscribe(
-      (response) => {
-        this.listCategorias = response.data; // Asumiendo que la respuesta tiene un campo 'data'
-        console.log("Categorías con productos:", this.listCategorias);
-      },
-      (error) => {
-        Swal.fire("Error", "No se pudieron obtener las categorías con productos", "error");
-        console.error("Error al obtener las categorías con productos:", error);
-      }
-    );
-  }
+
 
   listarGrupos(): void {
     this.grupoService.listarGrupos().subscribe(
@@ -294,9 +281,7 @@ export class MainComponent implements OnInit {
     this.productService.listarProductos().subscribe(
       (response) => {
         this.productos = response.data.map((producto) => {
-          if (producto.url_imagen) {
-            producto.imagen = producto.url_imagen;
-          }
+          producto.imagen = producto.pic_filename ? producto.pic_filename : 'assets/img/404.png';
           return producto;
         });
       },
@@ -305,6 +290,7 @@ export class MainComponent implements OnInit {
       }
     );
   }
+  
 
   listarProductosPorCategoria(id_categoria: number): void {
     this.productService.listarProductosPorCategoria(id_categoria).subscribe(

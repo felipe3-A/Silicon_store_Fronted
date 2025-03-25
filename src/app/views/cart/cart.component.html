@@ -1,4 +1,4 @@
-<div *ngIf="!isLoggedIn" class="text-center">
+<!-- <div *ngIf="!isLoggedIn" class="text-center">
   <p>Tu carrito está vacío. Por favor, <a [routerLink]="['/login']">inicia sesión</a> o <a [routerLink]="['/registro']">regístrate</a> para ver tus productos.</p>
 </div>
 
@@ -15,7 +15,7 @@
   <div *ngIf="!carrito || carrito.length === 0" class="text-center">
     <p>Tu carrito está vacío.</p>
   </div>
-  
+   -->
   <div class="container mt-5" *ngIf="carrito && carrito.length > 0">
     <div class="row">
       <div class="col-lg-8 col-md-7">
@@ -89,4 +89,3 @@
       </div>
     </div>
   </div>
-</div>

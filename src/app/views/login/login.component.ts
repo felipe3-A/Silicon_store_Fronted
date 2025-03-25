@@ -59,12 +59,12 @@ export class LoginComponent implements OnInit{
   if (response.user.perfil === "admin") {
     this.router.navigate(['/dashboard']); // Redirige a la ruta principal para el idperfil 1
   } else if (response.user.idperfil === 2) {
-    this.router.navigate(['/store']); // Redirige a la tienda para el idperfil 2
+    this.router.navigate(['/VerTienda']); // Redirige a la tienda para el idperfil 2
   } else {
-    this.router.navigate(['/main']); // Redirige a una ruta por defecto si el idperfil no coincide
+    this.router.navigate(['/CrearProducto']); // Redirige a una ruta por defecto si el idperfil no coincide
   }
 } else {
-  this.router.navigate(['/main']); // Redirige a una ruta por defecto si no hay idperfil
+  this.router.navigate(['/CrearProducto']); // Redirige a una ruta por defecto si no hay idperfil
 }    }, error => {
       console.error('Error al iniciar sesión', error);
       this.errorMessage = error.error?.error || 'Usuario y Contraseña incorrectos';

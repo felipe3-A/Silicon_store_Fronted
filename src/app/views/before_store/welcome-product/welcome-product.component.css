@@ -1,76 +1,27 @@
-/* Sidebar */
+.main-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  transition: all 0.3s ease;
+}
 
-  
-.sidebar {
-    height: 100vh; /* Altura completa de la pantalla */
-    overflow-y: auto; /* Habilita el desplazamiento vertical */
-    scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
-    -ms-overflow-style: none; /* Oculta la barra de desplazamiento en Edge */
-  }
-  
-  .sidebar::-webkit-scrollbar {
-    display: none; /* Oculta la barra de desplazamiento en Chrome y Safari */
-  }
-  
-  .fixed-bottom {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-  }
+app-sidebar {
+  width: 20%; /* Ancho del sidebar abierto */
+  transition: width 0.3s ease;
+}
 
-  
-  .sidebar .logout-container {
-    padding: 10px;
-    background: transparent;
-    position: sticky;
-    bottom: 0;
-    text-align: center;
-  }  
-  
-  .nav-link {
-    color: white;
-    margin-bottom: 10px;
-  }
-  
-  /* Contenedor principal */
-  .content {
-    margin-left: 260px;
-    width: calc(100% - 260px);
-    padding: 20px;
-  }
-  
-  /* Carrusel */
-  .carousel {
-    max-width: 900px;
-    margin: auto;
-  }
-  
-  /* Tarjetas */
-  .card {
-    text-align: center;
-  }
-  
-  .circle {
-    width: 50px;
-    height: 50px;
-    background-color: #6c757d;
-    border-radius: 50%;
-    margin: 0 auto 10px;
-  }
-  
-  /* Featurette */
-  .placeholder {
-    width: 100%;
-    height: 300px;
-    background-color: #e9ecef;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-  }
+app-root {
+  flex-grow: 1;
+  width: 80%; /* Ancho cuando el sidebar está abierto */
+  transition: width 0.3s ease;
+}
 
-  li{
-    text-decoration: none;
-    list-style: none;
-  }
+/* Cuando el sidebar está cerrado */
+.sidebar-collapsed app-sidebar {
+  width: 0;
+  overflow: hidden;
+}
+
+.sidebar-collapsed app-root {
+  width: 100%;
+}

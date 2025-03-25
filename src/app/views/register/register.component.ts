@@ -79,6 +79,6 @@ export class RegistroComponent implements OnInit {
   }
 
   regresarAlMenu() {
-    this.router.navigate(['/store']); // Cambia '/home' por la ruta de tu menú principal
+    this.router.navigate(['/VerTienda']); // Cambia '/home' por la ruta de tu menú principal
   }
 }

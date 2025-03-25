@@ -15,13 +15,13 @@ export class ModuloxperfilServiceService {
   constructor(private httpClient: HttpClient) {}
 
   obtenerModulosXperfil(): Observable<any> {
-    const url = `${this.baseUrl}/api/obtenerModulosXperfil`;
+    const url = `${this.baseUrl}/modulosxperfil`;
 
     return this.httpClient.get<any>(url);
   }
 
   crearModuloXperfil(moduloxperfilData: any): Observable<any> {
-    const url = `${this.baseUrl}/api/crearModuloXperfil`;
+    const url = `${this.baseUrl}/modulosxperfil`;
     return this.httpClient.post<any>(url, moduloxperfilData);
   }
 

@@ -9,10 +9,14 @@ import { Router, NavigationStart, ActivatedRoute } from "@angular/router";
 export class WelcomeProductComponent implements OnInit {
 
   constructor(private router: Router) { }
+  sidebarAbierto = true;
 
   ngOnInit(): void {
   }
 
+  toggleSidebar() {
+    this.sidebarAbierto = !this.sidebarAbierto;
+  }
  
 
 }
