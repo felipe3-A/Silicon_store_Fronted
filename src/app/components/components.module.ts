@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { DataInfoFormComponent } from './data-info-form/data-info-form.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
+    DataInfoFormComponent,
   ],
   exports: [
     FooterComponent,

@@ -11,7 +11,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./unidad-producto.component.css'],
 })
 export class UnidadProductoComponent implements OnInit {
-  id_imagen!: number;
+  item_id!: number;
   logoMarca: string = ''; // URL del logo de la marca
   productoListado: any[] = [];
   galeriaImagenes: string[] = [];
@@ -25,16 +25,16 @@ export class UnidadProductoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id_imagen = +this.route.snapshot.paramMap.get('id_imagen')!;
-    this.cargarProductoSeleccionado(this.id_imagen);
+    this.item_id = +this.route.snapshot.paramMap.get('item_id')!;
+    this.cargarProductoSeleccionado(this.item_id);
   }
 
   cambiarImagenPrincipal(index: number): void {
     this.imagenPrincipal = this.galeriaImagenes[index];
   }
 
-  cargarProductoSeleccionado(id_imagen: number): void {
-    this.serviceImagen.listarProductoId(id_imagen).subscribe((response) => {
+  cargarProductoSeleccionado(item_id: number): void {
+    this.serviceImagen.listarProductoId(item_id).subscribe((response) => {
       if (response?.data) {
         this.productoListado = [response.data];
         this.imagenPrincipal = this.productoListado[0]?.url_imagen;

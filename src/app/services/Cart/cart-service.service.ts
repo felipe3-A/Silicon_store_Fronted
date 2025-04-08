@@ -7,30 +7,29 @@ import { environment } from 'environments/environment';
   providedIn: 'root'
 })
 export class CartServiceService {
-  private baseUrl = environment.apiUrl; // URL base desde el archivo de configuración
+  private baseUrl = `${environment.apiUrl}cart`; // Base URL ajustada
 
   constructor(private http: HttpClient) { }
 
-  // Crear un nuevo carrito
-  crearCarrito(usuarioId: number, estado: string = 'CREATED'): Observable<any> {
-    const body = { usuario_id: usuarioId, estado };
-    return this.http.post(`${this.baseUrl}/create`, body);
-  }
-
-  // Obtener el carrito de un usuario
+  // Obtener el carrito de un usuario (el más reciente o activo)
   obtenerCarrito(usuarioId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/list/${usuarioId}`);
+    return this.http.get(`${this.baseUrl}/validar/${usuarioId}`);
   }
 
-  // Agregar producto al carrito
-  agregarProductoAlCarrito(usuarioId: number, productId: number, cantidad: number): Observable<any> {
-    const body = { usuario_id: usuarioId, product_id: productId, quantity: cantidad };
+  // Agregar producto a un carrito específico o al más reciente del usuario
+  agregarProductoAlCarrito(cartId: number | null, usuarioId: number, productId: number, cantidad: number): Observable<any> {
+    const body = {
+      cart_id: cartId, // Puede ser null para usar el del usuario
+      person_id: usuarioId,
+      item_id: productId,
+      quantity: cantidad
+    };
     return this.http.post(`${this.baseUrl}/add`, body);
   }
 
   // Eliminar producto del carrito
-  eliminarProductoDelCarrito(usuarioId: number, productId: number): Observable<any> {
-    const body = { usuario_id: usuarioId, product_id: productId };
+  eliminarProductoDelCarrito(cartId: number, productId: number): Observable<any> {
+    const body = { cart_id: cartId, item_id: productId };
     return this.http.post(`${this.baseUrl}/remove`, body);
   }
 }

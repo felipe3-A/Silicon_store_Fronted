@@ -3,7 +3,7 @@
   <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
     <div class="carousel-inner">
       <div class="carousel-item" *ngFor="let imagen of publicidad; let i = index" [class.active]="i === 0">
-        <img [src]="imagen.imagen" class="d-block w-100" alt="Imagen cargada" (click)="verDetalles(imagen)" />
+        <img [src]="imagen.image_url" class="d-block w-100" alt="Imagen cargada" (click)="verDetalles(imagen)" />
       </div>
     </div>
     <!-- Botones de control -->

@@ -51,6 +51,7 @@ import { CrearCaracteristicasComponent } from "app/views/caracteristicas/crear-c
 import { CrearsubCaracteristicasComponent } from "app/views/caracteristicas/crearsub-caracteristicas/crearsub-caracteristicas.component";
 import { CrearValoresComponent } from "app/views/caracteristicas/crear-valores/crear-valores.component";
 import { WelcomeProductComponent } from "app/views/before_store/welcome-product/welcome-product.component";
+import { DataInfoFormComponent } from "app/components/data-info-form/data-info-form.component";
 
 export const AdminLayoutRoutes: Routes = [
   // {
@@ -167,6 +168,8 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'editarModulo', component: EditarModuloComponent  },
   { path: 'detalleModulo', component: DetallesComponent  },
 
+
+{path:'AñadirContactos', component: DataInfoFormComponent},
 
   {path: 'crearCaracteristica', component: CrearCaracteristicasComponent},
   {path: 'crearSubCaracteristica', component: CrearsubCaracteristicasComponent},

@@ -1,0 +1,33 @@
+<div class="container mt-4">
+    <form (ngSubmit)="onSubmit()" #dataInfoForm="ngForm">
+      <div class="mb-3">
+        <label for="data" class="form-label">Tipo de dato</label>
+        <input type="text" class="form-control" id="data" name="data" [(ngModel)]="formData.data" required>
+      </div>
+  
+      <div class="mb-3">
+        <label for="info" class="form-label">Información</label>
+        <input type="text" class="form-control" id="info" name="info" [(ngModel)]="formData.info" required>
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Seleccionar ícono</label>
+        <div class="d-flex flex-wrap gap-3">
+          <div
+            *ngFor="let icon of iconList"
+            class="icon-option p-2 border rounded"
+            [class.selected]="formData.icono === icon"
+            (click)="selectIcon(icon)"
+            style="cursor: pointer;"
+          >
+            <i class="material-icons">{{ icon }}</i>
+          </div>
+        </div>
+      </div>
+  
+      <input type="hidden" name="icono" [(ngModel)]="formData.icono">
+  
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+  </div>
+  

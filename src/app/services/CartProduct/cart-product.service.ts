@@ -20,8 +20,10 @@ export class CartProductsService {
     return this.http.post(`${this.baseUrl}/remove`, body);
   }
 
-  // Obtener productos en el carrito
-  obtenerProductosEnCarrito(carritoId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/cartProducts/${carritoId}`);
-  }
+  
+ // Obtener productos en el carrito
+obtenerProductosEnCarrito(personId: number = 1): Observable<any> {
+  return this.http.get(`${this.baseUrl}cart/${personId}/items`);
+}
+
 }

@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app.routing';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { MatIconModule } from '@angular/material/icon';
 
 import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
@@ -66,6 +67,7 @@ import { CrearsubCaracteristicasComponent } from './views/caracteristicas/crears
 import { CrearValoresComponent } from './views/caracteristicas/crear-valores/crear-valores.component';
 import { WelcomeProductComponent } from './views/before_store/welcome-product/welcome-product.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { DataInfoFormComponent } from './views/data-info-form/data-info-form.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -90,6 +92,7 @@ export function tokenGetter() {
     RouterModule,
     NgxPaginationModule,
     AppRoutingModule,
+    MatIconModule
     
   ],
   declarations: [
@@ -148,6 +151,7 @@ export function tokenGetter() {
     CrearsubCaracteristicasComponent,
     CrearValoresComponent,
     WelcomeProductComponent,
+    DataInfoFormComponent,
     
 
   ],

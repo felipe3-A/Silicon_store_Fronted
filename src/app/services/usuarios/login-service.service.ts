@@ -20,7 +20,7 @@ export class LoginService {
   ) {}
 
   postLogin(formValue: any): Observable<any> {
-    const url = `${this.baseUrl}/login`;
+    const url = `${this.baseUrl}login`;
 
     return this.httpClient.post<any>(url, formValue).pipe(
       

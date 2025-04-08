@@ -54,8 +54,8 @@ export class ProductService {
   // }
 
 
-  listarProductoId(id_imagen: number): Observable<any> {
-    return this.http.get<any>(`/api/imagenes/upload/${id_imagen}`);
+  listarProductoId(item_id: number): Observable<any> {
+    return this.http.get<any>(`/api/item/${item_id}`);
   }
 
   listarProductosPorMarca(id_marca: number): Observable<any[]> {
@@ -75,6 +75,6 @@ export class ProductService {
 
   // En tu servicio de Angular
   getProductos() {
-    return this.http.get<any[]>("http://localhost:3000/productos"); // Cambia la URL por la correcta
+    return this.http.get<any[]>("http://127.0.0.1:8000/api"); // Cambia la URL por la correcta
   }
 }

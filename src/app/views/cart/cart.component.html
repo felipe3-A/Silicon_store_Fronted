@@ -15,77 +15,65 @@
   <div *ngIf="!carrito || carrito.length === 0" class="text-center">
     <p>Tu carrito está vacío.</p>
   </div>
-   -->
-  <div class="container mt-5" *ngIf="carrito && carrito.length > 0">
-    <div class="row">
-      <div class="col-lg-8 col-md-7">
-        <div *ngFor="let producto of carrito" class="card mb-3 shadow-sm animate__animated animate__fadeInUp">
-          <div class="row g-0">
-            <div class="col-md-4">
-              <img [src]="producto.url_imagen || 'assets/img/404ERROR.png'" class="img-fluid rounded-start" alt="Producto">
-            </div>
-            <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title">{{ producto.nombre_producto }}</h5>
-                <p class="card-text text-muted">{{ producto.descripcion_producto }}</p>
-                <p class="card-text"><strong>Precio: {{ producto.precio_producto | currency }}</strong></p>
-                <div class="d-flex flex-wrap align-items-center gap-2">
-                  <label for="cantidad">Cantidad:</label>
-                  <select class="form-select mb-2" [(ngModel)]="producto.cantidad" (change)="actualizarCantidad(producto)">
-                    <option *ngFor="let cantidad of cantidades" [value]="cantidad">{{ cantidad }}</option>
-                  </select>
-                  <button class="btn btn-danger btn-sm text-white d-flex align-items-center" (click)="eliminarProductoC(producto)">
-                    <i class="material-icons me-1">delete</i>
-                    Eliminar del carrito
-                  </button>
-                </div>
+   --><div class="container mt-5" *ngIf="carrito && carrito.length > 0">
+  <div class="row">
+    <div class="col-lg-8 col-md-7">
+      <div *ngFor="let producto of carrito" class="card mb-3 shadow-sm animate__animated animate__fadeInUp">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img [src]="producto.pic_filename ? 'ruta_a_tu_servidor/' + producto.pic_filename : 'assets/img/404ERROR.png'" 
+                 class="img-fluid rounded-start" alt="Producto">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ producto.product.name  }}</h5>
+              <p class="card-text text-muted">{{ producto.product.description }}</p>
+              <p class="card-text">
+                <strong>Precio: {{ producto.unit_price | currency }}</strong>
+              </p>
+              <div class="d-flex flex-wrap align-items-center gap-2">
+                <label for="cantidad">Cantidad:</label>
+                <select class="form-select mb-2" [(ngModel)]="producto.cantidad" 
+                        (change)="actualizarCantidad(producto)">
+                  <option *ngFor="let cantidad of cantidades" [value]="cantidad">{{ cantidad }}</option>
+                </select>
+                <button class="btn btn-danger btn-sm text-white d-flex align-items-center" 
+                        (click)="eliminarProductoC(producto)">
+                  <i class="material-icons me-1">delete</i>
+                  Eliminar del carrito
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-  
-      <div class="col-lg-4 col-md-5">
-        <div class="card shadow-lg animate__animated animate__fadeInRight">
-          <div class="card-body">
-            <h5 class="card-title text-center">Resumen del Carrito</h5>
-            <ul class="list-group mb-3 shadow-sm rounded">
-              <li *ngFor="let producto of carrito" class="list-group-item d-flex justify-content-between align-items-center">
-                <div class="d-flex flex-column">
-                  <strong>{{ producto.nombre_producto }}</strong>
-                  <small class="text-muted">Cantidad: x{{ producto.cantidad }}</small>
-                </div>
-                <span class="badge bg-danger fs-6 px-3 py-2">{{ (producto.precio_producto * producto.cantidad) | currency }}</span>
-              </li>
-            </ul>
-                  
-            <div class="d-flex justify-content-between mb-3">
-              <span><strong>Total:</strong></span>
-              <span><strong>{{ totalAmount | currency }}</strong></span>
-            </div>
-            <button *ngIf="carrito.length > 0" class="btn btn-warning w-100 text-white" (click)="iniciarPago()">
-              Iniciar Pago
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <h1>Productos</h1>
-  <div class="row">
-    <div class="col-md-3 mb-4" *ngFor="let producto of productos">
-      <div class="card product-card" style="width: 250px; height: 340px;">
-        <img [src]="producto.imagen || 'assets/placeholder.png'" class="card-img-top rounded-3 imagen_producto"
-          alt="Producto">
+    <div class="col-lg-4 col-md-5">
+      <div class="card shadow-lg animate__animated animate__fadeInRight">
         <div class="card-body">
-          <h5 class="card-title">{{ producto.nombre_producto }}</h5>
-          <p class="card-text">{{ producto.descripcion_producto }}</p>
-          <div class="price-container">
-            <span class="price-new">${{ producto.precio_producto }}</span>
+          <h5 class="card-title text-center">Resumen del Carrito</h5>
+          <ul class="list-group mb-3 shadow-sm rounded">
+            <li *ngFor="let producto of carrito" class="list-group-item d-flex justify-content-between align-items-center">
+              <div class="d-flex flex-column">
+                <strong>{{ producto.product.name }}</strong>
+                <small class="text-muted">Cantidad: x{{ producto.cantidad }}</small>
+              </div>
+              <span class="badge bg-danger fs-6 px-3 py-2">
+                {{ (producto.product.unit_price) | currency }}
+              </span>
+            </li>
+          </ul>
+
+          <div class="d-flex justify-content-between mb-3">
+            <span><strong>Total:</strong></span>
+            <span><strong>{{ totalAmount | currency }}</strong></span>
           </div>
-          <button class="btn btn-primary btn-sm" (click)="verDetalle(producto)">Ver Detalle</button>
+          <button *ngIf="carrito.length > 0" class="btn btn-warning w-100 text-white" (click)="iniciarPago()">
+            Iniciar Pago
+          </button>
         </div>
       </div>
     </div>
   </div>
+</div>

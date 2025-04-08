@@ -73,6 +73,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     // Llamar a la función para listar productos al cargar el componente
     this.listarProductos();
+    this.obtenerPublicidad();
 
     this.productoForm = this.fb.group({
       nombre: ["", Validators.required],
@@ -80,13 +81,29 @@ export class MainComponent implements OnInit {
       precio: ["", [Validators.required, Validators.min(0)]],
     });
 
-    this.obtenerImagenesPorTipo("1"); // Asegúrate de pasar el idTipo correcto
-    this.obtenerIamgenesOfertas("2");
-    this.obtenerImagenesDescuentos("3");
-    this.listarMarcas();
-    this.obtenerCategorias();
-    this.listarGrupos();
+    // this.obtenerImagenesPorTipo("1"); // Asegúrate de pasar el idTipo correcto
+    // this.obtenerIamgenesOfertas("2");
+    // this.obtenerImagenesDescuentos("3");
+    // this.listarMarcas();
+    // this.obtenerCategorias();
+    // this.listarGrupos();
   }
+
+  obtenerPublicidad() {
+    this.publicidadService.listarPublicidad().subscribe({
+      next: (data) => {
+        console.log('Imágenes de publicidad:', data);
+        this.publicidad = data.map((imagen: any) => ({
+          ...imagen,
+          image_url: `http://127.0.0.1:8000/storage/${imagen.image_url}`
+        }));
+      },
+      error: (error) => {
+        console.error('Error al obtener la publicidad:', error);
+      }
+    });
+  }
+  
 
   // Método para redirigir a la vista de detalles
   verDetalles(imagen: any): void {
@@ -147,46 +164,46 @@ export class MainComponent implements OnInit {
 
 
 
-  listarGrupos(): void {
-    this.grupoService.listarGrupos().subscribe(
-      (response) => {
-        this.grupos = response.data.map((grupo) => {
-          if (grupo.icono_grupo) {
-            grupo.imagen = grupo.icono_grupo;
-          }
-          // Asegúrate de que 'categorias' sea un array
-          if (!Array.isArray(grupo.categorias)) {
-            grupo.categorias = [grupo.categorias]; // Convierte a array si no lo es
-          }
-          return grupo;
-        });
-        console.log("Grupos:", this.grupos);
-      },
-      (error) => {
-        console.error("Error al obtener los Grupos", error);
-      }
-    );
-  }
+  // listarGrupos(): void {
+  //   this.grupoService.listarGrupos().subscribe(
+  //     (response) => {
+  //       this.grupos = response.data.map((grupo) => {
+  //         if (grupo.icono_grupo) {
+  //           grupo.imagen = grupo.icono_grupo;
+  //         }
+  //         // Asegúrate de que 'categorias' sea un array
+  //         if (!Array.isArray(grupo.categorias)) {
+  //           grupo.categorias = [grupo.categorias]; // Convierte a array si no lo es
+  //         }
+  //         return grupo;
+  //       });
+  //       console.log("Grupos:", this.grupos);
+  //     },
+  //     (error) => {
+  //       console.error("Error al obtener los Grupos", error);
+  //     }
+  //   );
+  // }
 
-  obtenerImagenesDescuentos(idTipo): void {
-    this.publicidadService.listarImagenesPorTipo(idTipo).subscribe(
-      (response) => {
-        this.descuentos = response.data.map((pulicidadIm) => {
-          if (pulicidadIm.url_imagen_publicitaria) {
-            pulicidadIm.imagen = pulicidadIm.url_imagen_publicitaria;
-          }
+  // obtenerImagenesDescuentos(idTipo): void {
+  //   this.publicidadService.listarImagenesPorTipo(idTipo).subscribe(
+  //     (response) => {
+  //       this.descuentos = response.data.map((pulicidadIm) => {
+  //         if (pulicidadIm.url_imagen_publicitaria) {
+  //           pulicidadIm.imagen = pulicidadIm.url_imagen_publicitaria;
+  //         }
 
-          return pulicidadIm;
-        });
+  //         return pulicidadIm;
+  //       });
 
-        console.log("Imágenes por tipo:", this.publicidad);
-      },
-      (error) => {
-        Swal.fire("Error", "No se pudieron obtener las imágenes", "error");
-        console.error("Error al obtener las imágenes por tipo:", error);
-      }
-    );
-  }
+  //       console.log("Imágenes por tipo:", this.publicidad);
+  //     },
+  //     (error) => {
+  //       Swal.fire("Error", "No se pudieron obtener las imágenes", "error");
+  //       console.error("Error al obtener las imágenes por tipo:", error);
+  //     }
+  //   );
+  // }
 
   // Método para navegar a la categoría específica
   navigateToCategory(id_categoria: number): void {
@@ -200,64 +217,64 @@ export class MainComponent implements OnInit {
     this.router.navigate(["/product", id_imagen]);
   }
 
-  obtenerCategorias(): void {
-    this.serviceCategoria.listarCategorias().subscribe(
-      (response) => {
-        this.listCategorias = response.data.map((listcategorias) => {
-          if (listcategorias.logo_categoria) {
-            listcategorias.imagen = listcategorias.logo_categoria;
-          }
-          // Llama a listarProductosPorCategoria para cada categoría
-          return listcategorias;
-        });
-        console.log("Categorias:", this.listCategorias);
-        console.log("Productos por categoría:", this.productosPorCategoria);      },
-      (error) => {
-        Swal.fire("Error", "No se pudieron obtener las imágenes", "error");
-        console.error("Error al obtener las imágenes por tipo:", error);
-      }
-    );
-  }
+  // obtenerCategorias(): void {
+  //   this.serviceCategoria.listarCategorias().subscribe(
+  //     (response) => {
+  //       this.listCategorias = response.data.map((listcategorias) => {
+  //         if (listcategorias.logo_categoria) {
+  //           listcategorias.imagen = listcategorias.logo_categoria;
+  //         }
+  //         // Llama a listarProductosPorCategoria para cada categoría
+  //         return listcategorias;
+  //       });
+  //       console.log("Categorias:", this.listCategorias);
+  //       console.log("Productos por categoría:", this.productosPorCategoria);      },
+  //     (error) => {
+  //       Swal.fire("Error", "No se pudieron obtener las imágenes", "error");
+  //       console.error("Error al obtener las imágenes por tipo:", error);
+  //     }
+  //   );
+  // }
 
-  obtenerIamgenesOfertas(idTipo): void {
-    this.publicidadService.listarImagenesPorTipo(idTipo).subscribe(
-      (response) => {
-        this.ofertas = response.data.map((pulicidadIm) => {
-          if (pulicidadIm.url_imagen_publicitaria) {
-            pulicidadIm.imagen = pulicidadIm.url_imagen_publicitaria;
-          }
+  // obtenerIamgenesOfertas(idTipo): void {
+  //   this.publicidadService.listarImagenesPorTipo(idTipo).subscribe(
+  //     (response) => {
+  //       this.ofertas = response.data.map((pulicidadIm) => {
+  //         if (pulicidadIm.url_imagen_publicitaria) {
+  //           pulicidadIm.imagen = pulicidadIm.url_imagen_publicitaria;
+  //         }
 
-          return pulicidadIm;
-        });
+  //         return pulicidadIm;
+  //       });
 
-        console.log("Imágenes por tipo:", this.publicidad);
-      },
-      (error) => {
-        Swal.fire("Error", "No se pudieron obtener las imágenes", "error");
-        console.error("Error al obtener las imágenes por tipo:", error);
-      }
-    );
-  }
+  //       console.log("Imágenes por tipo:", this.publicidad);
+  //     },
+  //     (error) => {
+  //       Swal.fire("Error", "No se pudieron obtener las imágenes", "error");
+  //       console.error("Error al obtener las imágenes por tipo:", error);
+  //     }
+  //   );
+  // }
 
-  obtenerImagenesPorTipo(idTipo: string): void {
-    this.publicidadService.listarImagenesPorTipo(idTipo).subscribe(
-      (response) => {
-        this.publicidad = response.data.map((pulicidadIm) => {
-          if (pulicidadIm.url_imagen_publicitaria) {
-            pulicidadIm.imagen = pulicidadIm.url_imagen_publicitaria;
-          }
+  // obtenerImagenesPorTipo(idTipo: string): void {
+  //   this.publicidadService.listarImagenesPorTipo(idTipo).subscribe(
+  //     (response) => {
+  //       this.publicidad = response.data.map((pulicidadIm) => {
+  //         if (pulicidadIm.url_imagen_publicitaria) {
+  //           pulicidadIm.imagen = pulicidadIm.url_imagen_publicitaria;
+  //         }
 
-          return pulicidadIm;
-        });
+  //         return pulicidadIm;
+  //       });
 
-        console.log("Imágenes por tipo:", this.publicidad);
-      },
-      (error) => {
-        Swal.fire("Error", "No se pudieron obtener las imágenes", "error");
-        console.error("Error al obtener las imágenes por tipo:", error);
-      }
-    );
-  }
+  //       console.log("Imágenes por tipo:", this.publicidad);
+  //     },
+  //     (error) => {
+  //       Swal.fire("Error", "No se pudieron obtener las imágenes", "error");
+  //       console.error("Error al obtener las imágenes por tipo:", error);
+  //     }
+  //   );
+  // }
 
   verMasInformacion(producto: any): void {
     console.log("Ver más información de:", producto);
@@ -276,14 +293,16 @@ export class MainComponent implements OnInit {
       console.log("Imagen cargada:", this.ProductoData.imagen);
     }
   }
-
   listarProductos(): void {
     this.productService.listarProductos().subscribe(
       (response) => {
         this.productos = response.data.map((producto) => {
-          producto.imagen = producto.pic_filename ? producto.pic_filename : 'assets/img/404.png';
+          producto.imagen = producto.pic_filename 
+            ? `http://localhost:8082/uploads/item_pics/${producto.pic_filename}` 
+            : 'assets/img/404.png';
           return producto;
         });
+        console.log("Productos listados:", this.productos);
       },
       (error) => {
         console.error("Error al obtener Productos", error);
@@ -291,36 +310,37 @@ export class MainComponent implements OnInit {
     );
   }
   
+  
 
-  listarProductosPorCategoria(id_categoria: number): void {
-    this.productService.listarProductosPorCategoria(id_categoria).subscribe(
-      (response) => {
-        this.productosPorCategoria[id_categoria] = response.data; // Almacena los productos por categoría
-        console.log("Productos por categoría:", this.productosPorCategoria[id_categoria]);
-      },
-      (error) => {
-        Swal.fire("Error", "No se pudieron obtener los productos por categoría", "error");
-        console.error("Error al obtener los productos por categoría:", error);
-      }
-    );
-  }
+  // listarProductosPorCategoria(id_categoria: number): void {
+  //   this.productService.listarProductosPorCategoria(id_categoria).subscribe(
+  //     (response) => {
+  //       this.productosPorCategoria[id_categoria] = response.data; // Almacena los productos por categoría
+  //       console.log("Productos por categoría:", this.productosPorCategoria[id_categoria]);
+  //     },
+  //     (error) => {
+  //       Swal.fire("Error", "No se pudieron obtener los productos por categoría", "error");
+  //       console.error("Error al obtener los productos por categoría:", error);
+  //     }
+  //   );
+  // }
 
-  listarMarcas(): void {
-    this.marcaService.listarMarcas().subscribe(
-      (response) => {
-        this.marcas = response.data.map((marca) => {
-          if (marca.logo_marca) {
-            marca.imagen = marca.logo_marca;
-          }
-          return marca;
-        });
-        console.log("MARCAS:", this.marcas);
-      },
-      (error) => {
-        console.error("Error al obtener Productos", error);
-      }
-    );
-  }
+  // listarMarcas(): void {
+  //   this.marcaService.listarMarcas().subscribe(
+  //     (response) => {
+  //       this.marcas = response.data.map((marca) => {
+  //         if (marca.logo_marca) {
+  //           marca.imagen = marca.logo_marca;
+  //         }
+  //         return marca;
+  //       });
+  //       console.log("MARCAS:", this.marcas);
+  //     },
+  //     (error) => {
+  //       console.error("Error al obtener Productos", error);
+  //     }
+  //   );
+  // }
 
   // Función para convertir la imagen en base64 a un Blob si es necesario
   dataURLtoBlob(dataURL: string): Blob {
@@ -342,59 +362,59 @@ export class MainComponent implements OnInit {
   }
 
   // En main.component.ts
-  crearCarrito(producto: any): void {
-    if (this.authService.isLoggedIn()) {
-      const usuarioIdString = this.authService.getUserId(); // Obtén el ID del usuario logueado como string
-      const usuarioId = Number(usuarioIdString); // Convierte el ID a un número
-      console.log("Id obtenido del usuario Logueado:", usuarioId);
+  // crearCarrito(producto: any): void {
+  //   if (this.authService.isLoggedIn()) {
+  //     const usuarioIdString = this.authService.getUserId(); // Obtén el ID del usuario logueado como string
+  //     const usuarioId = Number(usuarioIdString); // Convierte el ID a un número
+  //     console.log("Id obtenido del usuario Logueado:", usuarioId);
 
-      // Primero, verifica si ya existe un carrito para el usuario
-      this.cartService.obtenerCarrito(usuarioId).subscribe(
-        (response) => {
-          if (response && response.data) {
-            // Si el carrito ya existe, agrega el producto
-            this.carrito_id = response.data.id; // Guarda el ID del carrito
-            this.agregarProductoAlCarrito(
-              this.carrito_id,
-              producto.id_imagen,
-              1,
-              producto.precio
-            ); // Cambia aquí
-          } else {
-            // Si no existe, crea un nuevo carrito
-            this.cartService.crearCarrito(usuarioId).subscribe(
-              (createResponse) => {
-                this.carrito_id = createResponse.data.id; // Guarda el ID del nuevo carrito
-                this.agregarProductoAlCarrito(
-                  this.carrito_id,
-                  producto.id_imagen,
-                  1,
-                  producto.precio
-                ); // Cambia aquí
-              },
-              (error) => {
-                console.error("Error al crear el carrito", error);
-                Swal.fire("Error", "No se pudo crear el carrito", "error");
-              }
-            );
-          }
-        },
-        (error) => {
-          console.error("Error al obtener el carrito", error);
-          Swal.fire("Error", "No se pudo obtener el carrito", "error");
-        }
-      );
-    } else {
-      // Si no está logueado, redirige al login
-      Swal.fire({
-        icon: "warning",
-        title: "¡Debes iniciar sesión!",
-        text: "Por favor, inicia sesión para agregar productos al carrito.",
-      }).then(() => {
-        this.router.navigate(["/login"]); // Cambia a la ruta de login
-      });
-    }
-  }
+  //     // Primero, verifica si ya existe un carrito para el usuario
+  //     this.cartService.obtenerCarrito(usuarioId).subscribe(
+  //       (response) => {
+  //         if (response && response.data) {
+  //           // Si el carrito ya existe, agrega el producto
+  //           this.carrito_id = response.data.id; // Guarda el ID del carrito
+  //           this.agregarProductoAlCarrito(
+  //             this.carrito_id,
+  //             producto.id_imagen,
+  //             1,
+  //             producto.precio
+  //           ); // Cambia aquí
+  //         } else {
+  //           // Si no existe, crea un nuevo carrito
+  //           this.cartService.crearCarrito(usuarioId).subscribe(
+  //             (createResponse) => {
+  //               this.carrito_id = createResponse.data.id; // Guarda el ID del nuevo carrito
+  //               this.agregarProductoAlCarrito(
+  //                 this.carrito_id,
+  //                 producto.id_imagen,
+  //                 1,
+  //                 producto.precio
+  //               ); // Cambia aquí
+  //             },
+  //             (error) => {
+  //               console.error("Error al crear el carrito", error);
+  //               Swal.fire("Error", "No se pudo crear el carrito", "error");
+  //             }
+  //           );
+  //         }
+  //       },
+  //       (error) => {
+  //         console.error("Error al obtener el carrito", error);
+  //         Swal.fire("Error", "No se pudo obtener el carrito", "error");
+  //       }
+  //     );
+  //   } else {
+  //     // Si no está logueado, redirige al login
+  //     Swal.fire({
+  //       icon: "warning",
+  //       title: "¡Debes iniciar sesión!",
+  //       text: "Por favor, inicia sesión para agregar productos al carrito.",
+  //     }).then(() => {
+  //       this.router.navigate(["/login"]); // Cambia a la ruta de login
+  //     });
+  //   }
+  // }
 
   agregarProductoAlCarrito(
     carrito_id: number,

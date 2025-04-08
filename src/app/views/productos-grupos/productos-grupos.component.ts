@@ -47,59 +47,59 @@ export class ProductosGruposComponent implements OnInit {
     );
   }
 
-  crearCarrito(producto: any): void {
-    if (this.authService.isLoggedIn()) {
-      const usuarioIdString = this.authService.getUserId(); // Obtén el ID del usuario logueado como string
-      const usuarioId = Number(usuarioIdString); // Convierte el ID a un número
-      console.log("Id obtenido del usuario Logueado:", usuarioId);
+  // crearCarrito(producto: any): void {
+  //   if (this.authService.isLoggedIn()) {
+  //     const usuarioIdString = this.authService.getUserId(); // Obtén el ID del usuario logueado como string
+  //     const usuarioId = Number(usuarioIdString); // Convierte el ID a un número
+  //     console.log("Id obtenido del usuario Logueado:", usuarioId);
 
-      // Primero, verifica si ya existe un carrito para el usuario
-      this.cartProductService.obtenerCarrito(usuarioId).subscribe(
-        (response) => {
-          if (response && response.data) {
-            // Si el carrito ya existe, agrega el producto
-            this.carrito_id = response.data.id; // Guarda el ID del carrito
-            this.agregarProductoAlCarrito(
-              this.carrito_id,
-              producto.id_imagen,
-              1,
-              producto.precio
-            ); // Cambia aquí
-          } else {
-            // Si no existe, crea un nuevo carrito
-            this.cartProductService.crearCarrito(usuarioId).subscribe(
-              (createResponse) => {
-                this.carrito_id = createResponse.data.id; // Guarda el ID del nuevo carrito
-                this.agregarProductoAlCarrito(
-                  this.carrito_id,
-                  producto.id_imagen,
-                  1,
-                  producto.precio
-                ); // Cambia aquí
-              },
-              (error) => {
-                console.error("Error al crear el carrito", error);
-                Swal.fire("Error", "No se pudo crear el carrito", "error");
-              }
-            );
-          }
-        },
-        (error) => {
-          console.error("Error al obtener el carrito", error);
-          Swal.fire("Error", "No se pudo obtener el carrito", "error");
-        }
-      );
-    } else {
-      // Si no está logueado, redirige al login
-      Swal.fire({
-        icon: "warning",
-        title: "¡Debes iniciar sesión!",
-        text: "Por favor, inicia sesión para agregar productos al carrito.",
-      }).then(() => {
-        this.router.navigate(["/login"]); // Cambia a la ruta de login
-      });
-    }
-  }
+  //     // Primero, verifica si ya existe un carrito para el usuario
+  //     this.cartProductService.obtenerCarrito(usuarioId).subscribe(
+  //       (response) => {
+  //         if (response && response.data) {
+  //           // Si el carrito ya existe, agrega el producto
+  //           this.carrito_id = response.data.id; // Guarda el ID del carrito
+  //           this.agregarProductoAlCarrito(
+  //             this.carrito_id,
+  //             producto.id_imagen,
+  //             1,
+  //             producto.precio
+  //           ); // Cambia aquí
+  //         } else {
+  //           // Si no existe, crea un nuevo carrito
+  //           this.cartProductService.crearCarrito(usuarioId).subscribe(
+  //             (createResponse) => {
+  //               this.carrito_id = createResponse.data.id; // Guarda el ID del nuevo carrito
+  //               this.agregarProductoAlCarrito(
+  //                 this.carrito_id,
+  //                 producto.id_imagen,
+  //                 1,
+  //                 producto.precio
+  //               ); // Cambia aquí
+  //             },
+  //             (error) => {
+  //               console.error("Error al crear el carrito", error);
+  //               Swal.fire("Error", "No se pudo crear el carrito", "error");
+  //             }
+  //           );
+  //         }
+  //       },
+  //       (error) => {
+  //         console.error("Error al obtener el carrito", error);
+  //         Swal.fire("Error", "No se pudo obtener el carrito", "error");
+  //       }
+  //     );
+  //   } else {
+  //     // Si no está logueado, redirige al login
+  //     Swal.fire({
+  //       icon: "warning",
+  //       title: "¡Debes iniciar sesión!",
+  //       text: "Por favor, inicia sesión para agregar productos al carrito.",
+  //     }).then(() => {
+  //       this.router.navigate(["/login"]); // Cambia a la ruta de login
+  //     });
+  //   }
+  // }
 
   agregarProductoAlCarrito(
     carrito_id: number,

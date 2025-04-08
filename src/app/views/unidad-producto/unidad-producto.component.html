@@ -25,10 +25,10 @@
         />
         <div class="card-body" *ngIf="productoListado[0]">
           <h2 class="card-title text-primary fw-bold">
-            {{ productoListado[0]?.nombre_producto }}
+            {{ productoListado[0]?.name }}
           </h2>
           <p class="text-start text-dark">
-            <strong>Descripción:</strong> {{ productoListado[0]?.descripcion_producto }}
+            <strong>Descripción:</strong> {{ productoListado[0]?.description }}
           </p>
           <p class="text-start text-secondary">
             <strong>Referencia:</strong> {{ productoListado[0]?.envio_producto }}

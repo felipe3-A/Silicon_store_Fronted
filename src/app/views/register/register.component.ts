@@ -12,41 +12,41 @@ import { UsuarioService } from 'app/services/usuarios/usuario-service.service';
 export class RegistroComponent implements OnInit {
   registroForm: FormGroup;
   ubicacionActual: string = '';
-
+  departamentos: any[] = [];
+  ciudades: string[] = [];
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private usuarioService: UsuarioService
   ) {
     this.registroForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.maxLength(255)]],
+      first_name: ['', [Validators.required, Validators.maxLength(255)]],
+      last_name: ['', [Validators.required, Validators.maxLength(255)]],
       email: ['', [Validators.required, Validators.email]],
-      identificacion: ['', [Validators.required, Validators.maxLength(255)]],
-      direccion: ['', Validators.required],
-      telefono: ['', [Validators.required, Validators.pattern(/^\d{10,13}$/)]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      phone_number: ['', [Validators.required, Validators.maxLength(255)]],
+      address_1: ['', [Validators.required, Validators.maxLength(255)]],
+      address_2: ['', [Validators.maxLength(255)]],
+      city: ['', [Validators.required, Validators.maxLength(255)]],
+      state: ['', [Validators.required, Validators.maxLength(255)]],
+      zip: ['', [Validators.required, Validators.maxLength(255)]],
+      country: ['', [Validators.required, Validators.maxLength(255)]],
+      comments: ['Bienvenido a Silicon Store']
     });
   }
 
   ngOnInit(): void {
-    this.obtenerUbicacion();
+    this.usuarioService.obtenerUbicaciones().subscribe(data => {
+      this.departamentos = data;
+    });
+
+    this.registroForm.get('state')?.valueChanges.subscribe(depId => {
+      const dept = this.departamentos.find(d => d.id == depId);
+      this.ciudades = dept ? dept.ciudades : [];
+      this.registroForm.get('city')?.setValue('');
+    });
   }
 
-  obtenerUbicacion() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.ubicacionActual = `Latitud: ${position.coords.latitude}, Longitud: ${position.coords.longitude}`;
-          this.registroForm.patchValue({ direccion: this.ubicacionActual });
-        },
-        (error) => {
-          console.error('Error obteniendo ubicación:', error);
-        }
-      );
-    } else {
-      console.error('Geolocalización no soportada por el navegador.');
-    }
-  }
+
 
   registrarUsuario() {
     if (this.registroForm.valid) {

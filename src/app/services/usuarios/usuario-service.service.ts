@@ -22,6 +22,10 @@ export class UsuarioService {
     });
   }
 
+  obtenerUbicaciones(): Observable<any> {
+    return this.http.get<any>('assets/data/ubicaciones.json');
+  }
+
   obtenerUsuarios(): Observable<any> {
     return this.http.get(`${this.baseUrl}/usuarios`, {
       headers: this.getHeaders(),
@@ -29,7 +33,7 @@ export class UsuarioService {
   }
 
   crearUsuario(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/usuarios`, data, {
+    return this.http.post(`${this.baseUrl}people`, data, {
       headers: this.getHeaders(),
     });
   }

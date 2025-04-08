@@ -11,7 +11,7 @@ export class PublicidadServiceService {
   constructor(private http: HttpClient) {}
 
   listarPublicidad(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/api/publicidad/uploads_publicidad`);
+    return this.http.get(`${this.baseUrl}adimages`);
   }
   crearPublicidad(formdata: FormData): Observable<any> {
     return this.http.post(

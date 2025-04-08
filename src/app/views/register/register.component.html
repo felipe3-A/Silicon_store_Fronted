@@ -1,119 +1,152 @@
-<div class="navbar">
+<div class="navbar bg-primary text-white mb-4">
   <div class="container">
-    <a class="navbar-brand" href="/home">Mi Tienda</a>
+    <a class="navbar-brand text-white" href="/home">Mi Tienda</a>
   </div>
 </div>
 
-<div class="container mt-5">
-
-  <div class="card floating-info">
-    <h4>Beneficios de registrarte</h4>
-    <ul>
-      <li class="bi-text">
-        <i class="bi bi-check-circle benefit-icon"></i>
-        Al momento de registrarte no deberás volver a hacerlo al solicitar un servicio.
-      </li>
-      <li class="bi-text">
-        <i class="bi bi-cart-check benefit-icon"></i>
-        Compras más eficientes.
-      </li>
-      <li class="bi-text">
-        <i class="bi bi-shield-lock benefit-icon"></i>
-        Consultas rápidas y seguras.
-      </li>
-      <li class="bi-text">
-        <i class="bi bi-basket benefit-icon"></i>
-        Manejo de tu propio carrito.
-      </li>
-      <li class="bi-text">
-        <i class="bi bi-door-open benefit-icon"></i>
-        Puedes cerrar tu sesión cuando quieras.
-      </li>
-    </ul>
-  </div>
-
-  <div class="card p-4 shadow content_float animated-card">
-    <h2 class="text-center mb-4">Registro de Usuario</h2>
-    <form [formGroup]="registroForm" (ngSubmit)="registrarUsuario()">
-      <div class="mb-3">
-        <label for="nombre" class="form-label">Nombre</label>
-        <div class="input-group">
-          <span class="input-group-text">
-            <i class="bi bi-person-fill"></i>
-          </span>
-          <input type="text" id="nombre" class="form-control animated-input" formControlName="nombre" />
-        </div>
-        <div *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched" class="text-danger error-message">
-          El nombre es requerido.
-        </div>
+<div class="container mt-4">
+  <div class="row">
+    <!-- Beneficios -->
+    <div class="col-md-4 mb-4">
+      <div class="card shadow p-3 floating-info">
+        <h4 class="text-primary">Beneficios de registrarte</h4>
+        <ul class="list-unstyled mt-3">
+          <li><i class="bi bi-check-circle text-success"></i> No tendrás que registrarte nuevamente.</li>
+          <li><i class="bi bi-cart-check text-success"></i> Compras más eficientes.</li>
+          <li><i class="bi bi-shield-lock text-success"></i> Consultas rápidas y seguras.</li>
+          <li><i class="bi bi-basket text-success"></i> Manejo de tu carrito personalizado.</li>
+          <li><i class="bi bi-door-open text-success"></i> Cierre de sesión en cualquier momento.</li>
+        </ul>
       </div>
+    </div>
 
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <div class="input-group">
-          <span class="input-group-text">
-            <i class="bi bi-envelope-fill"></i>
-          </span>
-          <input type="email" id="email" class="form-control animated-input" formControlName="email" />
-        </div>
-        <div *ngIf="registroForm.get('email')?.invalid && registroForm.get('email')?.touched" class="text-danger error-message">
-          Email inválido.
-        </div>
-      </div>
+    <!-- Formulario -->
+    <div class="col-md-8">
+      <div class="card p-4 shadow animated-card">
+        <h2 class="text-center mb-4 text-primary">Registro de Usuario</h2>
 
-      <div class="mb-3">
-        <label for="identificacion" class="form-label">Identificación</label>
-        <div class="input-group">
-          <span class="input-group-text">
-            <i class="bi bi-card-text"></i>
-          </span>
-          <input type="text" id="identificacion" class="form-control animated-input" formControlName="identificacion" />
-        </div>
-        <div *ngIf="registroForm.get('identificacion')?.invalid && registroForm.get('identificacion')?.touched" class="text-danger error-message">
-          La identificación es requerida.
-        </div>
-      </div>
+        <form [formGroup]="registroForm" (ngSubmit)="registrarUsuario()">
 
-      <div class="mb-3">
-        <label for="direccion" class="form-label">Dirección</label>
-        <input type="text" id="direccion" class="form-control animated-input" formControlName="direccion" [value]="ubicacionActual" readonly />
-      </div>
+          <!-- Nombre -->
+          <div class="mb-3">
+            <label for="first_name" class="form-label">Primer Nombre</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+              <input type="text" id="first_name" class="form-control" formControlName="first_name" placeholder="Juan">
+            </div>
+            <div *ngIf="registroForm.get('first_name')?.touched && registroForm.get('first_name')?.invalid"
+              class="text-danger small">
+              Este campo es obligatorio.
+            </div>
+          </div>
 
-      <div class="mb-3">
-        <label for="telefono" class="form-label">Teléfono</label>
-        <div class="input-group">
-          <span class="input-group-text">
-            <i class="bi bi-telephone-fill"></i>
-          </span>
-          <input type="text" id="telefono" class="form-control animated-input" formControlName="telefono" />
-        </div>
-        <div *ngIf="registroForm.get('telefono')?.invalid && registroForm.get('telefono')?.touched" class="text-danger error-message">
-          Teléfono inválido.
-        </div>
-      </div>
+          <div class="mb-3">
+            <label for="last_name" class="form-label">Apellidos</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+              <input type="text" id="last_name" class="form-control" formControlName="last_name" placeholder="Juan">
+            </div>
+            <div *ngIf="registroForm.get('last_name')?.touched && registroForm.get('last_name')?.invalid"
+              class="text-danger small">
+              Este campo es obligatorio.
+            </div>
+          </div>
 
-      <div class="mb-3">
-        <label for="password" class="form-label">Contraseña</label>
-        <div class="input-group">
-          <span class="input-group-text">
-            <i class="bi bi-lock-fill"></i>
-          </span>
-          <input type="password" id="password" class="form-control animated-input" formControlName="password" />
-        </div>
-        <div *ngIf="registroForm.get('password')?.invalid && registroForm.get('password')?.touched" class="text-danger error-message">
-          La contraseña debe tener al menos 6 caracteres.
-        </div>
-      </div>
 
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary animated-button send" [disabled]="registroForm.invalid">
-          Registrar
-        </button>
-      </div>
 
-      <div class="text-center mt-3">
-        <a routerLink="/login" class="btn btn-link">¿Ya estás registrado? Inicia sesión aquí</a>
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+              <input type="email" id="email" class="form-control" formControlName="email"
+                placeholder="ejemplo@correo.com">
+            </div>
+            <div *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.invalid"
+              class="text-danger small">
+              Ingrese un email válido.
+            </div>
+          </div>
+          <!-- Teléfono -->
+          <div class="mb-3">
+            <label for="phone_number" class="form-label">Teléfono</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+              <input type="text" id="phone_number" class="form-control" formControlName="phone_number"
+                placeholder="3001234567">
+            </div>
+            <div *ngIf="registroForm.get('phone_number')?.touched && registroForm.get('phone_number')?.invalid"
+              class="text-danger small">
+              Ingrese un teléfono válido.
+            </div>
+          </div>
+
+
+          <!-- Dirección -->
+          <div class="mb-3">
+            <label for="address_1" class="form-label">Dirección Principal</label>
+            <input type="text" id="address_1" class="form-control" formControlName="address_1">
+          </div>
+
+          <!-- Dirección -->
+          <div class="mb-3">
+            <label for="address_2" class="form-label">Dirección Secundaria</label>
+            <input type="text" id="address_2" class="form-control" formControlName="address_2">
+          </div>
+
+
+          <!-- Departamento -->
+          <div class="mb-3">
+            <label for="state" class="form-label">Departamento</label>
+            <select id="state" class="form-control" formControlName="state">
+              <option value="">Seleccione un departamento</option>
+              <option *ngFor="let d of departamentos" [value]="d.id">{{ d.departamento }}</option>
+            </select>
+          </div>
+
+          <!-- Ciudad -->
+          <div class="mb-3">
+            <label for="city" class="form-label">Ciudad</label>
+            <select id="city" class="form-control" formControlName="city" [disabled]="!ciudades.length">
+              <option value="">Seleccione una ciudad</option>
+              <option *ngFor="let ciudad of ciudades" [value]="ciudad">{{ ciudad }}</option>
+            </select>
+          </div>
+
+
+          <!-- Zip -->
+          <div class="mb-3">
+            <label for="zip" class="form-label">Codigo Postal</label>
+            <input type="text" id="zip" class="form-control" formControlName="zip">
+          </div>
+
+          <!-- Country -->
+          <div class="mb-3">
+            <label for="country" class="form-label">Pais</label>
+            <input type="text" id="country" class="form-control" formControlName="country">
+          </div>
+
+                <!-- Country -->
+                <div class="mb-3">
+                  <label for="comments" class="form-label">Mensaje</label>
+                  <input type="text" id="comments" class="form-control" formControlName="comments" readonly> 
+                </div>
+      
+
+
+
+          <!-- Botón -->
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary" [disabled]="registroForm.invalid">Registrarse</button>
+          </div>
+
+          <!-- Enlace -->
+          <div class="text-center mt-3">
+            <a routerLink="/login" class="text-decoration-none">¿Ya tienes cuenta? Inicia sesión</a>
+          </div>
+
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </div>

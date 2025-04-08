@@ -15,9 +15,8 @@ declare var BoldCheckout: any; // Declaración de la variable
 export class CartComponent implements OnInit {
   carrito: any[] = [];
   carritoId: number;
-
   productos: any[] = [];
-  usuarioId: number; // Asegúrate de tener el ID del usuario logueado
+  person_id: number; // Asegúrate de tener el ID del usuario logueado
   checkout: any; // Para almacenar la instancia de BoldCheckout
   mensajeCompraCompleta: boolean = false;
   cantidades: number[] = [1, 2, 3, 4, 5]; // Cantidades disponibles
@@ -32,48 +31,53 @@ export class CartComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.usuarioId = 1; // Asignar siempre el usuario con ID 1
-    this.carritoId = 1; // Asegurar que tenga un carrito asignado
-  
-    this.listarProductos();
-  
+    this.person_id = 1; 
     try {
-      await this.obtenerProductosEnCarrito(); // Espera a obtener los productos
-      this.calcularTotal(); // Calcula el total correctamente
+      await this.obtenerCarrito();  
+      await this.obtenerProductosEnCarrito();
+      
+      if (!this.carrito || this.carrito.length === 0) {
+        console.warn("El carrito está vacío o no se pudo obtener.");
+        return;
+      }
   
+      this.calcularTotal();
+      
       if (this.totalAmount > 0) {
-        await this.initBoldCheckout(); // Inicializa BoldCheckout solo si hay total
+        await this.initBoldCheckout();
       } else {
         console.warn("No se inicializó BoldCheckout porque el total es 0.");
       }
     } catch (error) {
-      console.error("Error al obtener productos del carrito:", error);
+      console.error("Error en la inicialización del carrito:", error);
     }
   }
   
   
   
+  
+  
   calcularTotal(): number {
+    if (!Array.isArray(this.carrito) || this.carrito.length === 0) {
+        console.warn("El carrito está vacío o no es un array válido.");
+        this.totalAmount = 0;
+        return 0;
+    }
     this.totalAmount = this.carrito.reduce((total, producto) => {
-      let precio = producto.precio_producto;
-      const cantidad = producto.cantidad || 1;
-  
-      // Asegurar que el precio sea un número
-      if (typeof precio === "string") {
-        precio = parseFloat(precio.replace(",", "")) || 0;
-      } else if (typeof precio !== "number" || isNaN(precio)) {
-        precio = 0;
-      }
-  
-      console.log(`Producto: ${producto.nombre_producto}, Precio: ${precio}, Cantidad: ${cantidad}, Subtotal: ${precio * cantidad}`);
-      return total + (precio * cantidad);
+        let precio = parseFloat(producto.product.unit_price); // Acceder al precio correcto
+        const cantidad = producto.quantity || 1; // Asegúrate de usar la cantidad correcta
+
+        if (isNaN(precio)) {
+            precio = 0;
+        }
+
+        return total + precio * cantidad;
     }, 0);
-  
-    // Convertir el total a entero redondeado
+
     this.totalAmount = Math.round(this.totalAmount);
-    console.log("Total calculado (entero):", this.totalAmount);
     return this.totalAmount;
-  }
+}
+  
   
   
   
@@ -123,48 +127,69 @@ export class CartComponent implements OnInit {
   }
 
   obtenerCarrito(): void {
-    this.cartService.obtenerCarrito(this.usuarioId).subscribe(
+    this.cartService.obtenerCarrito(this.person_id).subscribe(
       (response) => {
-        if (response && response.data) {
-          this.carritoId = response.data.id; // Guarda el ID del carrito
-          console.log("Carrito ID obtenido:", this.carritoId); // Verifica el ID del carrito)
-
-          this.obtenerProductosEnCarrito(); // Llama a la función para obtener los productos en el carrito
+        console.log("Respuesta al obtener carrito:", response);
+  
+        if (response?.data) {
+          console.log("Datos del carrito recibido:", response.data);
+  
+          if (response.data.id) {
+            if (response.data.user_id !== this.person_id) {
+              console.warn(`El carrito pertenece a otro usuario. Esperado: ${this.person_id}, Recibido: ${response.data.user_id}`);
+              return;
+            }
+  
+            this.carritoId = response.data.id;
+            console.log("Carrito ID obtenido:", this.carritoId);
+            this.obtenerProductosEnCarrito();
+          } else {
+            console.warn("No se encontró un carrito válido para este usuario.");
+            this.carritoId = null;
+          }
         } else {
-          console.error("No se encontró el carrito para el usuario.");
+          console.warn("Respuesta inválida del servidor.");
         }
       },
       (error) => {
         console.error("Error al obtener el carrito", error);
-        Swal.fire("Error", "No se pudo obtener el carrito", "error");
       }
     );
   }
-
+  
   obtenerProductosEnCarrito(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.cartProductsService.obtenerProductosEnCarrito(this.carritoId).subscribe(
-        (response) => {
-          this.carrito = response.data.map((producto) => ({
-            ...producto,
-            precio_producto: producto.precio_producto || 1,
-          }));
-          console.log("Productos cargados en el carrito:", this.carrito);
-          this.calcularTotal();
-          resolve();
-        },
-        (error) => {
-          console.error("Error al obtener productos del carrito", error);
-          reject(error);
+        if (!this.person_id) {
+            console.warn("No hay un ID de persona válido para obtener productos.");
+            resolve();
+            return;
         }
-      );
+
+        this.cartProductsService.obtenerProductosEnCarrito(this.person_id).subscribe(
+            (response) => {
+                console.log("Respuesta de la API:", response);
+                
+                // Asignar directamente la respuesta a carrito
+                this.carrito = response; // No hay propiedad 'data', es un array directamente
+                
+                resolve();
+            },
+            (error) => {
+                console.error("Error en la petición:", error);
+                this.carrito = []; // Para evitar errores
+                reject(error);
+            }
+        );
     });
-  }
+}
+  
+  
+  
   
 
   eliminarProductoC(producto: any): void {
     this.cartProductsService
-      .eliminarProductoDelCarrito(this.usuarioId, producto.id_imagen)
+      .eliminarProductoDelCarrito(this.person_id, producto.id_imagen)
       .subscribe(
         (response) => {
           Swal.fire("Éxito", "Producto eliminado del carrito", "success");
@@ -202,7 +227,7 @@ export class CartComponent implements OnInit {
     amount: number,
     currency: string
   ): Promise<string> {
-    const secretKey = "q8s-fXDRxrUC0cdpCJAKsA"; // Reemplaza con tu clave secreta
+    const secretKey = "q8s-fXDRxrUC0cdpCJAKsA"; // Reemplaza con tu llave de identidad
     const cadenaConcatenada = `${orderId}${amount}${currency}${secretKey}`;
 
     // Codificar la cadena en UTF-8
@@ -224,37 +249,44 @@ export class CartComponent implements OnInit {
   
     console.log("Carrito antes del cálculo:", this.carrito);
     console.log("TotalAmount antes de enviar a BoldCheckout:", this.totalAmount);
-  
+
     if (!this.totalAmount || this.totalAmount <= 0) {
-      console.error("Error: el total del carrito es inválido:", this.totalAmount);
-      return;
+        console.error("Error: el total del carrito es inválido:", this.totalAmount);
+        return;
     }
-  
+
     const orderId = "MY-ORDER-" + Date.now();
     const currency = "COP";
-    const totalAmountEnviar = this.totalAmount; // Usar directamente la variable
-  
+    const totalAmountEnviar = this.totalAmount;
+
     console.log("Total enviado a BoldCheckout:", totalAmountEnviar);
-  
+
     const integritySignature = await this.generateIntegritySignature(
-      orderId,
-      totalAmountEnviar,
-      currency
+        orderId,
+        totalAmountEnviar,
+        currency
     );
-  
+
     this.checkout = new BoldCheckout({
-      orderId: orderId,
-      currency: currency,
-      amount: totalAmountEnviar, // Asegurar que esta variable es correcta
-      apiKey: "rAWnCUsKaJxYoFDXYjvMe7qukQHodJgC9ifkvIOHqTE",
-      redirectionUrl: "http://localhost:4200/#/cart",
-      description: "Pago de productos en mi tienda:",
-      integritySignature: integritySignature,
+        orderId: orderId,
+        currency: currency,
+        amount: totalAmountEnviar,
+        apiKey: "rAWnCUsKaJxYoFDXYjvMe7qukQHodJgC9ifkvIOHqTE", // Reemplázala con la clave real
+        description: "Pago de productos en mi tienda",
+        integritySignature: integritySignature,
+        payer: {
+            email: "pagador@hotmail.com",
+            phone_number: "3100000000",
+            document: {
+                document_type: "CEDULA",
+                document_number: "1010140000"
+            }
+        }
     });
-  
+
     console.log("Configuración de BoldCheckout:", this.checkout._config);
-  }
-  
+}
+
   
   
   

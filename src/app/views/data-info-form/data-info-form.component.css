@@ -1,0 +1,9 @@
+.icon-option {
+    transition: 0.3s;
+  }
+  
+  .icon-option.selected {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+  }
+  
