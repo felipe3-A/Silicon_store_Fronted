@@ -33,7 +33,7 @@ export class UsuarioService {
   }
 
   crearUsuario(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}people`, data, {
+    return this.http.post(`${this.baseUrl}customers`, data, {
       headers: this.getHeaders(),
     });
   }

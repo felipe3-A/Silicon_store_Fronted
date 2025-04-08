@@ -29,109 +29,132 @@
 
           <!-- Nombre -->
           <div class="mb-3">
-            <label for="first_name" class="form-label">Primer Nombre</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-              <input type="text" id="first_name" class="form-control" formControlName="first_name" placeholder="Juan">
-            </div>
-            <div *ngIf="registroForm.get('first_name')?.touched && registroForm.get('first_name')?.invalid"
-              class="text-danger small">
-              Este campo es obligatorio.
-            </div>
+            <label for="first_name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="first_name" formControlName="first_name"
+              placeholder="Tu nombre">
           </div>
 
+          <!-- Apellido -->
           <div class="mb-3">
-            <label for="last_name" class="form-label">Apellidos</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-              <input type="text" id="last_name" class="form-control" formControlName="last_name" placeholder="Juan">
-            </div>
-            <div *ngIf="registroForm.get('last_name')?.touched && registroForm.get('last_name')?.invalid"
-              class="text-danger small">
-              Este campo es obligatorio.
-            </div>
+            <label for="last_name" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="last_name" formControlName="last_name"
+              placeholder="Tu apellido">
           </div>
 
-
-
-          <!-- Email -->
+          <!-- Correo electrónico -->
           <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
-              <input type="email" id="email" class="form-control" formControlName="email"
-                placeholder="ejemplo@correo.com">
-            </div>
-            <div *ngIf="registroForm.get('email')?.touched && registroForm.get('email')?.invalid"
-              class="text-danger small">
-              Ingrese un email válido.
-            </div>
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" formControlName="email"
+              placeholder="ejemplo@correo.com">
           </div>
+
           <!-- Teléfono -->
           <div class="mb-3">
             <label for="phone_number" class="form-label">Teléfono</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
-              <input type="text" id="phone_number" class="form-control" formControlName="phone_number"
-                placeholder="3001234567">
-            </div>
-            <div *ngIf="registroForm.get('phone_number')?.touched && registroForm.get('phone_number')?.invalid"
-              class="text-danger small">
-              Ingrese un teléfono válido.
-            </div>
-          </div>
-
-
-          <!-- Dirección -->
-          <div class="mb-3">
-            <label for="address_1" class="form-label">Dirección Principal</label>
-            <input type="text" id="address_1" class="form-control" formControlName="address_1">
+            <input type="text" class="form-control" id="phone_number" formControlName="phone_number">
           </div>
 
           <!-- Dirección -->
           <div class="mb-3">
-            <label for="address_2" class="form-label">Dirección Secundaria</label>
-            <input type="text" id="address_2" class="form-control" formControlName="address_2">
+            <label for="address_1" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="address_1" formControlName="address_1">
           </div>
 
+          <!-- Dirección adicional -->
+          <div class="mb-3">
+            <label for="address_2" class="form-label">Dirección 2 (opcional)</label>
+            <input type="text" class="form-control" id="address_2" formControlName="address_2">
+          </div>
 
-          <!-- Departamento -->
+          <!-- Departamento (state) -->
           <div class="mb-3">
             <label for="state" class="form-label">Departamento</label>
-            <select id="state" class="form-control" formControlName="state">
-              <option value="">Seleccione un departamento</option>
-              <option *ngFor="let d of departamentos" [value]="d.id">{{ d.departamento }}</option>
+            <select class="form-select" id="state" formControlName="state">
+              <option value="">Selecciona un departamento</option>
+              <option *ngFor="let dep of departamentos" [value]="dep.id">{{ dep.nombre }}</option>
             </select>
           </div>
 
           <!-- Ciudad -->
           <div class="mb-3">
             <label for="city" class="form-label">Ciudad</label>
-            <select id="city" class="form-control" formControlName="city" [disabled]="!ciudades.length">
-              <option value="">Seleccione una ciudad</option>
+            <select class="form-select" id="city" formControlName="city">
+              <option value="">Selecciona una ciudad</option>
               <option *ngFor="let ciudad of ciudades" [value]="ciudad">{{ ciudad }}</option>
             </select>
           </div>
 
-
-          <!-- Zip -->
+          <!-- Código postal -->
           <div class="mb-3">
-            <label for="zip" class="form-label">Codigo Postal</label>
-            <input type="text" id="zip" class="form-control" formControlName="zip">
+            <label for="zip" class="form-label">Código postal</label>
+            <input type="text" class="form-control" id="zip" formControlName="zip">
           </div>
 
-          <!-- Country -->
+          <!-- País -->
           <div class="mb-3">
-            <label for="country" class="form-label">Pais</label>
-            <input type="text" id="country" class="form-control" formControlName="country">
+            <label for="country" class="form-label">País</label>
+            <input type="text" class="form-control" id="country" formControlName="country">
           </div>
 
-                <!-- Country -->
-                <div class="mb-3">
-                  <label for="comments" class="form-label">Mensaje</label>
-                  <input type="text" id="comments" class="form-control" formControlName="comments" readonly> 
-                </div>
-      
+          <!-- Empresa -->
+          <div class="mb-3">
+            <label for="company_name" class="form-label">Nombre de la empresa (opcional)</label>
+            <input type="text" class="form-control" id="company_name" formControlName="company_name">
+          </div>
+
+          <!-- Número de cuenta -->
+          <div class="mb-3">
+            <label for="account_number" class="form-label">Número de cuenta</label>
+            <input type="text" class="form-control" id="account_number" formControlName="account_number">
+          </div>
+
+          <!-- Descuento -->
+          <div class="mb-3">
+            <label for="discount" class="form-label">Descuento (%)</label>
+            <input type="number" class="form-control" id="discount" formControlName="discount" min="0">
+          </div>
+
+          <!-- Tipo de descuento -->
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="discount_type" formControlName="discount_type">
+            <label class="form-check-label" for="discount_type">¿Descuento por porcentaje?</label>
+          </div>
+
+          <!-- Paquete -->
+          <div class="mb-3">
+            <label for="package_id" class="form-label">ID de Paquete (opcional)</label>
+            <input type="number" class="form-control" id="package_id" formControlName="package_id">
+          </div>
+
+          <!-- Puntos -->
+          <div class="mb-3">
+            <label for="points" class="form-label">Puntos</label>
+            <input type="number" class="form-control" id="points" formControlName="points">
+          </div>
+
+          <!-- Contraseña -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" formControlName="password"
+              placeholder="Mínimo 6 caracteres, al menos una letra y un número">
+          </div>
+
+          <!-- Confirmar contraseña -->
+          <div class="mb-3">
+            <label for="password_confirmation" class="form-label">Confirmar contraseña</label>
+            <input type="password" class="form-control" id="password_confirmation"
+              formControlName="password_confirmation">
+            <div *ngIf="registroForm.errors?.passwordMismatch && registroForm.touched" class="text-danger mt-1">
+              Las contraseñas no coinciden.
+            </div>
+          </div>
+
+          <!-- Botón de registrar -->
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary" [disabled]="registroForm.invalid">Registrarse</button>
+            <button type="button" class="btn btn-outline-secondary" (click)="regresarAlMenu()">Cancelar</button>
+          </div>
+
 
 
 

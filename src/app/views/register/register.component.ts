@@ -30,8 +30,24 @@ export class RegistroComponent implements OnInit {
       state: ['', [Validators.required, Validators.maxLength(255)]],
       zip: ['', [Validators.required, Validators.maxLength(255)]],
       country: ['', [Validators.required, Validators.maxLength(255)]],
-      comments: ['Bienvenido a Silicon Store']
+      comments: ['Bienvenido a Silicon Store'],
+      company_name: ['', [Validators.maxLength(255)]],
+      account_number: ['', [Validators.required, Validators.maxLength(255)]],
+      discount: [0, [Validators.required, Validators.min(0)]],
+      discount_type: [false, [Validators.required]],
+      package_id: [null],
+      points: [0],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20),
+        Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,}$/)
+      ]],
+      password_confirmation: ['', [Validators.required]]
+    }, {
+      validators: this.passwordsMatchValidator
     });
+    
   }
 
   ngOnInit(): void {
@@ -48,6 +64,12 @@ export class RegistroComponent implements OnInit {
 
 
 
+  passwordsMatchValidator(form: FormGroup) {
+    const password = form.get('password')?.value;
+    const confirm = form.get('password_confirmation')?.value;
+    return password === confirm ? null : { passwordMismatch: true };
+  }
+  
   registrarUsuario() {
     if (this.registroForm.valid) {
       const usuarioData = this.registroForm.value;
