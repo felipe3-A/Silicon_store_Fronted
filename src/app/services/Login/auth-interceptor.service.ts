@@ -10,10 +10,10 @@ export class AuthInterceptorService {
     const token = localStorage.getItem('token');
     
     if (token) {
-      // Clonar la solicitud y agregar el token a las cabeceras
+      // AQUÍ se clona la solicitud y se agrega el token en la cabecera Authorization
       const authRequest = request.clone({
         setHeaders: {
-          Authorization: `${token}`
+          Authorization: `Bearer ${token}` // <-- cambia esto si el backend espera otro formato
         }
       });
       
@@ -22,5 +22,4 @@ export class AuthInterceptorService {
       return next.handle(request);
     }
   }
-
 }

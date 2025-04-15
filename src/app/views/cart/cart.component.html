@@ -15,33 +15,33 @@
   <div *ngIf="!carrito || carrito.length === 0" class="text-center">
     <p>Tu carrito está vacío.</p>
   </div>
-   --><div class="container mt-5" *ngIf="carrito && carrito.length > 0">
+   -->
+<div class="container mt-5" *ngIf="carrito && carrito.length > 0">
   <div class="row">
     <div class="col-lg-8 col-md-7">
       <div *ngFor="let producto of carrito" class="card mb-3 shadow-sm animate__animated animate__fadeInUp">
         <div class="row g-0">
           <div class="col-md-4">
-            <img [src]="producto.pic_filename ? 'ruta_a_tu_servidor/' + producto.pic_filename : 'assets/img/404ERROR.png'" 
-                 class="img-fluid rounded-start" alt="Producto">
+            <img [src]="getImagenProducto(producto)" class="card-img-top img-fluid m-3" alt="Imagen del producto" />
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">{{ producto.product.name  }}</h5>
+              <h2 class="title_name">{{ producto.product.name }}</h2>
               <p class="card-text text-muted">{{ producto.product.description }}</p>
               <p class="card-text">
-                <strong>Precio: {{ producto.unit_price | currency }}</strong>
+                <strong>Precio: {{ producto.product.unit_price | currency }}</strong>
               </p>
               <div class="d-flex flex-wrap align-items-center gap-2">
                 <label for="cantidad">Cantidad:</label>
-                <select class="form-select mb-2" [(ngModel)]="producto.cantidad" 
-                        (change)="actualizarCantidad(producto)">
+                <select class="form-select mb-2" [(ngModel)]="producto.product.receiving_quantity"
+                  (change)="actualizarCantidad(producto)">
                   <option *ngFor="let cantidad of cantidades" [value]="cantidad">{{ cantidad }}</option>
                 </select>
-                <button class="btn btn-danger btn-sm text-white d-flex align-items-center" 
-                        (click)="eliminarProductoC(producto)">
+                <button class="btn btn-danger btn-sm text-white d-flex align-items-center" (click)="eliminarProductoC(producto)">
                   <i class="material-icons me-1">delete</i>
                   Eliminar del carrito
                 </button>
+                
               </div>
             </div>
           </div>
@@ -52,9 +52,10 @@
     <div class="col-lg-4 col-md-5">
       <div class="card shadow-lg animate__animated animate__fadeInRight">
         <div class="card-body">
-          <h5 class="card-title text-center">Resumen del Carrito</h5>
+          <h5 class="title_name_r text-center">Resumen del Carrito</h5>
           <ul class="list-group mb-3 shadow-sm rounded">
-            <li *ngFor="let producto of carrito" class="list-group-item d-flex justify-content-between align-items-center">
+            <li *ngFor="let producto of carrito"
+              class="list-group-item d-flex justify-content-between align-items-center">
               <div class="d-flex flex-column">
                 <strong>{{ producto.product.name }}</strong>
                 <small class="text-muted">Cantidad: x{{ producto.cantidad }}</small>

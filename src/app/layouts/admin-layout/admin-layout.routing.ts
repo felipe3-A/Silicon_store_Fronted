@@ -51,7 +51,7 @@ import { CrearCaracteristicasComponent } from "app/views/caracteristicas/crear-c
 import { CrearsubCaracteristicasComponent } from "app/views/caracteristicas/crearsub-caracteristicas/crearsub-caracteristicas.component";
 import { CrearValoresComponent } from "app/views/caracteristicas/crear-valores/crear-valores.component";
 import { WelcomeProductComponent } from "app/views/before_store/welcome-product/welcome-product.component";
-import { DataInfoFormComponent } from "app/components/data-info-form/data-info-form.component";
+import { DataInfoComponent } from "app/views/data-info/data-info.component";
 
 export const AdminLayoutRoutes: Routes = [
   // {
@@ -129,7 +129,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "AdministrarGrupos", component: GruposGeneralesComponent },
   
   { path: "products/:id_categoria", component: VerProductosComponent },
-  { path: "product/:id_imagen", component: UnidadProductoComponent },
+  { path: "producto/:item_id", component: UnidadProductoComponent },
 
 
   {path:'AdministarUsuarios',component:AdministarUsuarioComponent},
@@ -138,7 +138,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'crearModuloPorPerfil', component: CrearModulosXperfilComponent},
   { path: 'listaModulosPorPerfil', component: ListarModulosXperfilComponent},
 
-
+  {path:'data_info', component:DataInfoComponent},
   { path: "groups/:id_grupo", component: ProductosGruposComponent },
   { path: "Ourbrands", component: NuestrasMarcasComponent },
 
@@ -169,7 +169,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'detalleModulo', component: DetallesComponent  },
 
 
-{path:'AñadirContactos', component: DataInfoFormComponent},
 
   {path: 'crearCaracteristica', component: CrearCaracteristicasComponent},
   {path: 'crearSubCaracteristica', component: CrearsubCaracteristicasComponent},

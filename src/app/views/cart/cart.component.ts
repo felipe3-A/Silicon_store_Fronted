@@ -22,6 +22,7 @@ export class CartComponent implements OnInit {
   cantidades: number[] = [1, 2, 3, 4, 5]; // Cantidades disponibles
   totalAmount: number = 0; // Aquí almacenamos el total calculado
   isLoggedIn: boolean = false; // Estado de inicio de sesión
+  imagenPrincipal: string ="https://media.istockphoto.com/id/1152189152/es/vector/icono-rojo-de-alerta.jpg?s=612x612&w=0&k=20&c=FTX2cd49ZhiXXyR-mMXT4vb2jxuInJVx7fcTOtQV37U=";
 
   constructor(
     private cartProductsService: CartProductsService,
@@ -31,18 +32,23 @@ export class CartComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.person_id = 1; 
+    this.person_id = parseInt(this.loginService.getUserId() ?? '0'); // Obtener el ID del usuario logueado desde el servicio LoginService
+    if (this.person_id === 0) {
+      console.warn("Usuario no logueado o ID no disponible.");
+      return; // Si no hay un usuario logueado, no continuamos
+    }
+
     try {
-      await this.obtenerCarrito();  
+      await this.obtenerCarrito();
       await this.obtenerProductosEnCarrito();
-      
+
       if (!this.carrito || this.carrito.length === 0) {
         console.warn("El carrito está vacío o no se pudo obtener.");
         return;
       }
-  
+
       this.calcularTotal();
-      
+
       if (this.totalAmount > 0) {
         await this.initBoldCheckout();
       } else {
@@ -54,9 +60,16 @@ export class CartComponent implements OnInit {
   }
   
   
+  getImagenProducto(producto: any): string {
+    const filename = producto.product.pic_filename;
+    return filename
+      ? `http://localhost:8082/uploads/item_pics/${filename}`
+      : 'assets/img/404.png'; // imagen por defecto
+  }
   
   
-  
+
+
   calcularTotal(): number {
     if (!Array.isArray(this.carrito) || this.carrito.length === 0) {
         console.warn("El carrito está vacío o no es un array válido.");
@@ -82,27 +95,36 @@ export class CartComponent implements OnInit {
   
   
 
-  listarProductos(): void {
-    this.productosService.listarProductos().subscribe(
-      (response) => {
-        this.productos = response.data.map((producto) => {
-          if (producto.url_imagen) {
-            producto.imagen = producto.url_imagen;
-          }
-          return producto;
-        });
-        console.log("Productos del Carrito:", this.productos);
-      },
-      (error) => console.error("Error al obtener Productos", error)
-    );
-  }
+listarProductos() {
+  this.productosService.listarProductos().subscribe({
+    next: (productos: any[]) => {
+      this.productos = productos.filter(
+        (p) => p.deleted === 0 && p.total_quantity > 0
+      );
+
+      this.productos.forEach((producto) => {
+        producto.imagen = producto.pic_filename
+          ? `http://localhost:8082/uploads/item_pics/${producto.pic_filename}`
+          : "assets/img/404.png";
+
+        // 👇 Mostrar cantidad en consola
+        console.log(`🟢 Producto: ${producto.name}, Cantidad total: ${producto.total_quantity}`);
+      });
+
+      console.log("📦 Productos cargados:", this.productos);
+    },
+    error: (err) => {
+      console.error("❌ Error al listar productos:", err);
+    },
+  });
+}
 
   verDetalleProducto(producto: any): void {
     // Lógica para mostrar los detalles del producto
     Swal.fire({
       title: producto.nombre_producto,
       text: producto.descripcion_producto,
-      imageUrl: producto.url_imagen || "assets/img/404ERROR.png",
+      imageUrl: producto.pic_filename || "assets/img/404ERROR.png",
       imageWidth: 400,
       imageHeight: 200,
       imageAlt: "Producto",
@@ -113,7 +135,7 @@ export class CartComponent implements OnInit {
     // Lógica para redirigir a la pasarela de pagos con solo este producto
     this.initBoldCheckout();
     if (this.checkout) {
-      const orderId = "PRODUCTO-" + producto.id_imagen + "-" + Date.now();
+      const orderId = "PRODUCTO-" + producto.item_id + "-" + Date.now();
       const currency = "COP";
 
       this.checkout.orderId = orderId;
@@ -130,16 +152,16 @@ export class CartComponent implements OnInit {
     this.cartService.obtenerCarrito(this.person_id).subscribe(
       (response) => {
         console.log("Respuesta al obtener carrito:", response);
-  
+
         if (response?.data) {
           console.log("Datos del carrito recibido:", response.data);
-  
+
           if (response.data.id) {
             if (response.data.user_id !== this.person_id) {
               console.warn(`El carrito pertenece a otro usuario. Esperado: ${this.person_id}, Recibido: ${response.data.user_id}`);
               return;
             }
-  
+
             this.carritoId = response.data.id;
             console.log("Carrito ID obtenido:", this.carritoId);
             this.obtenerProductosEnCarrito();
@@ -187,24 +209,28 @@ export class CartComponent implements OnInit {
   
   
 
-  eliminarProductoC(producto: any): void {
-    this.cartProductsService
-      .eliminarProductoDelCarrito(this.person_id, producto.id_imagen)
-      .subscribe(
-        (response) => {
-          Swal.fire("Éxito", "Producto eliminado del carrito", "success");
-          this.obtenerProductosEnCarrito(); // Actualiza la lista
-        },
-        (error) => {
-          console.error("Error al eliminar producto del carrito", error);
-          Swal.fire(
-            "Error",
-            "No se pudo eliminar el producto del carrito",
-            "error"
-          );
-        }
-      );
+eliminarProductoC(producto: any): void {
+  const productoId = producto?.product.item_id; // Asegúrate de que estás usando el ID correcto
+
+  if (!productoId) {
+    console.error("ID del producto no definido:", producto);
+    Swal.fire("Error", "No se encontró el ID del producto para eliminar", "error");
+    return;
   }
+
+  this.cartProductsService.eliminarProductoDelCarrito(this.person_id, productoId).subscribe(
+    (response) => {
+      Swal.fire("Éxito", "Producto eliminado del carrito", "success");
+      this.obtenerProductosEnCarrito(); // Refresca el carrito
+    },
+    (error) => {
+      console.error("Error al eliminar producto del carrito", error);
+      Swal.fire("Error", "No se pudo eliminar el producto del carrito", "error");
+    }
+  );
+}
+
+
 
   actualizarCantidad(producto: any) {
     console.log(

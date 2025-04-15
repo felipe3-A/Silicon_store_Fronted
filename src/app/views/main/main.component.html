@@ -137,30 +137,44 @@
   <h3 class="text-center"></h3>
   <div class="row">
     <div class="col-md-3 mb-4" *ngFor="let producto of productos">
-      <div class=" text-center card_product">
-        <img [src]="producto.imagen" class="card-img-top img-fluid" alt="Imagen del producto">
+      <div class="text-center card_product border shadow-sm rounded-3 p-3" style="cursor: pointer;">
+        <!-- Imagen del producto -->
+        <div (click)="verProducto(producto.item_id)">
+          <img [src]="producto.imagen" class="card-img-top img-fluid" alt="Imagen del producto">
+          <h6 class="card-title_2 mt-3">{{ producto.name }}</h6>
 
-        <h6 class="card-title_2">{{ producto.name }}</h6>
-        <p class="card-text text-muted">
-        <div class="price-container d-flex mt-3">
+          <!-- Categoría -->
+          <div class="price-container d-flex justify-content-center mt-2">
+            <p class="card-title_3 me-1">Categoría:</p>
+            <p class="card-title_4">{{ producto.category }}</p>
 
-          <p class="card-title_3">Categoria: </p>
-          <p class="card-title_4">{{ producto.category }}</p>
+
+          </div>
+        
+
+          <!-- Estado de disponibilidad -->
+          <div class="mt-1">
+            <span *ngIf="producto.total_quantity === 1" class="badge bg-danger">¡Producto limitado!</span>
+            <span *ngIf="producto.total_quantity > 1" class="badge bg-success">Producto disponible</span>
+          </div>
+
+
+          <!-- Precios -->
+          <div class="price-container d-flex justify-content-center align-items-center">
+            <span class="price-old text-muted text-decoration-line-through me-2">
+              ${{ producto.cost_price | number }}
+            </span>
+            <span class="price-new fw-bold">
+              ${{ producto.unit_price | number }}
+            </span>
+          </div>
         </div>
 
-
-        <div class="price-container d-flex">
-          <span class="price-old text-muted text-decoration-line-through">
-            ${{ producto.cost_price | number }}
-          </span>
-          <span class="price-new fw-bold">
-            ${{ producto.unit_price | number }}
-          </span>
-        </div>
 
       </div>
 
     </div>
+
   </div>
 </div>
 
@@ -168,17 +182,6 @@
 
 
 
-<!-- Sección de marcas -->
-<div class="fila5">
-  <div class="brands-container">
-    <h3 class="text-center text-orange fw-bold mb-4">Trabajamos con las Mejores Marcas</h3>
-    <div class="container d-flex justify-content-center flex-wrap gap-3">
-      <div class="brand" *ngFor="let marca of marcas">
-        <img [src]="marca.imagen" alt="Imagen del producto" width="100px">
-      </div>
-    </div>
-  </div>
-</div>
 
 
 

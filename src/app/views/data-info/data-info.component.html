@@ -1,0 +1,49 @@
+<div class="container mt-5">
+  <h2 class="mb-4">Gestión de Data Info</h2>
+
+  <!-- Formulario Crear / Editar -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <form (submit)="guardar()">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <input [(ngModel)]="dataNueva.data" name="titulo" class="form-control" placeholder="Título" required />
+          </div>
+          <div class="col-md-4 mb-3">
+            <textarea [(ngModel)]="dataNueva.info" name="descripcion" class="form-control" placeholder="Descripción" required></textarea>
+          </div>
+          <div class="col-md-3 mb-3">
+            <select [(ngModel)]="dataNueva.icono" name="icono" class="form-control">
+              <option *ngFor="let icon of iconos" [value]="icon.clase">
+                {{ icon.nombre }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-1 mb-3 d-grid">
+            <button class="btn btn-success" type="submit">{{ modoEdicion ? 'Actualizar' : 'Guardar' }}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lista de tarjetas -->
+  <div class="col-md-4 mb-4" *ngFor="let data of lista; let i = index">
+    <div class="card h-100 shadow-sm fade-in" [style.animationDelay]="i * 0.1 + 's'">
+      <div class="card-body text-center">
+        <i [class]="data.icono" style="font-size: 2.5rem;"></i>
+        <h5 class="card-title mt-3">{{ data.data }}</h5>
+        <p class="card-text">{{ data.info }}</p>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <button class="btn btn-sm btn-warning" (click)="editar(data)">
+          <i class="bi bi-pencil-square"></i> Editar
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="eliminar(data.iddata_info)">
+          <i class="bi bi-trash"></i> Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+  
+</div>

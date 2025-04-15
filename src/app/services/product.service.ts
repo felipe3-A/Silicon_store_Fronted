@@ -17,6 +17,11 @@ export class ProductService {
     return this.http.get(`${this.baseUrl}items`); // Asumiendo que la ruta de los productos es /api/products
   }
 
+  listarProductoId(item_id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}items/${item_id}`);
+  }
+
+
   listarProductosPorGrupo(id_grupo: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/api/imagenes/upload_grupo/${id_grupo}`); // Asegúrate de que la ruta sea correcta
   }
@@ -54,10 +59,7 @@ export class ProductService {
   // }
 
 
-  listarProductoId(item_id: number): Observable<any> {
-    return this.http.get<any>(`/api/item/${item_id}`);
-  }
-
+  
   listarProductosPorMarca(id_marca: number): Observable<any[]> {
     return this.http
       .get<any>(`${this.baseUrl}/categoriaProducto/${id_marca}`)

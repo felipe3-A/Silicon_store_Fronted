@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataInfoFormComponent } from './data-info-form.component';
+import { DataInfoComponent } from './data-info.component';
 
-describe('DataInfoFormComponent', () => {
-  let component: DataInfoFormComponent;
-  let fixture: ComponentFixture<DataInfoFormComponent>;
+describe('DataInfoComponent', () => {
+  let component: DataInfoComponent;
+  let fixture: ComponentFixture<DataInfoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DataInfoFormComponent ]
+      declarations: [ DataInfoComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DataInfoFormComponent);
+    fixture = TestBed.createComponent(DataInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

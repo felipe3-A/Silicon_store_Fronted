@@ -16,6 +16,7 @@ import { CategoriaServiceService } from "app/services/Categoria/categoria-servic
 import { response } from "express";
 import { error } from "console";
 import { Subscription } from "rxjs";
+import { DataInfoService } from '../../services/data-info.service';
 
 import { CartServiceService } from "app/services/Cart/cart-service.service";
 import Swal from 'sweetalert2';
@@ -29,6 +30,7 @@ declare interface RouteInfo {
   icon: string;
   class: string;
 }
+
 
 export const ROUTES: RouteInfo[] = [
   { path: "/VerTienda", title: "store", icon: "dashboard", class: "" },
@@ -55,9 +57,11 @@ export class NavbarComponent implements OnInit {
   isAdministrador = false;
   isUser = false;
   dropdownStates: { [key: string]: boolean } = {};
+  listaDataInfo: any[] = [];
 
   menuItems: any[];
-
+  selectedCategory: string = '';
+  selectedOption: string = '';
   nombre: string = "";
   cart: any[] = []; // Propiedad para almacenar los datos del carrito
   messages: string[] = [
@@ -79,11 +83,10 @@ export class NavbarComponent implements OnInit {
     private userSrervice: UsuarioService,
     private modulosXperfilService: ModuloxperfilServiceService,
     private cdr: ChangeDetectorRef,
-
+    private dataservice: DataInfoService,
     private categoriaService: CategoriaServiceService,
-    private tokenvalidationService: TokenValidationService,
     private authService: AuthServiceService,
-    private tokenValidationService: TokenValidationService
+    private tokenvalidationService: TokenValidationService
   ) {
     this.location = location;
     this.router.events.subscribe((val) => {
@@ -117,6 +120,11 @@ export class NavbarComponent implements OnInit {
       }
     });
 
+
+    this.dataservice.getAll().subscribe(data => {
+      this.listaDataInfo = data;
+    });
+  
  
     // Obtener el estado de inicio de sesión almacenado
     const storedLoginStatus = localStorage.getItem("isLoggedIn");
@@ -138,12 +146,9 @@ export class NavbarComponent implements OnInit {
         this.nombre = ""; // Limpiar el nombre si no está conectado
       }
     });
+   
   }
 
-  private checkIfLoginRoute(url: string): void {
-    const hiddenRoutes = ["/login"];
-    this.isLoginRoute = hiddenRoutes.includes(url);
-  }
 
   private validateToken(): void {
     const storedToken = this.tokenvalidationService.getToken();
@@ -193,6 +198,13 @@ export class NavbarComponent implements OnInit {
   abrirCarrito() {
     this.router.navigate(["/cart"]); // Usa paréntesis para llamar a la función
   }
+  handleCategorySelect(category: string) {
+    this.selectedCategory = category;
+  }
+
+  handleOptionSelect(option: string) {
+    this.selectedOption = option;
+  }
 
   // Método para cerrar sesión
   cerrarSesion() {
@@ -209,10 +221,8 @@ export class NavbarComponent implements OnInit {
           if (result.isConfirmed) {
             this.loginService.removerToken();
             localStorage.setItem("isLoggedIn", JSON.stringify(false));
-
+            this.isLoggedIn = false; // Actualiza el estado aquí también
             this.router.navigate(["store"]);
-            window.location.reload();
-
             history.replaceState(null, "", "/");
           }
         });
@@ -222,7 +232,7 @@ export class NavbarComponent implements OnInit {
       }
     );
   }
-
+ 
   isCollapsed(module: string): boolean {
     return this.collapsedModules.has(module);
   }
@@ -237,9 +247,9 @@ export class NavbarComponent implements OnInit {
 
   private fetchUsername(): void {
     const storedToken = this.tokenvalidationService.getToken();
-    if (storedToken) {
-      const userId =
-        this.tokenvalidationService.getUserData(storedToken).userId;
+    const userData = this.tokenvalidationService.getUserData(storedToken);
+    if (userData && userData.userId) {
+      const userId = userData.userId;
       this.userSrervice.obtenerUsuarioId(userId).subscribe(
         (response) => {
           if (response && response.user) {
@@ -253,23 +263,31 @@ export class NavbarComponent implements OnInit {
           console.error("Error al obtener el usuario:", error);
         }
       );
+    } else {
+      console.warn("El token no contiene datos válidos del usuario.");
     }
+    
   }
 
-  async checkAuthentication() {
+  async checkAuthentication(): Promise<void> {
     try {
-      const token = localStorage.getItem("token");
-      if (token && (await this.tokenValidationService.isValidToken(token))) {
-        this.isLoggedIn = true;
-        this.userData = await this.tokenValidationService.getUserData(token);
+      const token = localStorage.getItem('token');
+      this.isLoggedIn = !!token;
+  
+      if (token && (await this.tokenvalidationService.isValidToken(token))) {
+        this.userData = await this.tokenvalidationService.getUserData(token);
         this.setUserRoles(this.userData.idperfil);
-        this.obtenerModulosPorPerfil(this.userData.idperfil);
-        this.cdr.detectChanges(); // Realizar detección de cambios
+        this.cdr.detectChanges(); // Detectar cambios manualmente
+      } else {
+        this.isLoggedIn = false;
       }
     } catch (error) {
       console.error("Error al verificar la autenticación:", error);
+      this.isLoggedIn = false;
     }
   }
+  
+  
 
   sanitizeId(moduleName: string): string {
     return 'collapse' + moduleName.replace(/\s+/g, '');
@@ -283,45 +301,7 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  obtenerModulosPorPerfil(idperfil: number) {
-    this.modulosXperfilService.obtenerModulosPorPerfil(idperfil).subscribe(
-      (response) => {
-        console.log("id del perfil logueado:", idperfil);
-        
-        const groupedModules = response.data.reduce((acc, curr) => {
-          if (!acc[curr.modulo]) {
-            acc[curr.modulo] = [];
-          }
-
-          // Verificar duplicados de url_modulo
-          if (
-            !acc[curr.modulo].some(
-              (route) => route.url_modulo === curr.url_modulo
-            )
-          ) {
-            acc[curr.modulo].push(curr);
-          }
-
-          return acc;
-        }, {});
-
-
-
-        // Filtrar módulos para incluir solo aquellos con rutas que tienen permiso 'si'
-        this.moduleRoutes = Object.keys(groupedModules)
-          .map((module) => ({
-            module,
-            routes: groupedModules[module].filter(
-              (route) => route.permiso === "si"
-            ),
-          }))
-          .filter((moduleRoute) => moduleRoute.routes.length > 0);
-      },
-      (error) => {
-        console.error("Error al obtener los módulos por perfil:", error);
-      }
-    );
-  }
+  
 
 
   
@@ -332,5 +312,7 @@ export class NavbarComponent implements OnInit {
   isDropdownOpen(moduleName: string): boolean {
     return this.dropdownStates[moduleName] || false;
   }
+
+
 
 }

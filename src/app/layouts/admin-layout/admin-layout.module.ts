@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ComponentsModule } from '../../components/components.module';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,6 +28,8 @@ import {MatSelectModule} from '@angular/material/select';
     ReactiveFormsModule,
     MatButtonModule,
     MatRippleModule,
+    ComponentsModule, // 👈 Aquí
+
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -38,9 +41,10 @@ import {MatSelectModule} from '@angular/material/select';
     TableListComponent,
     TypographyComponent,
     IconsComponent,
-    MapsComponent,
+  MapsComponent,
     NotificationsComponent,
-    UpgradeComponent,
+    UpgradeComponent
+
   ]
 })
 

@@ -1,42 +1,140 @@
+/* Estilos generales */
 body {
   font-family: 'Poppins', sans-serif;
 }
 
-h2 {
-  color: #0056b3;
+h1, h2,h3,h4,h5,h6, p, span, li, a, ul{
+  font-family: 'Poppins', sans-serif;
+
+}
+.name_product{
+  font-size: 40px;
+}
+.card-title {
+  font-size: 1rem;
+  color: #2C2C2C;
+  font-weight: 700;
 }
 
-.text-success {
-  color: #28a745 !important;
+.card_product {
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 490px;
 }
 
-.clickable-image {
-  width: 100%;
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
+.price-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.clickable-image:hover {
-  border-color: #007bff;
+.price-old {
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-decoration: line-through;
 }
 
-button {
-  transition: all 0.3s ease;
+.price-new {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #dc143c; /* Color para el precio nuevo */
 }
 
-button:hover {
-  transform: scale(1.05);
+/* Animaciones */
+.card_product {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card {
-  border-radius: 12px;
+.card_product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.card-footer {
-  background-color: #f8f9fa;
+/* Responsividad */
+@media (max-width: 768px) {
+  .card_product {
+    height: auto; /* Permitir que la altura se ajuste automáticamente */
+  }
+
+  .price-container {
+    flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
+  }
+
+  .btn {
+    width: 100%; /* Botones ocupan el ancho completo en pantallas pequeñas */
+  }
 }
 
-img {
-  border-radius: 8px;
-  width: 50%;
+/* Estilos generales */
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.card-title {
+  font-size: 1rem;
+  color: #2C2C2C;
+  font-weight: 700;
+}
+
+.card_product {
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 490px;
+}
+
+.price-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.price-old {
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-decoration: line-through;
+}
+
+.price-new {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #dc143c; /* Color para el precio nuevo */
+}
+
+/* Animaciones */
+.card_product {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card_product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .card_product {
+    height: auto; /* Permitir que la altura se ajuste automáticamente */
+  }
+
+  .price-container {
+    flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
+  }
+
+  .btn {
+    width: 100%; /* Botones ocupan el ancho completo en pantallas pequeñas */
+  }
+}
+.card-img-top {
+  width: 100%; /* Asegura que la imagen ocupe el 100% del ancho del contenedor */
+  height: 300px; /* Establece una altura fija */
+  object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+  border-top-left-radius: 10px; /* Bordes redondeados en la parte superior */
+  border-top-right-radius: 10px; /* Bordes redondeados en la parte superior */
+}
+
+/* Para las miniaturas */
+.img-thumbnail {
+  width: 60px; /* Ancho fijo para las miniaturas */
+  height: 60px; /* Altura fija para las miniaturas */
+  object-fit: cover; /* Asegura que las miniaturas se ajusten sin distorsionarse */
 }

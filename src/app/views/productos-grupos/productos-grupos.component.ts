@@ -101,32 +101,32 @@ export class ProductosGruposComponent implements OnInit {
   //   }
   // }
 
-  agregarProductoAlCarrito(
-    carrito_id: number,
-    id_imagen: number,
-    cantidad: number,
-    precio: number
-  ): void {
-    const productoData = {
-      carrito_id: carrito_id,
-      id_imagen: id_imagen,
-      cantidad: 1,
-      precio: 10.0,
-      addedAt: new Date().getTime(), // Agrega un timestamp
-    };
+  // agregarProductoAlCarrito(
+  //   carrito_id: number,
+  //   id_imagen: number,
+  //   cantidad: number,
+  //   precio: number
+  // ): void {
+  //   const productoData = {
+  //     carrito_id: carrito_id,
+  //     id_imagen: id_imagen,
+  //     cantidad: 1,
+  //     precio: 10.0,
+  //     addedAt: new Date().getTime(), // Agrega un timestamp
+  //   };
 
-    this.cartProductsService.agregarProductoAlCarrito(productoData).subscribe(
-      (response) => {
-        Swal.fire("Éxito", "Producto agregado al carrito", "success");
-      },
-      (error) => {
-        console.error("Error al agregar producto al carrito", error);
-        Swal.fire(
-          "Error",
-          "No se pudo agregar el producto al carrito",
-          "error"
-        );
-      }
-    );
-  }
+  //   this.cartProductsService.agregarProductoAlCarrito(productoData).subscribe(
+  //     (response) => {
+  //       Swal.fire("Éxito", "Producto agregado al carrito", "success");
+  //     },
+  //     (error) => {
+  //       console.error("Error al agregar producto al carrito", error);
+  //       Swal.fire(
+  //         "Error",
+  //         "No se pudo agregar el producto al carrito",
+  //         "error"
+  //       );
+  //     }
+  //   );
+  // }
 }

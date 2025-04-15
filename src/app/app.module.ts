@@ -10,7 +10,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { MatIconModule } from '@angular/material/icon';
 
-import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { MainComponent } from './views/main/main.component';
@@ -67,7 +66,8 @@ import { CrearsubCaracteristicasComponent } from './views/caracteristicas/crears
 import { CrearValoresComponent } from './views/caracteristicas/crear-valores/crear-valores.component';
 import { WelcomeProductComponent } from './views/before_store/welcome-product/welcome-product.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { DataInfoFormComponent } from './views/data-info-form/data-info-form.component';
+import { ComponentsModule } from '.././app/components/components.module';
+import { DataInfoComponent } from './views/data-info/data-info.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -80,15 +80,15 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['silicon.com'], // Cambia esto por tu dominio
-        disallowedRoutes: ['http://localhost:3000/login'], // Opcional
+      
       },
     }),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ComponentsModule,
+    ComponentsModule, // 👈 AGREGA ESTO
+
     RouterModule,
     NgxPaginationModule,
     AppRoutingModule,
@@ -151,7 +151,7 @@ export function tokenGetter() {
     CrearsubCaracteristicasComponent,
     CrearValoresComponent,
     WelcomeProductComponent,
-    DataInfoFormComponent,
+    DataInfoComponent
     
 
   ],

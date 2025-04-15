@@ -13,6 +13,9 @@ export class LoginService {
   private baseUrl = environment.apiUrl;
   loginStatusChanged = new EventEmitter<boolean>();
 
+  private userId: number | null = null;
+  private userData: any = null;
+
   constructor(
     private httpClient: HttpClient,
     private jwtHelper: JwtHelperService,
@@ -23,54 +26,81 @@ export class LoginService {
     const url = `${this.baseUrl}login`;
 
     return this.httpClient.post<any>(url, formValue).pipe(
-      
       map((response) => {
         if (response.token) {
           localStorage.setItem('token', response.token);
-          localStorage.setItem('idperfil', response.token)
+          const decodedToken = this.jwtHelper.decodeToken(response.token);
 
+          // Suponiendo que el token tiene un campo idusuario y idperfil
+          this.userData = decodedToken;
+          this.userId = decodedToken.idusuario;
+          
+          localStorage.setItem('userId', this.userId?.toString() ?? '');
+          localStorage.setItem('idperfil', decodedToken.idperfil?.toString() ?? '');
 
+          console.log('✅ Usuario logueado correctamente');
+          console.log('👤 Datos del usuario:', this.userData);
         }
-        localStorage.setItem('userId', response.userId);
-        console.log('token:', localStorage);
+
         this.loginStatusChanged.emit(true);
-
-
         return response;
       })
-
     );
-
   }
 
+  // Assuming you have an API endpoint to get the cart based on userId
+  obtenerCarritoId(userId: number): Observable<any> {
+    return this.httpClient.get(`${this.baseUrl}carId/${userId}`);
+  }
+  
 
-  // Método para obtener el perfil del usuario desde el token
- public getUserPerfil(): string | null {
+  // Obtener el perfil del usuario desde el token
+  public getUserPerfil(): string | null {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken.idperfil ?? null;
+    }
+    return null;
+  }
+
+  getUserId(): string | null {
+    return this.userId?.toString() ?? localStorage.getItem('userId');
+  }
+  getPersonId(): string | null {
   const token = localStorage.getItem('token');
   if (token) {
     const decodedToken = this.jwtHelper.decodeToken(token);
-    return decodedToken.idperfil; // Suponiendo que el token tiene un campo 'role' que contiene el rol del usuario
+    return decodedToken.person_id ?? null;
   }
   return null;
 }
 
-  
 
-  getUserId(): string | null {
-    return localStorage.getItem('userId');
-  }  
+  getUserData(): any {
+    if (this.userData) return this.userData;
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.userData = this.jwtHelper.decodeToken(token);
+      return this.userData;
+    }
+
+    return null;
+  }
 
   cerrarSesion(): Observable<any> {
     const token = localStorage.getItem('token');
-    
+
     if (!token) {
-      return throwError('No se encontró un token de autenticación en el almacenamiento local.');
+      return throwError(() => 'No se encontró un token de autenticación en el almacenamiento local.');
     }
 
     const url = `${this.baseUrl}/cerrarSesion`;
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
+
     return this.httpClient.post<any>(url, null, { headers }).pipe(
       map((response) => {
         this.removerToken();
@@ -82,8 +112,10 @@ export class LoginService {
 
   removerToken() {
     localStorage.removeItem('token');
-    localStorage.removeItem('userId'); // Limpia el ID del usuario al cerrar sesión
-
+    localStorage.removeItem('userId');
+    localStorage.removeItem('idperfil');
+    this.userId = null;
+    this.userData = null;
   }
 
   isLoggedIn(): boolean {

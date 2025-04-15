@@ -17,6 +17,17 @@
 .list-group-item:nth-child(even) {
   background-color: #f1f3f5;
 }
+.title_name{
+font-weight: bolder;
+font-size: 25px;
+}
+
+.title_name_r{
+  font-weight: bolder;
+  font-size: 23px;
+  font-family: 'Poppins', sans-serif;
+
+  }
 
 .btn-warning {
   background-color: #ffb400;

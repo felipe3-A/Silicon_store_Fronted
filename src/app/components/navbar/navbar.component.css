@@ -140,10 +140,9 @@
   /* Elimina la indentación predeterminada de la lista */
 }
 
+
 .v{
   margin-right: -12px;
-  background-color: rgb(0, 255, 42);
-
 }
 
 
@@ -214,9 +213,7 @@ transform: rotate(-90deg);
 }
 
 .modulo_text{
-  font-size: 160px;
-  background-color: red;
-
+  font-size: 230px;
   font-weight: 10000;
 }
 
@@ -224,7 +221,7 @@ transform: rotate(-90deg);
 
 .modulo_text {
   display: inline;
-  margin-right: 4px; /* Espacio mínimo entre los elementos */
+  margin-right: 0px; /* Espacio mínimo entre los elementos */
 }
 
 .v {
@@ -239,9 +236,17 @@ transform: rotate(-90deg);
   text-align: center;
 }
 
-.opciones_menu{
+/* .opciones_menu{
   width: 130px;
+} */
+
+.opciones_menu {
+  display: flex;
+  flex-direction: row;
+  gap: 10px; /* espacio entre opciones, opcional */
+  width: 100%;
 }
+
 .message_login{
   justify-content: center;
   align-items: center;

@@ -1,0 +1,23 @@
+/* Estilo para animación al cargar */
+.fade-in {
+    animation: fadeInUp 0.6s ease-in-out both;
+  }
+  
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Efecto hover en cards */
+  .card:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'environments/environment';
 
 export interface DataInfo {
   iddata_info?: number;
@@ -10,31 +11,35 @@ export interface DataInfo {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataInfoService {
-
-  private apiUrl = 'http://127.0.0.1:8000/api/data_info';
+  private baseUrl = environment.apiUrl; // Usa el entorno configurado
 
   constructor(private http: HttpClient) {}
 
-  create(dataInfo: DataInfo): Observable<DataInfo> {
-    return this.http.post<DataInfo>(this.apiUrl, dataInfo);
-  }
-
+  // Listar todos
   getAll(): Observable<DataInfo[]> {
-    return this.http.get<DataInfo[]>(this.apiUrl);
+    return this.http.get<DataInfo[]>(`${this.baseUrl}data_info`);
   }
 
+  // Obtener por ID
   getById(id: number): Observable<DataInfo> {
-    return this.http.get<DataInfo>(`${this.apiUrl}/${id}`);
+    return this.http.get<DataInfo>(`${this.baseUrl}data_info/${id}`);
   }
 
-  update(id: number, dataInfo: DataInfo): Observable<DataInfo> {
-    return this.http.put<DataInfo>(`${this.apiUrl}/${id}`, dataInfo);
+  // Crear nuevo registro
+  create(data: DataInfo): Observable<any> {
+    return this.http.post(`${this.baseUrl}data_info`, data);
   }
 
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  // Actualizar
+  update(iddata_info: number, data: DataInfo): Observable<any> {
+    return this.http.put(`${this.baseUrl}data_info/${iddata_info}`, data);
+  }
+
+  // Eliminar
+  delete(iddata_info: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}data_info/${iddata_info}`);
   }
 }

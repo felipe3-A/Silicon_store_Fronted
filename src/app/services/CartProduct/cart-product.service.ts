@@ -11,13 +11,19 @@ export class CartProductsService {
 
   constructor(private http: HttpClient) { }
 
-  agregarProductoAlCarrito(productoData: { carrito_id: number; id_imagen: number; cantidad: number; precio:number }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/add`, productoData);
+  agregarProductoAlCarrito(data: {
+    item_id: number;
+    person_id: number;
+    quantity: number;
+  }) {
+    return this.http.post('http://127.0.0.1:8000/api/cart/add', data);
   }
+  
   // Eliminar producto del carrito
-  eliminarProductoDelCarrito(carritoId: number, idImagen: number): Observable<any> {
-    const body = { carrito_id: carritoId, id_imagen: idImagen };
-    return this.http.post(`${this.baseUrl}/remove`, body);
+  eliminarProductoDelCarrito(personId: number, item_id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}cart/remove-item/${item_id}`, {
+      params: { person_id: personId } // Asegúrate de enviar el ID de la persona si es necesario
+    });
   }
 
   
