@@ -96,10 +96,12 @@ export class LoginService {
       return throwError(() => 'No se encontró un token de autenticación en el almacenamiento local.');
     }
 
-    const url = `${this.baseUrl}/cerrarSesion`;
+    const url = `${this.baseUrl}logout`;
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
+      Accept: 'application/json'
     });
+    
 
     return this.httpClient.post<any>(url, null, { headers }).pipe(
       map((response) => {

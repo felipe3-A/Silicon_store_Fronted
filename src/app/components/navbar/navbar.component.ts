@@ -4,10 +4,11 @@ import {
   ElementRef,
   ChangeDetectorRef,
 } from "@angular/core";
+import { crearSlug } from '../../../app/shared/utils';
 
 import { Location } from "@angular/common";
 import { Router, NavigationStart, ActivatedRoute } from "@angular/router";
-
+import { of, Observable } from 'rxjs';
 import { LoginService } from "app/services/usuarios/login-service.service";
 import { TokenValidationService } from "../../services/VerificacionUser/token-validation.service";
 import { UsuarioService } from "app/services/usuarios/usuario-service.service";
@@ -16,11 +17,14 @@ import { CategoriaServiceService } from "app/services/Categoria/categoria-servic
 import { response } from "express";
 import { error } from "console";
 import { Subscription } from "rxjs";
-import { DataInfoService } from '../../services/data-info.service';
+import { DataInfoService } from "../../services/data-info.service";
 
 import { CartServiceService } from "app/services/Cart/cart-service.service";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import { ModuloxperfilServiceService } from "app/services/moduloxperfil/moduloxperfil-service.service";
+import { ProductService } from "app/services/product.service";
+import { Item } from "app/model/ProductosModel";
+import { map, finalize } from 'rxjs/operators';
 
 declare const $: any;
 
@@ -30,7 +34,6 @@ declare interface RouteInfo {
   icon: string;
   class: string;
 }
-
 
 export const ROUTES: RouteInfo[] = [
   { path: "/VerTienda", title: "store", icon: "dashboard", class: "" },
@@ -58,10 +61,15 @@ export class NavbarComponent implements OnInit {
   isUser = false;
   dropdownStates: { [key: string]: boolean } = {};
   listaDataInfo: any[] = [];
+  filtroBusqueda: string = "";
+  textoBusqueda: string = '';
+  sugerencias: any[] = [];
 
+  productos: any[] = [];
+  productosFiltrados: any[] = [];
   menuItems: any[];
-  selectedCategory: string = '';
-  selectedOption: string = '';
+  selectedCategory: string = "";
+  selectedOption: string = "";
   nombre: string = "";
   cart: any[] = []; // Propiedad para almacenar los datos del carrito
   messages: string[] = [
@@ -72,8 +80,12 @@ export class NavbarComponent implements OnInit {
     "Experiencia y servicio",
   ];
   isLoginRoute: boolean = false;
-
+  filtroCategoria: string = "";
   currentMessage: string = this.messages[0];
+  
+  isloading: boolean = false;
+src: string = '';
+data$: Observable<Item[]> = of([]);
 
   constructor(
     location: Location,
@@ -86,7 +98,8 @@ export class NavbarComponent implements OnInit {
     private dataservice: DataInfoService,
     private categoriaService: CategoriaServiceService,
     private authService: AuthServiceService,
-    private tokenvalidationService: TokenValidationService
+    private tokenvalidationService: TokenValidationService,
+    private productosservice : ProductService
   ) {
     this.location = location;
     this.router.events.subscribe((val) => {
@@ -96,22 +109,22 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     // Filtrar los elementos del menú
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
-    
+    this.menuItems = ROUTES.filter((menuItem) => menuItem);
+
     // Verificar la autenticación
     this.checkAuthentication();
-  
+
     // Obtener el rol del usuario y establecer isAdmin
     this.authService.getUserRole().subscribe((role: string) => {
       this.isAdmin = role === "admin"; // Establece isAdmin si el rol es admin
     });
-  
+
     // Suscribirse a los eventos de navegación
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.currentRoute = this.router.url; // Actualiza la ruta actual
         this.checkAuthentication(); // Verifica la autenticación en cada navegación
-  
+
         // Si se navega a la ruta de login o raíz, actualizar el estado de inicio de sesión
         if (event.url === "/login" || event.url === "/") {
           this.isLoggedIn = false;
@@ -120,36 +133,84 @@ export class NavbarComponent implements OnInit {
       }
     });
 
-
-    this.dataservice.getAll().subscribe(data => {
+    this.dataservice.getAll().subscribe((data) => {
       this.listaDataInfo = data;
     });
-  
- 
+
     // Obtener el estado de inicio de sesión almacenado
     const storedLoginStatus = localStorage.getItem("isLoggedIn");
     this.isLoggedIn = storedLoginStatus ? JSON.parse(storedLoginStatus) : false;
     localStorage.setItem("isLoggedIn", JSON.stringify(this.isLoggedIn));
-  
+
     // Validar el token si el usuario está conectado
     if (this.isLoggedIn) {
       this.validateToken();
     }
-  
+
     // Suscribirse a los cambios de estado de inicio de sesión
-    this.loginStatusSubscription = this.loginService.loginStatusChanged.subscribe(isLoggedIn => {
-      this.isLoggedIn = isLoggedIn;
-      localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
-      if (isLoggedIn) {
-        this.fetchUsername(); // Obtener el nombre de usuario si está conectado
-      } else {
-        this.nombre = ""; // Limpiar el nombre si no está conectado
-      }
-    });
-   
+    this.loginStatusSubscription =
+      this.loginService.loginStatusChanged.subscribe((isLoggedIn) => {
+        this.isLoggedIn = isLoggedIn;
+        localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
+        if (isLoggedIn) {
+          this.fetchUsername(); // Obtener el nombre de usuario si está conectado
+        } else {
+          this.nombre = ""; // Limpiar el nombre si no está conectado
+        }
+      });
+
+
+      this.productosservice.listarProductos().subscribe((res: any[]) => {
+        this.productos = res;
+      });
+  }
+  buscar() {
+    if (!this.textoBusqueda || this.textoBusqueda.trim() === '') {
+      this.sugerencias = [];
+      return;
+    }
+  
+    const texto = this.textoBusqueda.toLowerCase();
+  
+    this.sugerencias = this.productos.filter(item =>
+      item.name.toLowerCase().includes(texto) &&
+      item.total_quantity > 0 // Aquí filtramos los que tienen total_quantity mayor a 0
+    );
+  }
+  
+
+  crearSlug(nombre: string): string {
+    return nombre
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, '-');
+  }
+
+  seleccionar(nombre: string): void {
+    const producto = this.productos.find(p => p.name === nombre);
+    if (producto) {
+      this.textoBusqueda = nombre;
+      this.sugerencias = [];
+  
+      // Navegar al detalle del producto con su ID
+      this.router.navigate(['/producto', producto.item_id]);
+    }
   }
 
 
+
+  
+ 
+
+
+  irADetalle(producto: any): void {
+    this.router.navigate(["/producto", producto.id]); // Redirige a la vista de detalle
+  }
+
+ 
   private validateToken(): void {
     const storedToken = this.tokenvalidationService.getToken();
 
@@ -208,35 +269,42 @@ export class NavbarComponent implements OnInit {
 
   // Método para cerrar sesión
   cerrarSesion() {
-    this.loginService.cerrarSesion().subscribe(
-      (response) => {
-        Swal.fire({
-          title: "¿Realmente quieres salir?",
-          icon: "question",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Salir",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.loginService.removerToken();
-            localStorage.setItem("isLoggedIn", JSON.stringify(false));
-            this.isLoggedIn = false; // Actualiza el estado aquí también
-            this.router.navigate(["store"]);
-            history.replaceState(null, "", "/");
-          }
+    Swal.fire({
+      title: `¿${this.nombre} quieres cerrar sesión?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, salir",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loginService.cerrarSesion().subscribe({
+          next: (res) => {
+            this.loginService.loginStatusChanged.emit(false); // <- Esto actualizará todo lo que escucha cambios de login
+            this.isLoggedIn = false;
+            this.nombre = "";
+            localStorage.setItem("isLoggedIn", "false");
+            this.router.navigate(["/verTienda"]);
+            Swal.fire(
+              "¡Sesión cerrada!",
+              "Has cerrado sesión correctamente.",
+              "success"
+            );
+          },
+          error: (err) => {
+            console.error("Error al cerrar sesión", err);
+            Swal.fire("Error", "No se pudo cerrar sesión.", "error");
+          },
         });
-      },
-      (error) => {
-        console.error("Error al cerrar sesión:", error);
       }
-    );
+    });
   }
- 
+
   isCollapsed(module: string): boolean {
     return this.collapsedModules.has(module);
   }
-  
+
   toggleCollapse(module: string): void {
     if (this.collapsedModules.has(module)) {
       this.collapsedModules.delete(module);
@@ -266,14 +334,13 @@ export class NavbarComponent implements OnInit {
     } else {
       console.warn("El token no contiene datos válidos del usuario.");
     }
-    
   }
 
   async checkAuthentication(): Promise<void> {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       this.isLoggedIn = !!token;
-  
+
       if (token && (await this.tokenvalidationService.isValidToken(token))) {
         this.userData = await this.tokenvalidationService.getUserData(token);
         this.setUserRoles(this.userData.idperfil);
@@ -286,13 +353,10 @@ export class NavbarComponent implements OnInit {
       this.isLoggedIn = false;
     }
   }
-  
-  
 
   sanitizeId(moduleName: string): string {
-    return 'collapse' + moduleName.replace(/\s+/g, '');
+    return "collapse" + moduleName.replace(/\s+/g, "");
   }
-  
 
   setUserRoles(idperfil: Number) {
     if (idperfil) {
@@ -301,10 +365,6 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  
-
-
-  
   toggleDropdown(moduleName: string) {
     this.dropdownStates[moduleName] = !this.dropdownStates[moduleName];
   }
@@ -312,7 +372,4 @@ export class NavbarComponent implements OnInit {
   isDropdownOpen(moduleName: string): boolean {
     return this.dropdownStates[moduleName] || false;
   }
-
-
-
 }

@@ -45,7 +45,6 @@ import { VisitanosComponent } from './views/visitanos/visitanos.component';
 import { PoliticasComponent } from './views/politicas/politicas.component';
 import { ProductosCategoriasComponent } from './views/productos-categorias/productos-categorias.component';
 import { RegistroComponent } from './views/register/register.component';
-import { DetallesComponent } from './views/detalles/detalles.component';
 import { CategoriaComponent } from './views/categoria/categoria.component';
 import { GrupoComponent } from './views/grupo/grupo.component';
 import { ModulosComponent } from './views/modulos/modulos.component';
@@ -88,7 +87,6 @@ export function tokenGetter() {
     ReactiveFormsModule,
     HttpClientModule,
     ComponentsModule, // 👈 AGREGA ESTO
-
     RouterModule,
     NgxPaginationModule,
     AppRoutingModule,
@@ -131,7 +129,6 @@ export function tokenGetter() {
     VisitanosComponent,
     PoliticasComponent,
     ProductosCategoriasComponent,
-    DetallesComponent,
     CategoriaComponent,
     GrupoComponent,
     ModulosComponent,

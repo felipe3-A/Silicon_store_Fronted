@@ -2,6 +2,49 @@ h1, h2,h3,h4,h5,h6, p, span, li, a, ul{
   font-family: 'Poppins', sans-serif;
 
 }
+.category-marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.category-marquee {
+  display: inline-block;
+  animation: scroll-left 20s linear infinite;
+}
+
+.category-card-small {
+  display: inline-block;
+  width: 150px;
+  margin: 0 10px 10px 10px;
+}
+
+.category-card-small .card {
+  transition: transform 0.3s ease;
+  border-radius: 10px;
+padding: 2px;
+  background-color: #dc3545;
+  color: white;
+}
+
+.category-card-small .card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  color: #DC143B;
+  
+  background-color: #901d28;
+  border-color: 1px solid #DC143B;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 
 .badge-custom-danger {
   background-color: #dc3545;
@@ -12,7 +55,7 @@ h1, h2,h3,h4,h5,h6, p, span, li, a, ul{
 }
 
 .badge-custom-success {
-  background-color: #198754;
+  background-color: #901d28;
   color: white;
   padding: 0.4em 0.8em;
   border-radius: 1em;
@@ -22,7 +65,7 @@ h1, h2,h3,h4,h5,h6, p, span, li, a, ul{
 .card-title {
   font-family: 'Poppins', sans-serif;
   font-size: 1.0rem;
-  color: #2C2C2C;
+  color: #ffffff;
   font-weight: 700;
 }
 

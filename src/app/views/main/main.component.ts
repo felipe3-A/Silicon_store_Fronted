@@ -21,7 +21,6 @@ import { error, log } from "console";
   styleUrls: ["./main.component.css"],
 })
 export class MainComponent implements OnInit {
-  productos = [];
   marcas: [];
   publicidad = [];
   productXcategorias = [];
@@ -31,7 +30,6 @@ export class MainComponent implements OnInit {
   categoriasForm = [];
   grupos = [];
   // Listar las categorias
-  categorias: any[] = [];
 
   listCategorias :any[]=[]
   productosPorCategoria: { [key: number]: any[] } = {}; // Para almacenar productos por categoría
@@ -55,8 +53,21 @@ export class MainComponent implements OnInit {
     precio: null,   // Replace with the correct price
     addedAt: Date.now(),  // Example to set the current timestamp
   };
-  ;
+  categorias: any[] = [];
+  productos: any[] = [];
+  categoriaSeleccionada: string | null = null;
 
+  iconosCategoria: { [key: string]: string } = {
+    'TELEVISION': 'tv',
+    'Ropa': 'checkroom',
+    'Alimentos': 'restaurant',
+    'Libros': 'menu_book',
+    'Hogar': 'chair',
+    'Otro': 'category'
+  };
+  filtroBusqueda: string = '';
+  filtroCategoria: string = '';
+  productosFiltrados: any[] = [];
   
   constructor(
     private fb: FormBuilder,
@@ -64,7 +75,8 @@ export class MainComponent implements OnInit {
     private productService: ProductService,
     private router: Router,
     private publicidadService: PublicidadServiceService,
-    private authService: LoginService
+    private authService: LoginService,
+    private categoriaServicie: CategoriaServiceService
   ) {}
 
   ngOnInit(): void {
@@ -84,6 +96,7 @@ export class MainComponent implements OnInit {
   
     this.listarProductos();
     this.obtenerPublicidad();
+    this.listarCategorias();
   
     this.productoForm = this.fb.group({
       nombre: ["", Validators.required],
@@ -93,7 +106,22 @@ export class MainComponent implements OnInit {
   }
   
   
+  aplicarFiltros(): void {
+    const texto = this.filtroBusqueda?.toLowerCase() || '';
+    const categoria = this.filtroCategoria;
   
+    this.productosFiltrados = this.productos.filter(producto =>
+      (producto.name.toLowerCase().includes(texto) || producto.category.toLowerCase().includes(texto)) &&
+      (!categoria || producto.category === categoria)
+    );
+  }
+  
+  
+  resetFiltros(): void {
+    this.filtroBusqueda = '';
+    this.filtroCategoria = '';
+    this.productosFiltrados = [...this.productos];
+  }
   obtenerPublicidad() {
     this.publicidadService.listarPublicidad().subscribe({
       next: (data) => {
@@ -110,55 +138,23 @@ export class MainComponent implements OnInit {
   }
   
 
-  // Método para redirigir a la vista de detalles
-  // verDetalles(imagen: any): void {
-  //   let id_imagen = imagen.id_imagen || imagen.id_categoria || imagen.id_grupo;
+  seleccionarCategoria(categoria: string) {
+    this.categoriaSeleccionada = categoria;
+    this.categoriaServicie.obtenerProductosPorCategoria(categoria).subscribe({
+      next: (productos) => {
+        this.productos = productos;
+        console.log('📦 Productos de la categoría:', productos);
+      },
+      error: (err) => {
+        console.error('❌ Error al obtener productos por categoría:', err);
+      }
+    });
+  }
   
-  //   if (id_imagen) {
-  //     console.log("ID de la imagen:", id_imagen); // Verifica que el ID no sea null
-  
-  //     // Verifica qué tipo de ID es y llama al servicio correspondiente
-  //     if (imagen.id_imagen) {
-  //       this.productService.listarProductoId(id_imagen).subscribe(
-  //         (response) => {
-  //           // Maneja la respuesta para mostrar la imagen
-  //           console.log("Detalles de la imagen:", response);
-  //           // Redirige a la vista de detalles pasando el ID
-  //           this.router.navigate(['/detalles', id_imagen]);
-  //         },
-  //         (error) => {
-  //           console.error("Error al obtener los detalles de la imagen", error);
-  //         }
-  //       );
-  //     } else if (imagen.id_categoria) {
-  //       this.productService.listarProductosPorCategoria(imagen.id_categoria).subscribe(
-  //         (response) => {
-  //           // Maneja la respuesta para mostrar los productos de la categoría
-  //           console.log("Productos de la categoría:", response);
-  //           // Redirige a la vista de productos de la categoría
-  //           this.router.navigate(['/categoria', imagen.id_categoria]);
-  //         },
-  //         (error) => {
-  //           console.error("Error al obtener los productos de la categoría", error);
-  //         }
-  //       );
-  //     } else if (imagen.id_grupo) {
-  //       this.productService.listarProductosPorGrupo(imagen.id_grupo).subscribe(
-  //         (response) => {
-  //           // Maneja la respuesta para mostrar los productos del grupo
-  //           console.log("Productos del grupo:", response);
-  //           // Redirige a la vista de productos del grupo
-  //           this.router.navigate(['/grupo', imagen.id_grupo]);
-  //         },
-  //         (error) => {
-  //           console.error("Error al obtener los productos del grupo", error);
-  //         }
-  //       );
-  //     }
-  //   } else {
-  //     console.error("No se encontró un ID válido para la imagen.");
-  //   }
-  // }
+
+  obtenerIcono(categoria: string): string {
+    return this.iconosCategoria[categoria] || 'category';
+  }
 
   verProducto(item_id: number) {
     this.router.navigate(['/producto', item_id]);
@@ -170,18 +166,24 @@ export class MainComponent implements OnInit {
     console.log("Navegando a el grupo con IDs:", id_grupo);
     this.router.navigate(["/groups", id_grupo]); // Pasar las categorías como un objeto
   }
+  listarCategorias(): void {
+    this.categoriaServicie.listarCategorias().subscribe({
+      next: (data) => {
+        this.categorias = data; // Asigna las categorías al array
+        console.log('Categorías cargadas:', this.categorias); // Imprime las categorías en la consola
+      },
+      error: (err) => {
+        console.error('Error al cargar las categorías:', err);
+      }
+    });
+  }
 
-
-
-  
-
-  
 
 
   // Método para navegar a la categoría específica
-  navigateToCategory(id_categoria: number): void {
-    console.log("Navegando a la categoría con ID:", id_categoria);
-    this.router.navigate(["/products", id_categoria]);
+  navigateToCategory(categoria: String): void {
+    console.log("Navegando a la categoría con ID:", categoria);
+    this.router.navigate(["/products", categoria]);
   }
 
   // Método para navegar a la categoría específica
@@ -218,7 +220,10 @@ export class MainComponent implements OnInit {
         });
   
         console.log('📦 Productos cargados:', this.productos);
+        this.productosFiltrados = [...this.productos]; // Inicializa con todos los productos
+
       },
+
       error: (err) => {
         console.error('❌ Error al listar productos:', err);
       }

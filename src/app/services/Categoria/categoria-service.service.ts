@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriaServiceService {
-  private baseUrl = 'http://localhost:3000';  // Cambia esto a la URL de tu API
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
   listarCategorias(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/api/categoria/categoria_upload`);
+    return this.http.get(`${this.baseUrl}categorias`);
   }
 
   // Método para crear una nueva categoría
@@ -30,8 +31,10 @@ export class CategoriaServiceService {
     return this.http.delete(`${this.baseUrl}/categoria_upload/${id_categoria}`);
   }
   // Método para listar categorías con productos
-  listarCategoriasConProductos(): Observable<{ message: string; data: any[] }> {
-    return this.http.get<{ message: string; data: any[] }>(`${this.baseUrl}/api/categoria/categorias_con_productos`);
-  }
+  // categoria-service.service.ts
+obtenerProductosPorCategoria(nombreCategoria: string): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}categoria/${nombreCategoria}`);
+}
+
 }
 

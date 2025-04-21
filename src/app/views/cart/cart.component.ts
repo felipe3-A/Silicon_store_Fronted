@@ -70,26 +70,7 @@ export class CartComponent implements OnInit {
   
 
 
-  calcularTotal(): number {
-    if (!Array.isArray(this.carrito) || this.carrito.length === 0) {
-        console.warn("El carrito está vacío o no es un array válido.");
-        this.totalAmount = 0;
-        return 0;
-    }
-    this.totalAmount = this.carrito.reduce((total, producto) => {
-        let precio = parseFloat(producto.product.unit_price); // Acceder al precio correcto
-        const cantidad = producto.quantity || 1; // Asegúrate de usar la cantidad correcta
 
-        if (isNaN(precio)) {
-            precio = 0;
-        }
-
-        return total + precio * cantidad;
-    }, 0);
-
-    this.totalAmount = Math.round(this.totalAmount);
-    return this.totalAmount;
-}
   
   
   
@@ -181,30 +162,34 @@ listarProductos() {
   
   obtenerProductosEnCarrito(): Promise<void> {
     return new Promise((resolve, reject) => {
-        if (!this.person_id) {
-            console.warn("No hay un ID de persona válido para obtener productos.");
-            resolve();
-            return;
-        }
-
-        this.cartProductsService.obtenerProductosEnCarrito(this.person_id).subscribe(
-            (response) => {
-                console.log("Respuesta de la API:", response);
-                
-                // Asignar directamente la respuesta a carrito
-                this.carrito = response; // No hay propiedad 'data', es un array directamente
-                
-                resolve();
-            },
-            (error) => {
-                console.error("Error en la petición:", error);
-                this.carrito = []; // Para evitar errores
-                reject(error);
-            }
-        );
-    });
-}
+      if (!this.person_id) {
+        console.warn("No hay un ID de persona válido para obtener productos.");
+        resolve();
+        return;
+      }
   
+      this.cartProductsService.obtenerProductosEnCarrito(this.person_id).subscribe(
+        (response) => {
+          console.log("Respuesta de la API:", response);
+          
+          // Asignar directamente la respuesta a carrito
+          this.carrito = response; // No hay propiedad 'data', es un array directamente
+          
+          // Establecer la cantidad inicial en 1 para cada producto
+          this.carrito.forEach(producto => {
+            producto.product.receiving_quantity = 1; // Establecer la cantidad inicial en 1
+          });
+  
+          resolve();
+        },
+        (error) => {
+          console.error("Error en la petición:", error);
+          this.carrito = []; // Para evitar errores
+          reject(error);
+        }
+      );
+    });
+  }
   
   
   
@@ -232,14 +217,7 @@ eliminarProductoC(producto: any): void {
 
 
 
-  actualizarCantidad(producto: any) {
-    console.log(
-      `Cantidad actualizada para ${producto.nombre_producto}: ${producto.cantidad}`
-    );
 
-    // Recalcular el total del carrito
-    this.calcularTotal();
-  }
 
   iniciarPago(): void {
     console.log("Iniciando el proceso de pago...");
@@ -313,7 +291,30 @@ eliminarProductoC(producto: any): void {
     console.log("Configuración de BoldCheckout:", this.checkout._config);
 }
 
-  
-  
-  
+calcularTotal(): number {
+  this.totalAmount = this.carrito.reduce((total, producto) => {
+    let precio = parseFloat(producto.product.unit_price);
+    const cantidad = producto.product.receiving_quantity || 1; // Usar la cantidad seleccionada
+
+    if (isNaN(precio)) {
+      precio = 0;
+    }
+
+    return total + precio * cantidad;
+  }, 0);
+
+  return Math.round(this.totalAmount);
 }
+
+actualizarCantidad(producto: any) {
+  // Actualiza la cantidad en el carrito
+  const nuevaCantidad = producto.product.receiving_quantity;
+  producto.product.receiving_quantity = nuevaCantidad;
+
+  // Recalcular el total del carrito
+  this.calcularTotal();
+}
+}
+  
+  
+

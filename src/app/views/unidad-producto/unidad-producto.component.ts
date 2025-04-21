@@ -70,27 +70,47 @@ export class UnidadProductoComponent implements OnInit {
   cambiarImagenPrincipal(index: number): void {
     this.imagenPrincipal = this.galeriaImagenes[index];
   }
-
   cargarItemSeleccionado(item_id: number): void {
     this.serviceImagen.listarProductoId(item_id).subscribe(
       (response) => {
-        console.log("Respuesta recibida:", response);
         this.itemSeleccionado = response;
-
-        // Construye la URL de la imagen
+  
         const tieneImagen = this.itemSeleccionado.pic_filename;
         this.imagenPrincipal = tieneImagen
           ? `http://localhost:8082/uploads/item_pics/${this.itemSeleccionado.pic_filename}`
-          : "assets/img/404.png"; // imagen por defecto
-
-        // Si tienes una galería de imágenes, puedes cargarla aquí también
-        this.galeriaImagenes = tieneImagen ? [this.imagenPrincipal] : [];
+          : "assets/img/404.png";
+  
+        // Asignar imagen principal como primera de la galería
+        this.galeriaImagenes = [this.imagenPrincipal];
+  
+        // 🖼️ Llamar al método para obtener imágenes adicionales
+        this.cargarGaleriaImagenes(item_id);
       },
       (error) => {
         console.error("Error al cargar item:", error);
       }
     );
   }
+  
+  cargarGaleriaImagenes(item_id: number): void {
+    this.serviceImagen.obtenerGaleriaPorItem(item_id).subscribe(
+      (response) => {
+        if (response?.imagenes_adicionales?.length > 0) {
+          const imagenes = response.imagenes_adicionales.map((nombre: string) =>
+            `http://localhost:8000/storage/${nombre}`
+          );
+          // Agregarlas a la galería después de la principal
+          this.galeriaImagenes.push(...imagenes);
+        }
+      },
+      (error) => {
+        console.error("Error al cargar galería:", error);
+      }
+    );
+  }
+  
+  
+  
 
   // Componente
   agregarAlCarrito(producto: any): void {

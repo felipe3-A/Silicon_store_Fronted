@@ -1,31 +1,9 @@
-<div class="container mt-4" *ngIf="imagenDetalles">
-    <h2 class="text-center">{{ imagenDetalles.nombre_imagen_publicitaria }}</h2>
-    
-    <div class="text-center">
-      <img [src]="imagenDetalles.url_imagen_publicitaria" alt="Imagen Publicitaria" class="img-fluid rounded" />
-    </div>
-  
-    <div class="mt-4">
-      <h4>Descripción</h4>
-      <p>{{ imagenDetalles.descripcion }}</p>
-    </div>
-  
-    <div class="mt-4">
-      <h4>Detalles Adicionales</h4>
-      <ul>
-        <li><strong>ID de la Imagen:</strong> {{ imagenDetalles.id_imagen_publicitaria }}</li>
-        <li><strong>Grupo:</strong> {{ imagenDetalles.id_grupo }}</li>
-        <li><strong>Categoría:</strong> {{ imagenDetalles.id_categoria }}</li>
-        <li><strong>Tipo de Imagen:</strong> {{ imagenDetalles.id_tipo_imagen }}</li>
-      </ul>
-    </div>
-  
-    <div class="mt-4 text-center">
-      <a routerLink="/categoria/{{ imagenDetalles.id_categoria }}" class="btn btn-primary">Ver Productos de la Categoría</a>
-      <a routerLink="/grupo/{{ imagenDetalles.id_grupo }}" class="btn btn-secondary">Ver Productos del Grupo</a>
-    </div>
-  </div>
-  
-  <div *ngIf="!imagenDetalles" class="text-center mt-4">
-    <p>Cargando detalles de la imagen...</p>
-  </div>
+<div *ngIf="producto" class="card mt-4 p-3 shadow-sm">
+  <h2>{{ producto.name }}</h2>
+  <p><strong>Descripción:</strong> {{ producto.description }}</p>
+  <p><strong>Precio:</strong> ${{ producto.price }}</p>
+  <p><strong>Categoría:</strong> {{ producto.category }}</p>
+
+  <!-- Puedes mostrar una imagen si la tiene -->
+  <img *ngIf="producto.image" [src]="producto.image" alt="Imagen del producto" class="img-fluid mt-3" />
+</div>

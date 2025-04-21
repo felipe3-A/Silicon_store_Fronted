@@ -32,7 +32,6 @@ import { ContactosComponent } from "app/views/contactos/contactos.component";
 import { VisitanosComponent } from "app/views/visitanos/visitanos.component";
 import { PoliticasComponent } from "app/views/politicas/politicas.component";
 import { ProductosCategoriasComponent } from "app/views/productos-categorias/productos-categorias.component";
-import { DetallesComponent } from "app/views/detalles/detalles.component";
 import { GrupoComponent } from "app/views/grupo/grupo.component";
 import { CategoriaComponent } from "app/views/categoria/categoria.component";
 import { CrearModulosComponent } from "app/views/modulos/crear-modulos/crear-modulos.component";
@@ -52,6 +51,7 @@ import { CrearsubCaracteristicasComponent } from "app/views/caracteristicas/crea
 import { CrearValoresComponent } from "app/views/caracteristicas/crear-valores/crear-valores.component";
 import { WelcomeProductComponent } from "app/views/before_store/welcome-product/welcome-product.component";
 import { DataInfoComponent } from "app/views/data-info/data-info.component";
+import { DetalleComponent } from "app/views/detalles/detalles.component";
 
 export const AdminLayoutRoutes: Routes = [
   // {
@@ -109,11 +109,10 @@ export const AdminLayoutRoutes: Routes = [
   { path: "upgrade", component: UpgradeComponent },
   { path: "VerTienda", component: MainComponent },
   //Rutas para los carruseles
-  { path: "detalles/:id", component: DetallesComponent }, // Ruta para detalles
   { path: "categoria/:id", component: CategoriaComponent },
   { path: "grupo/:id", component: GrupoComponent },
 
-  //Demas rutas importante obviamente
+  //Demas rutas importante de
 
   { path: "AdministarProductos", component: AdminProductComponent },
   { path: "cart", component: CartComponent },
@@ -128,8 +127,10 @@ export const AdminLayoutRoutes: Routes = [
   { path: "AdministrarTipos", component: TipoProductoComponent },
   { path: "AdministrarGrupos", component: GruposGeneralesComponent },
   
-  { path: "products/:id_categoria", component: VerProductosComponent },
+  { path: "productsGallery", component: VerProductosComponent },
+  
   { path: "producto/:item_id", component: UnidadProductoComponent },
+ 
 
 
   {path:'AdministarUsuarios',component:AdministarUsuarioComponent},
@@ -166,8 +167,8 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'crearModulo', component: CrearModulosComponent },
   { path: 'listarModulos', component: ListarModulosComponent  },
   { path: 'editarModulo', component: EditarModuloComponent  },
-  { path: 'detalleModulo', component: DetallesComponent  },
-
+  
+  
 
 
   {path: 'crearCaracteristica', component: CrearCaracteristicasComponent},

@@ -16,6 +16,63 @@
   /* Oculto por defecto */
 }
 
+.autocomplete-container {
+  position: relative;
+  width: 300px;
+  margin: 0px auto;
+}
+*{
+  border: 1px solid red;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+.autocomplete-results {
+  background: #fff;
+  border: 1px solid #ccc;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.autocomplete-item:hover {
+  background-color: #f5f5f5;
+}
+
+.item-name {
+  font-weight: 500;
+}
+
+.item-quantity {
+  font-weight: bold;
+}
+
+.item-quantity.rojo {
+  color: #e74c3c;
+}
+
+.item-quantity.verde {
+  color: #2ecc71;
+}
+
+
+
+
+
 .menu-dropdown.show {
   display: block;
   /* Se muestra cuando se activa */
@@ -122,17 +179,10 @@
   /* Eliminar los puntos de la lista */
 }
 
-.nav-link {
-  color: #000000;
-  /* Color del texto */
-  font-weight: 900;
-  /* Texto en negrita */
+
+a, i ,ul{
   font-family: 'Poppins', sans-serif;
-  /* Aplicar la tipografía Poppins */
-  padding: 10px 15px;
-  /* Espaciado interno */
-  transition: background-color 0.3s;
-  /* Transición suave para el fondo */
+ 
 }
 
 .nav ul {
@@ -162,15 +212,9 @@
 }
 
 
-.nav-link i {
-  margin-right: 0.5rem;
-  font-size: 1.7rem;
-}
 
-.nav-link p {
-  margin: 0;
-  font-size: 12px;
-}
+
+
 
 
 
@@ -236,14 +280,11 @@ transform: rotate(-90deg);
   text-align: center;
 }
 
-/* .opciones_menu{
-  width: 130px;
-} */
 
 .opciones_menu {
   display: flex;
   flex-direction: row;
-  gap: 10px; /* espacio entre opciones, opcional */
+  gap: 60px; /* espacio entre opciones, opcional */
   width: 100%;
 }
 
@@ -309,7 +350,6 @@ transform: rotate(-90deg);
 /* Estilos para el contenedor de las cards */
 .contenedor-cards {
   position: relative;
-  width: 100%;
   height: 5vh;
   /* Ajustamos la altura para que las cards no sean tan pequeñas */
   overflow: hidden;
@@ -319,11 +359,16 @@ transform: rotate(-90deg);
   /* Mayor padding para dar espacio alrededor */
 }
 
+.h3_info{
+  width: 10%;
+}
+
 .card-container {
   display: flex;
+  width: auto;
   animation: scrollCards 30s linear infinite;
   /* Animación para las tarjetas */
-  gap: 15px;
+  gap: 10px;
   /* Ajustamos el espacio entre las tarjetas */
 }
 
@@ -335,7 +380,7 @@ transform: rotate(-90deg);
   align-items: center;
   justify-content: flex-start;
   /* Alinea los elementos hacia el inicio */
-  width: 100%;
+  width: 10%;
   height: 2vh;
   /* background-color: rebeccapurple; */
   border-radius: 8px;
@@ -369,7 +414,7 @@ transform: rotate(-90deg);
   /* Ajuste del tamaño del texto */
   color: #ffffff;
   /* Color blanco para los números de contacto */
-  width: 100%;
+  width: 10%;
   margin: 0;
   padding: 0;
   font-weight: lighter;
@@ -580,3 +625,110 @@ button {
   margin-top: 1px;
 
 }
+
+/*Esto debe pewrmanecer*/
+
+.orange {
+  background-color: #F9F9F9;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+.nav-link {
+  color: #000000;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s;
+}
+
+.datos1 {
+  background-color: #3F3F3F;
+  align-items: center;
+  width: 130px;
+  height: 100px;
+  text-align: center;
+}
+
+.datos {
+  background-color: #dc143c;
+  align-items: center;
+  width: 130px;
+  height: 100px;
+  text-align: center;
+}
+.datos1:hover, .datos:hover {
+  cursor: pointer;
+  transform: scale(1.05); /* Efecto de hover */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size : 1rem;
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .orange {
+    flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+    align-items: flex-start; /* Alinea los elementos al inicio */
+  }
+
+  .opciones_menu {
+    justify-content: center; /* Centra las opciones en pantallas pequeñas */
+  }
+
+  .nav-link {
+    font-size: 14px; /* Ajusta el tamaño de fuente */
+  }
+
+  .datos1, .datos {
+    width: 100%; /* Asegura que los botones ocupen el ancho completo */
+    height: auto; /* Permite que la altura se ajuste */
+  }
+}
+
+.fade-image {
+  opacity: 0;
+  animation: fadeLoop 6s infinite;
+  transition: opacity 1s ease-in-out;
+}
+
+
+
+.fade-image:nth-child(2) {
+  animation-delay: 5s;
+}
+
+
+
+@keyframes fadeLoop {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  40% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+

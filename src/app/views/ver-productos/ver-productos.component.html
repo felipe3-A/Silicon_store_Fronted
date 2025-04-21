@@ -1,19 +1,92 @@
-<div class="container">
-    <h2 class="text-center my-4">Productos por Categoría</h2>
-    <div class="row">
-      <div class="col-md-3 mb-4" *ngFor="let producto of productos">
-        <div class="card h-65">
-            <img [src]="producto.url_imagen" class="card-img-top rounded-3" alt="Imagen del producto">
-            <div class="card-body">
-            <h5 class="card-title">{{ producto.nombre_producto }}</h5>
-            <p class="card-text">{{ producto.descripcion_producto }}</p>
-            <p class="text-success fw-bold">${{ producto.precio_producto }}</p>
+<div class="container mt-4">
+  <input type="text" class="form-control mb-3" placeholder="Buscar producto..." [(ngModel)]="busqueda"
+    (input)="filtrarProductos()" />
+
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>ID</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of productosFiltradosPaginados">
+        <td><img [src]="item.imagen" alt="imagen" width="60" /></td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.item_id }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="cargarGaleriaImagenes(item.item_id)">
+            {{ item.gallery?.length > 0 ? 'Ver Galería' : 'EMPEZAR CREANDO GALERIA' }}
+          </button>
+                  </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal fade show d-block" tabindex="-1" role="dialog" *ngIf="mostrarGaleriaModal" style="background-color: rgba(0, 0, 0, 0.6);">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Galería del producto {{ galeriaActual?.name }}</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModalGaleria()"></button>
+        </div>
+        <div class="modal-body text-center">
+    
+          <!-- Si hay imágenes -->
+          <div *ngIf="galeriaImagenes.length > 0; else sinImagenes">
+            <div class="row">
+              <div class="col-md-4 mb-3" *ngFor="let img of galeriaImagenes; let i = index">
+                <div class="card">
+                  <img [src]="img" class="card-img-top" alt="imagen galería">
+                  <div class="card-body">
+<button class="btn btn-danger btn-sm" (click)="eliminarImagenSeleccionada(i, galeriaActual?.item_id)">Eliminar</button>
+                    <label class="btn btn-secondary btn-sm mt-1">
+                      Reemplazar
+                      <input type="file" (change)="reemplazarImagenSeleccionada(i, $event)" hidden>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="card-footer text-center">
-            <button class="btn btn-primary">Ver Detalle</button>
-          </div>
+    
+          <!-- Si NO hay imágenes -->
+          <ng-template #sinImagenes>
+            <p>No hay imágenes en la galería de este producto.</p>
+          </ng-template>
+    
+          <hr>
+    
+          <!-- Formulario para subir nuevas imágenes -->
+          <div class="mb-3">
+            <label for="uploadImages" class="form-label">Agregar nuevas imágenes:</label>
+            <input
+            *ngIf="galeriaActual?.item_id"
+            type="file"
+            multiple
+            (change)="onFileSelected($event, galeriaActual.item_id)"
+            class="form-control"
+            id="uploadImages"
+          />
+                    </div>
+    
+                    <button
+                    *ngIf="galeriaActual?.item_id"
+                    class="btn btn-success"
+                    (click)="upload(galeriaActual.item_id)"
+                  >
+                    Subir imágenes
+                  </button>
+                          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModalGaleria()">Cerrar</button>
         </div>
       </div>
     </div>
+    
   </div>
   
+</div>
