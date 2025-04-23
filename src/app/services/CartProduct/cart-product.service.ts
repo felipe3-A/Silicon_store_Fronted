@@ -18,13 +18,16 @@ export class CartProductsService {
   }) {
     return this.http.post('http://127.0.0.1:8000/api/cart/add', data);
   }
+  vaciarCarrito(personId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}carrito/${personId}/vaciar`);
+  }
+  
   
   // Eliminar producto del carrito
-  eliminarProductoDelCarrito(personId: number, item_id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}cart/remove-item/${item_id}`, {
-      params: { person_id: personId } // Asegúrate de enviar el ID de la persona si es necesario
-    });
+  eliminarProductoDelCarrito(personId: number, itemId: number) {
+    return this.http.delete(`${this.baseUrl}cart/person/${personId}/remove-item/${itemId}`);
   }
+  
 
   
  // Obtener productos en el carrito

@@ -1,3 +1,6 @@
+
+
+
 <div class="container-fluid contenedor-cards" style="background-color: #2c2c2c;">
   <div class="card-container">
     <div class="card_row" *ngFor="let item of listaDataInfo">
@@ -9,7 +12,6 @@
 </div>
 
 <div class="d-flex flex-column flex-md-row justify-content-between align-items-center orange m-0">
-  <!-- Contenedor Izquierdo: Logo -->
   <div class="d-flex align-items-center store" [routerLink]="['/VerTienda']">
     <img src="assets/img/Silicon_Store.png" class="image" alt="Logo Silicon">
   </div>
@@ -40,9 +42,7 @@
         </ul>
       </div>
 
-      <!-- Segundo menú con buscador, enlaces y redes -->
       <div class="d-flex flex-wrap align-items-center justify-content-between gap-1 p-1 bg-light  w-100">
-        <!-- Buscador -->
 
         <div class="autocomplete-container">
           <input type="text" [(ngModel)]="textoBusqueda" (input)="buscar()" placeholder="Buscar producto..."
@@ -65,13 +65,13 @@
 
 
 
-        <!-- Enlaces adicionales -->
+      
         <div class="d-flex gap-3 align-items-center flex-shrink-0">
           <a class="text-dark fw-bold text-decoration-none" href="#">Más sobre Nosotros</a>
           <a class="text-dark fw-bold text-decoration-none" href="#">Visítanos</a>
         </div>
 
-        <!-- Redes sociales -->
+     
         <div class="d-flex gap-3 align-items-center flex-shrink-0 position-relative overflow-hidden"
           style="width: 270px; height: 30px;">
           <img src="assets/img/facebook_silicon.png" class="fade-image position-absolute w-100 h-100 object-fit-contain"
@@ -85,10 +85,8 @@
     </div>
   </div>
 
-  <!-- Mostrar solo si está logueado -->
   <ng-container *ngIf="isLoggedIn; else notLoggedIn">
     <div class="content d-flex m-0">
-      <!-- Carrito -->
       <div class="text-white text-center datos1" (click)="abrirCarrito()">
         <div class="message_login">
           <i class="fas fa-shopping-cart mt-4 m-0"></i>
@@ -96,7 +94,6 @@
         </div>
       </div>
 
-      <!-- Usuario -->
       <div class="text-white text -center datos" (click)="cerrarSesion()">
         <div class="align-items-center justify-content-center">
           <i class="fas fa-user mt-4 m-0"></i>
@@ -108,12 +105,16 @@
   </ng-container>
 </div>
 
-<!-- Solo mostrar si NO está logueado -->
 <ng-template #notLoggedIn>
-  <div class="d-flex flex-row justify-content-end pe-4 mt-2">
+  <div class="d-flex flex-row justify-content-end">
     <div class="button-container">
-      <button class="btn btn-primary me-2" (click)="irALogin()">Login</button>
-      <button class="btn btn-secondary" (click)="irARegister()">Registro</button>
+      <button class="btn btn-primary" (click)="irALogin()">Login</button>
+      <button class="btn btn-secondary" (click)="irARegister()">Registro</button> 
+
+      <!-- <div class="Login"></div>
+      <div class="become">
+        <img src="assets/img/BECOME.png"class="image">
+      </div> -->
     </div>
   </div>
 </ng-template>

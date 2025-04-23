@@ -123,11 +123,70 @@ listarProductos() {
       this.checkout.open();
 
       this.checkout.on("complete", () => {
-        Swal.fire("Éxito", "Compra realizada exitosamente", "success");
-        this.obtenerProductosEnCarrito(); // Refresca el carrito si es necesario
+        this.mostrarFacturaEnModal(); // 👈 mostramos los detalles
+        this.obtenerProductosEnCarrito(); // Refresca el carrito
       });
+      
     }
   }
+
+  vaciarCarrito() {
+    this.cartProductsService.vaciarCarrito(this.person_id).subscribe(() => {
+      this.carrito = [];
+      this.totalAmount = 0;
+      console.log('Carrito vaciado correctamente');
+    });
+    
+  }
+  
+
+  mostrarFacturaEnModal() {
+    const usuario = this.loginService.getUserData(); // Asegúrate de tener estos datos del usuario
+    const nombre = usuario?.nombre || "Usuario";
+    const correo = usuario?.correo || "correo@desconocido.com";
+  
+    const productosHtml = this.carrito.map((producto) => {
+      const nombreProd = producto.product.name;
+      const precio = parseFloat(producto.product.unit_price).toFixed(2);
+      const cantidad = producto.product.receiving_quantity || 1;
+      const subtotal = (parseFloat(precio) * cantidad).toFixed(2);
+  
+      return `
+        <tr>
+          <td>${nombreProd}</td>
+          <td>${cantidad}</td>
+          <td>$${precio}</td>
+          <td>$${subtotal}</td>
+        </tr>
+      `;
+    }).join('');
+  
+    const htmlFactura = `
+      <strong>Cliente:</strong> ${nombre}<br>
+      <strong>Correo:</strong> ${correo}<br><br>
+      <table style="width:100%; text-align:left; border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 1px solid #ccc;">
+            <th>Producto</th>
+            <th>Cant.</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>${productosHtml}</tbody>
+      </table>
+      <br><strong>Total: </strong> $${this.totalAmount.toFixed(2)}
+    `;
+  
+    Swal.fire({
+      title: '🧾 Factura de compra',
+      html: htmlFactura,
+      icon: 'success',
+      confirmButtonText: 'Aceptar',
+      width: 700,
+    });
+  }
+  
 
   obtenerCarrito(): void {
     this.cartService.obtenerCarrito(this.person_id).subscribe(
@@ -194,26 +253,27 @@ listarProductos() {
   
   
 
-eliminarProductoC(producto: any): void {
-  const productoId = producto?.product.item_id; // Asegúrate de que estás usando el ID correcto
-
-  if (!productoId) {
-    console.error("ID del producto no definido:", producto);
-    Swal.fire("Error", "No se encontró el ID del producto para eliminar", "error");
-    return;
-  }
-
-  this.cartProductsService.eliminarProductoDelCarrito(this.person_id, productoId).subscribe(
-    (response) => {
-      Swal.fire("Éxito", "Producto eliminado del carrito", "success");
-      this.obtenerProductosEnCarrito(); // Refresca el carrito
-    },
-    (error) => {
-      console.error("Error al eliminar producto del carrito", error);
-      Swal.fire("Error", "No se pudo eliminar el producto del carrito", "error");
+  eliminarProductoC(producto: any): void {
+    const itemId = producto?.id; // Este es el ID correcto del ítem del carrito
+  
+    if (!itemId) {
+      console.error("ID del item del carrito no definido:", producto);
+      Swal.fire("Error", "No se encontró el ID del item del carrito para eliminar", "error");
+      return;
     }
-  );
-}
+  
+    this.cartProductsService.eliminarProductoDelCarrito(this.person_id, itemId).subscribe(
+      (response) => {
+        Swal.fire("Éxito", "Producto eliminado del carrito", "success");
+        this.obtenerProductosEnCarrito(); // Refresca el carrito
+      },
+      (error) => {
+        console.error("Error al eliminar producto del carrito", error);
+        Swal.fire("Error", "No se pudo eliminar el producto del carrito", "error");
+      }
+    );
+  }
+  
 
 
 

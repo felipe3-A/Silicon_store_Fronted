@@ -732,3 +732,12 @@ button {
   100% { opacity: 0; }
 }
 
+.Login{
+background-color: #333;
+width: 30%;
+}
+.become{
+  background-color: #dc143c;
+  width: 70%;
+
+}
