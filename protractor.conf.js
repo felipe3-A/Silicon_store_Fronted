@@ -12,7 +12,9 @@ exports.config = {
     'browserName': 'chrome'
   },
   directConnect: true,
-  baseUrl: 'http://127.0.0.1:8000/api',
+  //Aqui se le cambio baseUrl: 'http://127.0.0.1:8000/api',
+ //Por lo que esta alli
+  baseUrl: 'https://store.silicon.com.co/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
