@@ -15,7 +15,11 @@ export class UnidadProductoComponent implements OnInit {
   logoMarca: string = ""; // URL del logo de la marca
   productoListado: any[] = [];
   productos = [];
-
+  mostrarZoom: boolean = false;
+  mostrarLightbox: boolean = false;
+  imagenActualIndex: number = 0;
+  mostrarDetalle: boolean=false;
+  productoSeleccionado:any=null;
   galeriaImagenes: string[] = [];
   itemSeleccionado: any;
   imagenPrincipal: string ="https://media.istockphoto.com/id/1152189152/es/vector/icono-rojo-de-alerta.jpg?s=612x612&w=0&k=20&c=FTX2cd49ZhiXXyR-mMXT4vb2jxuInJVx7fcTOtQV37U=";
@@ -66,9 +70,31 @@ export class UnidadProductoComponent implements OnInit {
     });
   }
   
+  abrirLightbox() {
+    this.mostrarLightbox = true;
+  }
 
-  cambiarImagenPrincipal(index: number): void {
+  cerrarLightbox() {
+    this.mostrarLightbox = false;
+  }
+  imagenAnterior() {
+    if (this.imagenActualIndex > 0) {
+      this.imagenActualIndex--;
+    } else {
+      this.imagenActualIndex = this.galeriaImagenes.length - 1; // volver al final
+    }
+  }
+
+  imagenSiguiente() {
+    if (this.imagenActualIndex < this.galeriaImagenes.length - 1) {
+      this.imagenActualIndex++;
+    } else {
+      this.imagenActualIndex = 0; // volver al inicio
+    }
+  }
+  cambiarImagenPrincipal(index: number) {
     this.imagenPrincipal = this.galeriaImagenes[index];
+    this.imagenActualIndex = index;
   }
   cargarItemSeleccionado(item_id: number): void {
     this.serviceImagen.listarProductoId(item_id).subscribe(
@@ -91,7 +117,14 @@ export class UnidadProductoComponent implements OnInit {
       }
     );
   }
+  mostrarDetallesProducto(producto: any): void {
+    this.productoSeleccionado = producto;
+    this.mostrarDetalle = true;
+  }
   
+  cerrarDetalles(): void {
+    this.mostrarDetalle = false;
+  }
   cargarGaleriaImagenes(item_id: number): void {
     this.serviceImagen.obtenerGaleriaPorItem(item_id).subscribe(
       (response) => {
@@ -178,6 +211,14 @@ export class UnidadProductoComponent implements OnInit {
     });
   }
   
+
+  abrirZoom() {
+    this.mostrarZoom = true;
+  }
+
+  cerrarZoom() {
+    this.mostrarZoom = false;
+  }
 
   marcarFavorito(): void {
     this.esFavorito = !this.esFavorito;

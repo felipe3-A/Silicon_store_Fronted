@@ -741,3 +741,57 @@ width: 30%;
   width: 70%;
 
 }
+
+
+.buscador-input {
+  border: 2px solid crimson; /* borde rojo carmesí */
+  height: 40px;
+  font-size: 16px;
+  padding-right: 3rem; /* espacio para el botón */
+  border-radius: 8px;
+}
+
+.search-icon-btn {
+  background-color: crimson;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.search-icon-btn i {
+  font-size: 16px;
+}
+
+.search-wrapper {
+  width: 100%;
+}
+
+.autocomplete-results {
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 999;
+  width: auto;
+}
+
+.autocomplete-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.autocomplete-item:hover {
+  background-color: #f1f1f1;
+}
+
+.item-quantity.rojo {
+  color: red;
+}
+
+.item-quantity.verde {
+  color: green;
+}
