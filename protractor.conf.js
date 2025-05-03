@@ -14,8 +14,8 @@ exports.config = {
   directConnect: true,
   //Aqui se le cambio baseUrl: 'http://127.0.0.1:8000/api',
  //Por lo que esta alli
-  baseUrl: 'https://store.silicon.com.co/',
-  framework: 'jasmine',
+ baseUrl: 'https://store.silicon.com.co/api',
+ framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000,
