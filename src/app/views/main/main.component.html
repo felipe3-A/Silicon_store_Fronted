@@ -7,14 +7,16 @@
       </div>
     </div>
     <!-- Botones de control -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Anterior</span>
+    <button class="custom-carousel-btn prev" type="button" data-bs-target="#carouselExampleControls"
+      data-bs-slide="prev">
+      <i class="material-icons">chevron_left</i>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Siguiente</span>
+    <button class="custom-carousel-btn next" type="button" data-bs-target="#carouselExampleControls"
+      data-bs-slide="next">
+      <i class="material-icons">chevron_right</i>
     </button>
+
+
     <!-- Indicadores -->
     <div class="carousel-indicators">
       <button *ngFor="let imagen of publicidad; let i = index" type="button" data-bs-target="#carouselExampleControls"
@@ -27,11 +29,8 @@
 <div class="w-100">
   <div class="category-marquee-container">
     <div class="category-marquee">
-      <div
-        class="category-card-small text-center"
-        *ngFor="let cat of categorias"
-        (click)="seleccionarCategoria(cat.category)"
-      >
+      <div class="category-card-small text-center" *ngFor="let cat of categorias"
+        (click)="seleccionarCategoria(cat.category)">
         <div class="card shadow-sm border-0 p-2">
           <div class="card-body p-1">
             <h6 class="card-title m-1">{{ cat.category }}</h6>
@@ -39,11 +38,8 @@
         </div>
       </div>
       <!-- Duplicamos para que se vea continuo -->
-      <div
-        class="category-card-small text-center"
-        *ngFor="let cat of categorias"
-        (click)="seleccionarCategoria(cat.category)"
-      >
+      <div class="category-card-small text-center" *ngFor="let cat of categorias"
+        (click)="seleccionarCategoria(cat.category)">
         <div class="card shadow-sm border-0 p-2">
           <div class="card-body p-1">
             <h6 class="card-title m-1">{{ cat.category }}</h6>
@@ -52,9 +48,9 @@
       </div>
     </div>
   </div>
-  
-  
-  
+
+
+
 
   <div *ngIf="categoriaSeleccionada" class="mt-5">
     <h4>Productos en "{{ categoriaSeleccionada }}"</h4>
@@ -75,108 +71,122 @@
 
 
 <!-- Contenedor de categorías -->
-<div class="fila2">
-  <div class="container mt-5 content_category">
-    <div class="title_category">Nuestro Contenido</div>
-    <div class="contenedor_columnas">
-
-
-      <div class="columna1">
-        <div id="ofertasCarousel" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-interval="5000">
-          <div class="carousel-inner">
-            <div class="carousel-item active" *ngFor="let imagen of ofertas; let i = index">
-              <img [src]="imagen.imagen" class="d-block w-100 rounded-3" alt="Imagen cargada" />
-            </div>
+<!-- Contenedor de categorías -->
+<div class="container-fluid mt-5">
+  <div class="row align-items-center" style="min-height: 80vh;">
+    <div class="col-12 text-center">
+      <h2 class="titulo-seccion">Nuestro Contenido</h2>
+    </div>
+    <!-- Carrusel de redes sociales (40%) -->
+    <div class="col-md-5 d-flex justify-content-center">
+      <div id="carouselRedes" class="carousel slide w-100" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active text-center">
+            <img src="assets/img/facebook.jpg" class="img-fluid cuadro" alt="Red 1">
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#ofertasCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#ofertasCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-
-        <div id="descuentosCarousel" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-interval="7000"
-          style="width: 100%; height: 250px;">
-          <div class="carousel-inner" style="height: 100%;">
-            <div class="carousel-item active" *ngFor="let imagen of descuentos; let i = index">
-              <img [src]="imagen.imagen" class="d-block w-100 h-100 rounded-3" alt="Imagen cargada"
-                style="object-fit: cover; height: 100%;" />
-            </div>
+          <div class="carousel-item text-center">
+            <img src="assets/img/instagram.jpg" class="img-fluid cuadro" alt="Red 2">
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#descuentosCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#descuentosCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+          <div class="carousel-item text-center">
+            <img src="assets/img/tiktok.jpg" class="img-fluid cuadro" alt="Red 2">
+          </div>
+          <!-- Agrega más redes si deseas -->
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselRedes" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselRedes" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
       </div>
+    </div>
 
-      <div class="columna2">
-        <div id="descuentosCarousel2" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-interval="5000"
-          style="width: 100%; height: 250px;">
-          <div class="carousel-inner" style="height: 100%;">
-            <div class="carousel-item active" *ngFor="let imagen of descuentos; let i = index">
-              <img [src]="imagen.imagen" class="d-block w-100 h-100 rounded-3" alt="Imagen cargada"
-                style="object-fit: cover; height: 100%;" />
-            </div>
+    <!-- Carrusel de servicios (60%) -->
+    <div class="col-md-7 d-flex flex-column justify-content-center gap-2">
+
+      <!-- Carrusel de servicios 1 -->
+      <div id="carouselServicios1" class="carousel slide w-100" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active text-center">
+            <img src="assets/img/Bold.png" class="img-fluid " alt="Servicio 1">
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#descuentosCarousel2"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#descuentosCarousel2"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+          <div class="carousel-item active text-center">
+            <img src="assets/img/renovamos.jpg " class="img-fluid" alt="Servicio 1">
+          </div>
+       
         </div>
-
-        <div id="ofertasCarousel2" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-interval="5000">
-          <div class="carousel-inner">
-            <div class="carousel-item active" *ngFor="let imagen of ofertas; let i = index">
-              <img [src]="imagen.imagen" class="d-block w-100 rounded-3" alt="Imagen cargada" />
-            </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselServicios1" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselServicios1" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    
+      <!-- Carrusel de servicios 2 -->
+      <div id="carouselServicios2" class="carousel slide w-100" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active text-center">
+            <img src="assets/img/servicio_1.png" class="img-fluid" alt="Servicio extra 1">
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#ofertasCarousel2" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#ofertasCarousel2" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+          <div class="carousel-item text-center">
+            <img src="assets/img/Visitanos.png" class="img-fluid" alt="Servicio extra 2">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselServicios2" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselServicios2" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    
+    </div>
+    
+
+  </div>
+</div>
+
+
+
+
+
+
+<div class="tv-carousel-section">
+  <h2 class="carousel-title">Todo lo relacionado con Accesorios</h2>
+
+  <div class="tv-carousel-container">
+    <button class="arrow left" (click)="scrollCarousel(-1)">‹</button>
+
+    <div class="tv-carousel" #carousel>
+      <div class="tv-item animate-fade-in" *ngFor="let tv of televisores">
+        <img [src]="tv.imagen" alt="{{tv.name}}">
+        <h3>{{ tv.name }}</h3>
+        <p class="price">${{ tv.cost_price }}</p>
+
+        <div class="tv-actions">
+          <button (click)="verMasInformacion(tv)">Ver más</button>
+          <button (click)="agregarAFavoritos(tv)">❤️</button>
+          <button (click)="verProducto(tv.item_id)">🛒</button>
         </div>
       </div>
     </div>
+
+    <button class="arrow right" (click)="scrollCarousel(1)">›</button>
   </div>
 </div>
+
 
 <!-- Contenedor de búsqueda y filtros -->
 <div class="container mb-4 px-4">
   <div class="row align-items-center">
     <div class="col-md-6 mb-2">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Buscar por nombre o categoría"
-        [(ngModel)]="filtroBusqueda"
-        (input)="aplicarFiltros()"
-      />
+      <input type="text" class="form-control" placeholder="Buscar por nombre o categoría" [(ngModel)]="filtroBusqueda"
+        (input)="aplicarFiltros()" />
     </div>
 
     <div class="col-md-4 mb-2">
-      <select
-        class="form-select"
-        [(ngModel)]="filtroCategoria"
-        (change)="aplicarFiltros()"
-      >
+      <select class="form-select" [(ngModel)]="filtroCategoria" (change)="aplicarFiltros()">
         <option value="">Todas las categorías</option>
         <option *ngFor="let categoria of categorias" [value]="categoria.category">
           {{ categoria.category }}
@@ -209,7 +219,7 @@
 
 
           </div>
-        
+
 
           <!-- Estado de disponibilidad -->
           <div class="mt-1">

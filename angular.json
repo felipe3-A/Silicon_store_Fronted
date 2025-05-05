@@ -38,7 +38,9 @@
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
               "node_modules/bootstrap-notify/bootstrap-notify.js",
-              "node_modules/chartist/dist/chartist.js"
+              "node_modules/chartist/dist/chartist.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+
             ],
             "allowedCommonJsDependencies": [
               "rxjs/add/operator/filter",

@@ -739,14 +739,42 @@ width: 30%;
 
 }
 
-
 .buscador-input {
-  border: 2px solid crimson; /* borde rojo carmesí */
-  height: 40px;
-  font-size: 16px;
-  padding-right: 3rem; /* espacio para el botón */
-  border-radius: 8px;
+  padding-right: 40px; /* espacio para el ícono si fuera necesario */
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
+
+.input-group .input-group-text {
+  background-color: white;
+  border-left: none;
+  cursor: pointer;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.buscador-responsive {
+  width: 100%;
+}
+
+/* Responsive para móviles */
+@media screen and (max-width: 768px) {
+  .buscador-responsive {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+.buscador-btn {
+  background-color: crimson !important;
+  color: white !important; /* Esto hará blanco el ícono */
+}
+
+.buscador-btn i {
+  color: white !important;
+}
+
 
 .search-icon-btn {
   background-color: crimson;
