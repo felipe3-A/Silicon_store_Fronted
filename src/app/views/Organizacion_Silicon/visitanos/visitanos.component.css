@@ -1,0 +1,46 @@
+/* Color carmesí */
+.bg-carmesi {
+    background-color: #DC143B;
+  }
+  .text-carmesi {
+    color: #DC143B;
+  }
+  .btn-carmesi {
+    background-color: #DC143B;
+    border: none;
+  }
+  .btn-carmesi:hover {
+    background-color: #b0102e;
+    color: white;
+  }
+  
+  /* Animaciones */
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.9; }
+  }
+  .animate-fade-slide { animation: fadeSlide 1s ease-in-out; }
+  .animate-fade-in { animation: fadeIn 1.2s ease-in; }
+  .animate-pulse { animation: pulse 2s infinite; }
+  
+  /* Mapa y responsividad */
+  iframe {
+    border: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
+  @media (max-width: 768px) {
+    iframe {
+      min-height: 250px;
+    }
+  }
+  

@@ -1,0 +1,69 @@
+/* Color carmesí actualizado */
+.bg-carmesi {
+    background-color: #DC143B;
+  }
+  
+  .btn-carmesi {
+    background-color: #DC143B;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-carmesi:hover {
+    background-color: #c01133;
+    color: white;
+  }
+  
+  /* Animaciones */
+  @keyframes fadeSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  
+  @keyframes bounceSlow {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+  }
+  
+  .animate-fade-slide {
+    animation: fadeSlide 1s ease-in-out;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 1.2s ease-in;
+  }
+  
+  .animate-bounce-slow {
+    animation: bounceSlow 2.5s infinite ease-in-out;
+  }
+  
+  .animate-pulse {
+    animation: pulse 2s infinite;
+  }
+  

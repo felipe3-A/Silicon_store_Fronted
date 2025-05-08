@@ -25,72 +25,29 @@
   </div>
 </div>
 
-
-<div class="w-100">
-  <div class="category-marquee-container">
-    <div class="category-marquee">
-      <div class="category-card-small text-center" *ngFor="let cat of categorias"
-        (click)="seleccionarCategoria(cat.category)">
-        <div class="card shadow-sm border-0 p-2">
-          <div class="card-body p-1">
-            <h6 class="card-title m-1">{{ cat.category }}</h6>
-          </div>
-        </div>
-      </div>
-      <!-- Duplicamos para que se vea continuo -->
-      <div class="category-card-small text-center" *ngFor="let cat of categorias"
-        (click)="seleccionarCategoria(cat.category)">
-        <div class="card shadow-sm border-0 p-2">
-          <div class="card-body p-1">
-            <h6 class="card-title m-1">{{ cat.category }}</h6>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+// Nuestro contenido
 
 
-
-
-  <div *ngIf="categoriaSeleccionada" class="mt-5">
-    <h4>Productos en "{{ categoriaSeleccionada }}"</h4>
-    <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
-      <div class="col" *ngFor="let producto of productos">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body">
-            <h5 class="card-title">{{ producto.name }}</h5>
-            <p class="card-text">{{ producto.description }}</p>
-            <p><strong>Precio:</strong> ${{ producto.unit_price }}</p>
-            <p><strong>Stock:</strong> {{ producto.total_quantity }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Contenedor de categorías -->
-<!-- Contenedor de categorías -->
 <div class="container-fluid mt-5">
   <div class="row align-items-center" style="min-height: 80vh;">
-    <div class="col-12 text-center">
+    
+    <div class="col-12 text-center mb-4">
       <h2 class="titulo-seccion">Nuestro Contenido</h2>
     </div>
-    <!-- Carrusel de redes sociales (40%) -->
-    <div class="col-md-5 d-flex justify-content-center">
+
+    <!-- Carrusel de redes sociales -->
+    <div class="col-12 col-md-5 mb-4 mb-md-0 d-flex justify-content-center">
       <div id="carouselRedes" class="carousel slide w-100" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active text-center">
-            <img src="assets/img/facebook.jpg" class="img-fluid cuadro" alt="Red 1">
+            <img src="assets/img/facebook.jpg" class="img-fluid cuadro" alt="Red 1" href="https://www.facebook.com/Silicon.Popayan/">
           </div>
           <div class="carousel-item text-center">
-            <img src="assets/img/instagram.jpg" class="img-fluid cuadro" alt="Red 2">
+            <img src="assets/img/instagram.jpg" class="img-fluid cuadro" alt="Red 2" href="https://www.instagram.com/siliconpopayan/">
           </div>
           <div class="carousel-item text-center">
-            <img src="assets/img/tiktok.jpg" class="img-fluid cuadro" alt="Red 2">
+            <img src="assets/img/tiktok.jpg" class="img-fluid cuadro" alt="Red 3" href="https://www.tiktok.com/@silicon.popayan">
           </div>
-          <!-- Agrega más redes si deseas -->
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselRedes" data-bs-slide="prev">
           <span class="carousel-control-prev-icon"></span>
@@ -101,19 +58,17 @@
       </div>
     </div>
 
-    <!-- Carrusel de servicios (60%) -->
-    <div class="col-md-7 d-flex flex-column justify-content-center gap-2">
-
-      <!-- Carrusel de servicios 1 -->
+    <!-- Carruseles de servicios -->
+    <div class="col-12 col-md-7 d-flex flex-column gap-3">
+      
       <div id="carouselServicios1" class="carousel slide w-100" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active text-center">
-            <img src="assets/img/Bold.png" class="img-fluid " alt="Servicio 1">
+            <img src="assets/img/Bold.png" class="img-fluid" alt="Servicio 1">
           </div>
-          <div class="carousel-item active text-center">
-            <img src="assets/img/renovamos.jpg " class="img-fluid" alt="Servicio 1">
+          <div class="carousel-item text-center">
+            <img src="assets/img/renovamos.jpg" class="img-fluid" alt="Servicio 2">
           </div>
-       
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselServicios1" data-bs-slide="prev">
           <span class="carousel-control-prev-icon"></span>
@@ -122,8 +77,7 @@
           <span class="carousel-control-next-icon"></span>
         </button>
       </div>
-    
-      <!-- Carrusel de servicios 2 -->
+
       <div id="carouselServicios2" class="carousel slide w-100" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active text-center">
@@ -140,41 +94,63 @@
           <span class="carousel-control-next-icon"></span>
         </button>
       </div>
-    
     </div>
-    
 
   </div>
 </div>
-
-
-
-
 
 
 <div class="tv-carousel-section">
   <h2 class="carousel-title">Todo lo relacionado con Accesorios</h2>
 
   <div class="tv-carousel-container">
-    <button class="arrow left" (click)="scrollCarousel(-1)">‹</button>
+    <button class="arrow left" (click)="scrollCarousel(-1, 'accesorios')">‹</button>
 
-    <div class="tv-carousel" #carousel>
-      <div class="tv-item animate-fade-in" *ngFor="let tv of televisores">
-        <img [src]="tv.imagen" alt="{{tv.name}}">
-        <h3>{{ tv.name }}</h3>
-        <p class="price">${{ tv.cost_price }}</p>
-
-        <div class="tv-actions">
-          <button (click)="verMasInformacion(tv)">Ver más</button>
-          <button (click)="agregarAFavoritos(tv)">❤️</button>
-          <button (click)="verProducto(tv.item_id)">🛒</button>
-        </div>
+    <div class="tv-carousel" #carouselAccesorios>
+      <div class="tv-item animate-fade-in" *ngFor="let accesorio of accesorios" (click)="verProducto(accesorio.item_id)">
+        <img [src]="accesorio.imagen" alt="{{accesorio.name}}">
+        <h3>{{ accesorio.name }}</h3>
+        <p class="price">${{ accesorio.cost_price }}</p>
       </div>
     </div>
 
-    <button class="arrow right" (click)="scrollCarousel(1)">›</button>
+    <button class="arrow right" (click)="scrollCarousel(1, 'accesorios')">›</button>
   </div>
 </div>
+
+<div class="advice-section">
+  <span class="advice-title">Cuida tus electrodomésticos como se merecen ⚙️❤️</span>
+
+  <div class="carousel-container">
+    <div class="carousel-track" #track>
+      <div class="advice-card" *ngFor="let consejo of consejos">
+        <div class="advice-icon">{{ consejo.icono }}</div>
+        <div class="advice-text">
+          <strong>{{ consejo.titulo }}</strong> – {{ consejo.descripcion }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tv-carousel-section">
+  <h2 class="carousel-title">Todo lo relacionado con Televisores</h2>
+
+  <div class="tv-carousel-container">
+    <button class="arrow left" (click)="scrollCarousel(-1, 'televisores')">‹</button>
+
+    <div class="tv-carousel" #carouselTelevisores>
+      <div class="tv-item animate-fade-in" *ngFor="let tv of televisores" (click)="verProducto(tv.item_id)">
+        <img [src]="tv.imagen" alt="{{tv.name}}">
+        <h3>{{ tv.name }}</h3>
+        <p class="price">${{ tv.cost_price }}</p>
+      </div>
+    </div>
+
+    <button class="arrow right" (click)="scrollCarousel(1, 'televisores')">›</button>
+  </div>
+</div>
+
 
 
 <!-- Contenedor de búsqueda y filtros -->

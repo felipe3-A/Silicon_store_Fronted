@@ -47,10 +47,13 @@
         <!-- Imágenes -->
         <div class="d-flex gap-3 align-items-center flex-shrink-0 position-relative overflow-hidden"
           style="width: 270px; height: 30px;">
-          <img src="assets/img/facebook_silicon.png" class="fade-image position-absolute w-100 h-100 object-fit-contain"
-            alt="Logo 1">
-          <img src="assets/img/instagram_silicon.png"
-            class="fade-image position-absolute w-100 h-100 object-fit-contain" alt="Logo 2">
+          <img src="assets/img/Carrusel_imagenes (1).png" class="fade-image position-absolute w-100 h-100 object-fit-contain"alt="Logo 1">
+          <img src="assets/img/Carrusel_imagenes (2).png" class="fade-image position-absolute w-100 h-100 object-fit-contain"alt="Logo 1">
+          <img src="assets/img/Carrusel_imagenes (3).png" class="fade-image position-absolute w-100 h-100 object-fit-contain"alt="Logo 1">
+          <img src="assets/img/Carrusel_imagenes (4).png" class="fade-image position-absolute w-100 h-100 object-fit-contain"alt="Logo 1">
+          <img src="assets/img/Carrusel_imagenes (5).png" class="fade-image position-absolute w-100 h-100 object-fit-contain"alt="Logo 1">
+          <img src="assets/img/Carrusel_imagenes.png" class="fade-image position-absolute w-100 h-100 object-fit-contain"alt="Logo 1">
+
         </div>
       </div>
 
@@ -62,9 +65,19 @@
           <li class="nav-item">
             <a class="" role="button" routerLink="/verTienda">Tienda</a>
           </li>
-          <li class="nav-item">
-            <a class="" role="button">Categorías</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="categoriasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Categorías
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="categoriasDropdown">
+              <li *ngFor="let categoria of categorias">
+                <a class="dropdown-item" (click)="seleccionarCategoria(categoria.name)">
+                  {{ categoria.category }}
+                </a>
+              </li>
+            </ul>
           </li>
+          
           <li class="nav-item">
             <a class="" role="button">Descuentos</a>
           </li>
@@ -86,32 +99,40 @@
     <div class="content d-flex m-0">
       <div class="text-white text-center datos1" (click)="abrirCarrito()">
         <div class="message_login">
-          <i class="fas fa-shopping-cart mt-4 m-0"></i>
+          <i class="bi bi-cart-fill mt-4 m-0"></i> <!-- Icono de Bootstrap -->
           <p class="welcome me-0">Carrito</p>
         </div>
       </div>
+    </div>
 
-      <div class="text-white text -center datos" (click)="cerrarSesion()">
-        <div class="align-items-center justify-content-center">
-          <i class="fas fa-user mt-4 m-0"></i>
-          <p class="welcome me-0">Bienvenido</p>
-          <p class="name_user">{{ name }}</p>
-        </div>
+
+    <div class="text-white text-center datos" (click)="cerrarSesion()">
+      <div class="align-items-center justify-content-center">
+        <i class="bi bi-person-fill mt-4 m-0"></i> <!-- Icono de Bootstrap -->
+        <p class="welcome me-0">Bienvenido</p>
+        <p class="name_user">{{ name }}</p>
       </div>
     </div>
+
+
   </ng-container>
 </div>
 
 <ng-template #notLoggedIn>
-  <div class="d-flex flex-row justify-content-end">
-    <div class="button-container">
-      <button class="btn btn-primary" (click)="irALogin()">Login</button>
-      <button class="btn btn-secondary" (click)="irARegister()">Registro</button>
+  <div class="contenedor-login d-flex w-30">
 
-      <!-- <div class="Login"></div>
-      <div class="become">
-        <img src="assets/img/BECOME.png"class="image">
-      </div> -->
+    <!-- Sección de usuario (20%) -->
+    <div class="seccion-usuario d-flex h-100 flex-column justify-content-center" [routerLink]="['/login']"
+      style="cursor: pointer;">
+      <i class="bi bi-people-fill" style="font-size: 30px;"></i>
+      <p class="texto-ingresa">Ingresa</p>
     </div>
+
+    <!-- Sección de imagen (80%) -->
+    <div class="seccion-imagen d-flex justify-content-center h-100" [routerLink]="['/registro']"
+      style="cursor: pointer;">
+      <img src="assets/img/BECOME.png" class="image_become img-fluid" alt="Become">
+    </div>
+
   </div>
 </ng-template>

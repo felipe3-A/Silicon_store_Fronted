@@ -74,10 +74,55 @@ export class MainComponent implements OnInit, AfterViewInit {
   filtroBusqueda: string = "";
   filtroCategoria: string = "";
   productosFiltrados: any[] = [];
+  accesorios: any[] = [];
   televisores: any[] = [];
 
-  @ViewChild("carousel") carousel!: ElementRef;
+  tv:any[]=[];
+
+  @ViewChild('carouselAccesorios') carouselAccesorios!: ElementRef;
+  @ViewChild('carouselTelevisores') carouselTelevisores!: ElementRef;
+  
+
   @ViewChild("myCarousel", { static: false }) carouselElement!: ElementRef;
+  @ViewChild('track') track!: ElementRef<HTMLDivElement>;
+  currentIndex = 0;
+  intervalId: any;
+
+  consejos = [
+    { icono: '🧼', titulo: 'No olvides limpiarlos', descripcion: 'Ellos también odian el polvo... como tú los lunes.' },
+    { icono: '🔌', titulo: 'Desconéctalos si no los usas', descripcion: 'A menos que quieras que hagan yoga con los voltajes.' },
+    { icono: '🥶', titulo: 'No los sobrecargues', descripcion: 'Tu refri no es un juego de Tetris.' },
+    { icono: '📅', titulo: 'Hazles mantenimiento', descripcion: 'Un chequeo al año no hace daño… a ti ni a tu lavadora.' },
+    { icono: '🔥', titulo: 'No los pongas en modo sauna', descripcion: 'Evita lugares calientes, no son fans del spa.' }
+  ];
+
+  consejosTelevisor = [
+  {
+    icono: '💡',
+    titulo: 'Evita el brillo excesivo',
+    descripcion: 'Ajusta el brillo del televisor para evitar el desgaste del panel y cuidar tu vista.'
+  },
+  {
+    icono: '⚡',
+    titulo: 'Usa un regulador de voltaje',
+    descripcion: 'Protege el televisor de subidas de tensión y apagones repentinos.'
+  },
+  {
+    icono: '🧽',
+    titulo: 'Límpialo con cuidado',
+    descripcion: 'Usa un paño de microfibra seco o ligeramente húmedo para evitar rayar la pantalla.'
+  },
+  {
+    icono: '🌡️',
+    titulo: 'No lo expongas al calor',
+    descripcion: 'Ubícalo en un lugar ventilado, lejos de estufas o ventanas con sol directo.'
+  },
+  {
+    icono: '🔌',
+    titulo: 'Desconéctalo si no lo usas',
+    descripcion: 'Así ahorras energía y prolongas su vida útil.'
+  }
+];
 
   constructor(
     private fb: FormBuilder,
@@ -86,23 +131,12 @@ export class MainComponent implements OnInit, AfterViewInit {
     private router: Router,
     private publicidadService: PublicidadServiceService,
     private authService: LoginService,
+    private cartValidate : CartServiceService,
     private categoriaServicie: CategoriaServiceService
   ) {}
 
   ngOnInit(): void {
-    this.userId = this.authService.getUserId();
-
-    if (this.userId) {
-      this.authService.obtenerCarritoId(+this.userId).subscribe({
-        next: (data) => {
-          this.carrito_id = data.carrito_id;
-          console.log("🛒 ID del carrito obtenido:", this.carrito_id);
-        },
-        error: (err) => {
-          console.error("❌ Error al obtener el carrito del usuario:", err);
-        },
-      });
-    }
+   
     setInterval(() => {
       this.redIndex = (this.redIndex + 1) % 2; // 2 imágenes en columna1
     }, 3000);
@@ -111,11 +145,11 @@ export class MainComponent implements OnInit, AfterViewInit {
       this.bannerIndex = (this.bannerIndex + 1) % 3; // 3 imágenes en columna2
     }, 3500); // Puedes variar el tiempo si quieres un ritmo diferente
 
-    this.listarTelevisores();
+    this.listarAccesorios();
     this.listarProductos();
     this.obtenerPublicidad();
     this.listarCategorias();
-
+    this.listartelevisores();
     this.productoForm = this.fb.group({
       nombre: ["", Validators.required],
       descripcion: ["", Validators.required],
@@ -133,6 +167,12 @@ export class MainComponent implements OnInit, AfterViewInit {
           producto.category.toLowerCase().includes(texto)) &&
         (!categoria || producto.category === categoria)
     );
+  }
+
+
+
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
   }
 
   resetFiltros(): void {
@@ -154,13 +194,25 @@ export class MainComponent implements OnInit, AfterViewInit {
       },
     });
   }
-  scrollCarousel(direction: number) {
-    const amount = 260; // cantidad en px a desplazar
-    this.carousel.nativeElement.scrollBy({
-      left: amount * direction,
-      behavior: "smooth",
-    });
+  scrollCarousel(direction: number, tipo: 'accesorios' | 'televisores') {
+    const amount = 260;
+  
+    if (tipo === 'accesorios' && this.carouselAccesorios) {
+      this.carouselAccesorios.nativeElement.scrollBy({
+        left: amount * direction,
+        behavior: 'smooth',
+      });
+    }
+  
+    if (tipo === 'televisores' && this.carouselTelevisores) {
+      this.carouselTelevisores.nativeElement.scrollBy({
+        left: amount * direction,
+        behavior: 'smooth',
+      });
+    }
   }
+  
+  
 
   seleccionarCategoria(categoria: string) {
     this.categoriaSeleccionada = categoria;
@@ -184,6 +236,22 @@ export class MainComponent implements OnInit, AfterViewInit {
         wrap: true,
       });
     }
+    if (this.carouselElement) {
+      new bootstrap.Carousel(this.carouselElement.nativeElement, {
+        interval: 4000,
+        ride: "carouselTV",
+        pause: false, // evita que se detenga al pasar el mouse
+        wrap: true,
+      });
+    }
+
+    const total = this.consejos.length;
+
+    this.intervalId = setInterval(() => {
+      this.currentIndex = (this.currentIndex + 1) % total;
+      const offset = -this.currentIndex * 100;
+      this.track.nativeElement.style.transform = `translateX(${offset}%)`;
+    }, 4000);
   }
 
   obtenerIcono(categoria: string): string {
@@ -224,26 +292,40 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.router.navigate(["/product", id_imagen]);
   }
 
-  listarTelevisores() {
-    this.categoriaServicie
-      .obtenerProductosPorCategoria("ACCESORIOS")
-      .subscribe({
-        next: (productos) => {
-          this.televisores = productos.filter(
-            (p) => p.deleted === 0 && p.total_quantity > 0
-          );
-          this.televisores.forEach((producto) => {
-            producto.imagen = producto.pic_filename
-              ? `http://localhost:8082/uploads/item_pics/${producto.pic_filename}`
-              : "assets/img/404.png";
-          });
-          console.log("📺 Productos de TELEVISIÓN:", this.televisores);
-        },
-        error: (err) => {
-          console.error("❌ Error al obtener televisores:", err);
-        },
-      });
+  listarAccesorios() {
+    this.categoriaServicie.obtenerProductosPorCategoria("ACCESORIOS").subscribe({
+      next: (productos) => {
+        this.accesorios = productos.filter(p => p.deleted === 0 && p.total_quantity > 0);
+        this.accesorios.forEach(producto => {
+          producto.imagen = producto.pic_filename
+            ? `http://localhost:8082/uploads/item_pics/${producto.pic_filename}`
+            : "assets/img/404.png";
+        });
+      },
+      error: (err) => {
+        console.error("❌ Error al obtener accesorios:", err);
+      }
+    });
   }
+
+  listartelevisores() {
+    this.categoriaServicie.obtenerProductosPorCategoria("TELEVISION").subscribe({
+      next: (productos) => {
+        this.televisores = productos.filter(p => p.deleted === 0 && p.total_quantity > 0);
+        this.televisores.forEach(producto => {
+          producto.imagen = producto.pic_filename
+            ? `http://localhost:8082/uploads/item_pics/${producto.pic_filename}`
+            : "assets/img/404.png";
+        });
+      },
+      error: (err) => {
+        console.error("❌ Error al obtener accesorios:", err);
+      }
+    });
+  }
+  
+  
+
 
   verMasInformacion(producto: any): void {
     console.log("Ver más información de:", producto);

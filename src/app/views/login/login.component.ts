@@ -35,6 +35,12 @@ export class LoginComponent implements OnInit {
     this.router.navigate(["/registro"]);
   }
 
+  volverATienda() {
+    // Reemplaza esta línea con la navegación que usas en tu app
+    this.router.navigate(['/VerTienda']); 
+  }
+  
+
   onSubmit() {
     console.log("LoginService:", this.loginService);
     if (!this.loginService.postLogin) {
@@ -89,5 +95,8 @@ export class LoginComponent implements OnInit {
         });
       }
     );
+    //this.loginService.setUserData(res.user); // Guardar datos manualmente
+
   }
+
 }

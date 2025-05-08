@@ -9,6 +9,68 @@ h1, h2,h3,h4,h5,h6, p, span, li, a, ul{
 }
 
 
+/*Estas son para los consejos*/
+.advice-section {
+  background-color: #f4f4f4;
+  border-left: 8px solid #a30000;
+  padding: 20px;
+  border-radius: 12px;
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 1000px;
+  margin: 40px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.advice-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #a30000;
+  margin-bottom: 25px;
+  display: block;
+  text-align: center;
+}
+
+.carousel-container {
+  overflow: hidden;
+  height: 60px;
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.advice-card {
+  flex: 0 0 100%;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  height: 50px;
+  padding: 0 15px;
+  border-radius: 8px;
+  width: 100%;
+  gap: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.advice-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.advice-text {
+  font-size: 0.95rem;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*Consejos_fin*/
+
+
 .category-marquee {
   display: inline-block;
   animation: scroll-left 20s linear infinite;
@@ -34,6 +96,33 @@ h1, h2,h3,h4,h5,h6, p, span, li, a, ul{
   align-items: center;
   overflow: hidden;
 }
+
+@media (max-width: 768px) {
+  .carousel-container {
+    height: auto; /* Permite que crezca en altura según el contenido */
+  }
+
+  .advice-card {
+    flex-direction: column; /* Apila icono y texto verticalmente */
+    align-items: flex-start;
+    height: auto;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .advice-text {
+    white-space: normal; /* Permite múltiples líneas */
+    overflow: visible;
+    text-overflow: unset;
+    font-size: 1rem;
+  }
+
+  .advice-icon {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+}
+
 
 /* Flechas de navegación */
 .arrow {
@@ -74,6 +163,25 @@ h1, h2,h3,h4,h5,h6, p, span, li, a, ul{
 .tv-carousel::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
+
+@media (max-width: 768px) {
+  .carousel .carousel-inner img {
+    max-height: 200px;
+    object-fit: cover;
+  }
+
+  .titulo-seccion {
+    font-size: 1.5rem;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+
 
 /* Items del carrusel */
 .tv-item {

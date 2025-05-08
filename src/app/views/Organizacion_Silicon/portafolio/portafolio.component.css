@@ -1,0 +1,64 @@
+.btn-carmesi {
+    background-color: #DC143B;
+    color: white !important;
+    border: none;
+  }
+  .btn-carmesi:hover {
+    background-color: #b01030;
+  }
+  
+
+  
+  body, h1, h2, h3, h4, h5, h6, p, span, a, li, button, input, textarea ,i{
+    font-family: 'Poppins', sans-serif;
+}
+  
+  /* Animaciones */
+  @keyframes fade-slide {
+    from {
+      opacity: 0;
+      transform: translateY(-15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-slide {
+    animation: fade-slide 1s ease forwards;
+  }
+  
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-fade-in {
+    animation: fade-in 1.2s ease forwards;
+  }
+  
+  @keyframes zoom-in {
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  .animate-zoom-in {
+    animation: zoom-in 1s ease forwards;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+  .animate-pulse {
+    animation: pulse 1.5s infinite;
+  }
+  

@@ -56,3 +56,14 @@ a:hover {
   color: #dc143c;
 
 }
+.btn-return {
+  background-color: #dc143c;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+}
+
+.btn-return:hover {
+  background-color: #b01035;
+  color: white;
+}

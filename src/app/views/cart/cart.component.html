@@ -52,8 +52,18 @@
           <button *ngIf="carrito.length > 0" class="btn btn-warning w-100 text-white" (click)="iniciarPago()">
             Iniciar Pago
           </button>
+
+          <!-- Botón para descargar factura -->
+      <div class="d-flex justify-content-end mt-3">
+        <button (click)="mostrarFacturaEnModal()" class="btn btn-primay">Descargar Factura</button>
+      </div>
         </div>
       </div>
+
+      <button (click)="descargarFactura()" class="btn btn-success mt-3">
+        Descargar Factura
+      </button>
+      
     </div>
   </div>
 </div>

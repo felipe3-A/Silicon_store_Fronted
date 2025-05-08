@@ -37,6 +37,7 @@ export class LoginService {
           
           localStorage.setItem('userId', this.userId?.toString() ?? '');
           localStorage.setItem('idperfil', decodedToken.idperfil?.toString() ?? '');
+          localStorage.setItem('person_id', response.user.person_id.toString());
 
           console.log('✅ Usuario logueado correctamente');
           console.log('👤 Datos del usuario:', this.userData);
@@ -48,10 +49,7 @@ export class LoginService {
     );
   }
 
-  // Assuming you have an API endpoint to get the cart based on userId
-  obtenerCarritoId(userId: number): Observable<any> {
-    return this.httpClient.get(`${this.baseUrl}carId/${userId}`);
-  }
+
   
 
   // Obtener el perfil del usuario desde el token
@@ -67,6 +65,14 @@ export class LoginService {
   getUserId(): string | null {
     return this.userId?.toString() ?? localStorage.getItem('userId');
   }
+
+  getUserCarrito(): string | null {
+    return this.userId?.toString() ?? localStorage.getItem('person_id');
+  }
+  
+
+  
+  
   getPersonId(): string | null {
   const token = localStorage.getItem('token');
   if (token) {
@@ -88,6 +94,11 @@ export class LoginService {
 
     return null;
   }
+
+  
+setUserData(data: any) {
+  this.userData = data;
+}
 
   cerrarSesion(): Observable<any> {
     const token = localStorage.getItem('token');

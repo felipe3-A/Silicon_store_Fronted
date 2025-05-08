@@ -28,16 +28,10 @@ export class RegistroComponent implements OnInit {
       address_2: ['', [Validators.maxLength(255)]],
       city: ['', [Validators.required, Validators.maxLength(255)]],
       state: ['', [Validators.required, Validators.maxLength(255)]],
-      zip: ['', [Validators.required, Validators.maxLength(255)]],
       country: ['', [Validators.required, Validators.maxLength(255)]],
       comments: ['Bienvenido a Silicon Store'],
-      company_name: ['', [Validators.maxLength(255)]],
       account_number: ['', [Validators.required, Validators.maxLength(255)]],
-      discount: [0, [Validators.required, Validators.min(0)]],
-      discount_type: [false, [Validators.required]],
-      package_id: [null],
-      points: [0],
-      password: ['', [
+       password: ['', [
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(20),
@@ -72,14 +66,29 @@ export class RegistroComponent implements OnInit {
   
   registrarUsuario() {
     if (this.registroForm.valid) {
-      const usuarioData = this.registroForm.value;
-
-      this.usuarioService.crearUsuario(usuarioData).subscribe(
+      const datosFormulario = this.registroForm.value;
+  
+      // Agregar los campos obligatorios que no están en el formulario
+      const datosCompletos = {
+        ...datosFormulario,
+        discount: 0,
+        discount_type: false,
+        package_id: null,
+        points: 0,
+        zip: '00000' // Valor por defecto
+      };
+  
+      this.usuarioService.crearUsuario(datosCompletos).subscribe(
         (response) => {
           Swal.fire({
             icon: 'success',
             title: '¡Registro exitoso!',
-            text: `Bienvenido, ${usuarioData.nombre}!`,
+            html: `
+              <p>Bienvenido, <strong>${datosFormulario.first_name}</strong> 🎉</p>
+              <p><strong>Estos son tus datos de acceso:</strong></p>
+              <p><strong>Usuario:</strong> ${datosFormulario.email}</p>
+              <p><strong>Contraseña:</strong> ${datosFormulario.password}</p>
+            `,
             confirmButtonText: 'Iniciar sesión'
           }).then(() => {
             this.router.navigate(['/login']);
@@ -99,6 +108,7 @@ export class RegistroComponent implements OnInit {
       console.error('Formulario inválido.');
     }
   }
+  
 
   regresarAlMenu() {
     this.router.navigate(['/VerTienda']); // Cambia '/home' por la ruta de tu menú principal

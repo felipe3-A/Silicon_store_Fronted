@@ -28,8 +28,6 @@ import { NuestrasMarcasComponent } from "app/views/nuestras-marcas/nuestras-marc
 import { InfoSiliconComponent } from "app/views/info-silicon/info-silicon.component";
 import { ListapedidosReparacionComponent } from "app/views/listapedidos-reparacion/listapedidos-reparacion.component";
 import { ConsultarEstadoComponent } from "app/views/consultar-estado/consultar-estado.component";
-import { ContactosComponent } from "app/views/contactos/contactos.component";
-import { VisitanosComponent } from "app/views/visitanos/visitanos.component";
 import { PoliticasComponent } from "app/views/politicas/politicas.component";
 import { ProductosCategoriasComponent } from "app/views/productos-categorias/productos-categorias.component";
 import { GrupoComponent } from "app/views/grupo/grupo.component";
@@ -134,7 +132,6 @@ export const AdminLayoutRoutes: Routes = [
 
 
   {path:'AdministarUsuarios',component:AdministarUsuarioComponent},
-  {path:'CrearUsuario', component:CrearUsuarioComponent},
   
   { path: 'crearModuloPorPerfil', component: CrearModulosXperfilComponent},
   { path: 'listaModulosPorPerfil', component: ListarModulosXperfilComponent},
@@ -153,10 +150,6 @@ export const AdminLayoutRoutes: Routes = [
   { path: "AdministrarSolicitudes", component: ListapedidosReparacionComponent },
   { path: "searchFixed", component: ConsultarEstadoComponent },
 
-  { path: "Contactos", component: ContactosComponent },
-
-  { path: "visitanos", component: VisitanosComponent },
-
   { path: "Politicas", component: PoliticasComponent },
 
   { path: "ProductId/:id_categoria", component: ProductosCategoriasComponent },
@@ -174,5 +167,5 @@ export const AdminLayoutRoutes: Routes = [
   {path: 'crearCaracteristica', component: CrearCaracteristicasComponent},
   {path: 'crearSubCaracteristica', component: CrearsubCaracteristicasComponent},
   {path: 'crearValores', component: CrearValoresComponent},
-// {path:'login', component: LoginComponent},
+//  {path:'login', component: LoginComponent},
 ];

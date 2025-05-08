@@ -1,21 +1,16 @@
-<div class="navbar bg-primary text-white mb-4">
-  <div class="container">
-    <a class="navbar-brand text-white" href="/home">Mi Tienda</a>
-  </div>
-</div>
 
 <div class="container mt-4">
   <div class="row">
     <!-- Beneficios -->
     <div class="col-md-4 mb-4">
       <div class="card shadow p-3 floating-info">
-        <h4 class="text-primary">Beneficios de registrarte</h4>
+        <h4 style="color: brown; font-weight: bolder;">Beneficios de registrarte</h4>
         <ul class="list-unstyled mt-3">
-          <li><i class="bi bi-check-circle text-success"></i> No tendrás que registrarte nuevamente.</li>
-          <li><i class="bi bi-cart-check text-success"></i> Compras más eficientes.</li>
-          <li><i class="bi bi-shield-lock text-success"></i> Consultas rápidas y seguras.</li>
-          <li><i class="bi bi-basket text-success"></i> Manejo de tu carrito personalizado.</li>
-          <li><i class="bi bi-door-open text-success"></i> Cierre de sesión en cualquier momento.</li>
+          <li><i class="bi bi-check-circle text-danger"></i> No tendrás que registrarte nuevamente.</li>
+          <li><i class="bi bi-cart-check text-danger"></i> Compras más eficientes.</li>
+          <li><i class="bi bi-shield-lock text-danger"></i> Consultas rápidas y seguras.</li>
+          <li><i class="bi bi-basket text-danger"></i> Manejo de tu carrito personalizado.</li>
+          <li><i class="bi bi-door-open text-danger"></i> Cierre de sesión en cualquier momento.</li>
         </ul>
       </div>
     </div>
@@ -23,7 +18,7 @@
     <!-- Formulario -->
     <div class="col-md-8">
       <div class="card p-4 shadow animated-card">
-        <h2 class="text-center mb-4 text-primary">Registro de Usuario</h2>
+        <h2 class="text-center mb-4" style="color: brown; font-weight: bolder;">Registro de Usuario</h2>
 
         <form [formGroup]="registroForm" (ngSubmit)="registrarUsuario()">
 
@@ -50,9 +45,15 @@
 
           <!-- Teléfono -->
           <div class="mb-3">
-            <label for="phone_number" class="form-label">Teléfono</label>
-            <input type="text" class="form-control" id="phone_number" formControlName="phone_number">
+            <label for="account_number" class="form-label">Cedula</label>
+            <input type="text" class="form-control" id="account_number" formControlName="account_number">
           </div>
+
+             <!-- Teléfono -->
+             <div class="mb-3">
+              <label for="phone_number" class="form-label">Teléfono</label>
+              <input type="text" class="form-control" id="phone_number" formControlName="phone_number">
+            </div>
 
           <!-- Dirección -->
           <div class="mb-3">
@@ -84,11 +85,7 @@
             </select>
           </div>
 
-          <!-- Código postal -->
-          <div class="mb-3">
-            <label for="zip" class="form-label">Código postal</label>
-            <input type="text" class="form-control" id="zip" formControlName="zip">
-          </div>
+
 
           <!-- País -->
           <div class="mb-3">
@@ -96,41 +93,6 @@
             <input type="text" class="form-control" id="country" formControlName="country">
           </div>
 
-          <!-- Empresa -->
-          <div class="mb-3">
-            <label for="company_name" class="form-label">Nombre de la empresa (opcional)</label>
-            <input type="text" class="form-control" id="company_name" formControlName="company_name">
-          </div>
-
-          <!-- Número de cuenta -->
-          <div class="mb-3">
-            <label for="account_number" class="form-label">Identificación</label>
-            <input type="text" class="form-control" id="account_number" formControlName="account_number">
-          </div>
-
-          <!-- Descuento -->
-          <div class="mb-3">
-            <label for="discount" class="form-label">Descuento (%)</label>
-            <input type="number" class="form-control" id="discount" formControlName="discount" min="0">
-          </div>
-
-          <!-- Tipo de descuento -->
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="discount_type" formControlName="discount_type">
-            <label class="form-check-label" for="discount_type">¿Descuento por porcentaje?</label>
-          </div>
-
-          <!-- Paquete -->
-          <div class="mb-3">
-            <label for="package_id" class="form-label">ID de Paquete (opcional)</label>
-            <input type="number" class="form-control" id="package_id" formControlName="package_id">
-          </div>
-
-          <!-- Puntos -->
-          <div class="mb-3">
-            <label for="points" class="form-label">Puntos</label>
-            <input type="number" class="form-control" id="points" formControlName="points">
-          </div>
 
           <!-- Contraseña -->
           <div class="mb-3">
@@ -153,14 +115,6 @@
           <div class="d-grid gap-2">
             <button type="submit" class="btn btn-primary" [disabled]="registroForm.invalid">Registrarse</button>
             <button type="button" class="btn btn-outline-secondary" (click)="regresarAlMenu()">Cancelar</button>
-          </div>
-
-
-
-
-          <!-- Botón -->
-          <div class="d-grid mt-4">
-            <button type="submit" class="btn btn-primary" [disabled]="registroForm.invalid">Registrarse</button>
           </div>
 
           <!-- Enlace -->

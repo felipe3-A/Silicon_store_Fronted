@@ -4,6 +4,7 @@ import { CartProductsService } from "app/services/CartProduct/cart-product.servi
 import { ProductService } from "app/services/product.service";
 import { LoginService } from "app/services/usuarios/login-service.service";
 import Swal from "sweetalert2";
+import { jsPDF } from "jspdf";
 
 declare var BoldCheckout: any; // Declaración de la variable
 
@@ -32,9 +33,11 @@ export class CartComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.person_id = parseInt(this.loginService.getUserId() ?? '0'); // Obtener el ID del usuario logueado desde el servicio LoginService
+    this.person_id = parseInt(this.loginService.getUserCarrito() ?? '0'); // Obtener el ID del usuario logueado desde el servicio LoginService
     if (this.person_id === 0) {
       console.warn("Usuario no logueado o ID no disponible.");
+      console.log('Id encontrado:', this.person_id);
+      
       return; // Si no hay un usuario logueado, no continuamos
     }
 
@@ -67,15 +70,6 @@ export class CartComponent implements OnInit {
       : 'assets/img/404.png'; // imagen por defecto
   }
   
-  
-
-
-
-  
-  
-  
-  
-
 listarProductos() {
   this.productosService.listarProductos().subscribe({
     next: (productos: any[]) => {
@@ -129,6 +123,89 @@ listarProductos() {
       
     }
   }
+
+  descargarFactura(): void {
+    if (this.carrito && this.carrito.length > 0) {
+      const doc = new jsPDF();
+  
+      // Cargar imagen del logo
+      const logo = new Image();
+      logo.src = 'assets/img/Silicon_Store.png';
+      logo.onload = () => {
+        doc.addImage(logo, 'PNG', 80, 10, 40, 20); // Centrado
+  
+        // Encabezado de la empresa
+        doc.setFontSize(14);
+        doc.text('CENTRO DE SERVICIOS ISLICON', 105, 35, { align: 'center' });
+        doc.setFontSize(11);
+        doc.text('Factura generada por silicon.store', 105, 42, { align: 'center' });
+  
+        // Datos de la empresa
+        doc.setFontSize(10);
+        doc.text('NIT: 900123456-7', 14, 50);
+        doc.text('Dirección: Calle 45 #12-34, Ciudad', 14, 55);
+        doc.text('Teléfonos: (1) 234 5678 - 300 123 4567', 14, 60);
+        doc.text('Correo: contacto@silicon.store', 14, 65);
+  
+        // Datos del cliente
+        const usuario = this.loginService.getUserData();
+        const nombre = usuario?.name || "Usuario";
+        const correo = usuario?.email || "correo@desconocido.com";
+  
+        doc.setFontSize(12);
+        doc.text('Datos del cliente:', 14, 75);
+        doc.setFontSize(10);
+        doc.text(`Nombre: ${nombre}`, 14, 80);
+        doc.text(`Correo: ${correo}`, 14, 85);
+  
+        // Tabla de productos
+        doc.setFontSize(12);
+        doc.text('Productos:', 14, 95);
+  
+        doc.setFontSize(10);
+        doc.text("Producto", 14, 100);
+        doc.text("Cant.", 90, 100);
+        doc.text("Precio", 120, 100);
+        doc.text("Subtotal", 160, 100);
+  
+        let currentY = 105;
+        this.carrito.forEach((producto, index) => {
+          const nombreProducto = producto.product.name;
+          const precio = parseFloat(producto.product.unit_price).toFixed(2);
+          const cantidad = producto.product.receiving_quantity || 1;
+          const subtotal = (parseFloat(precio) * cantidad).toFixed(2);
+  
+          doc.text(nombreProducto, 14, currentY);
+          doc.text(cantidad.toString(), 90, currentY);
+          doc.text(`$${precio}`, 120, currentY);
+          doc.text(`$${subtotal}`, 160, currentY);
+  
+          currentY += 10;
+  
+          if (currentY > 270) {
+            doc.addPage();
+            currentY = 20;
+          }
+        });
+  
+        // Total de la compra
+        const total = this.totalAmount.toFixed(2);
+        doc.setFontSize(12);
+        doc.text(`Total: $${total}`, 14, currentY + 10);
+  
+        // Mensaje de agradecimiento
+        doc.setFontSize(11);
+        doc.text("¡Gracias por tu compra! Esperamos verte pronto.", 14, currentY + 20);
+  
+        // Guardar PDF
+        doc.save("FacturaCompra.pdf");
+      };
+    } else {
+      console.warn("El carrito está vacío, no se puede generar la factura.");
+    }
+  }
+  
+  
 
   vaciarCarrito() {
     this.cartProductsService.vaciarCarrito(this.person_id).subscribe(() => {
@@ -197,12 +274,12 @@ listarProductos() {
           console.log("Datos del carrito recibido:", response.data);
 
           if (response.data.id) {
-            if (response.data.user_id !== this.person_id) {
-              console.warn(`El carrito pertenece a otro usuario. Esperado: ${this.person_id}, Recibido: ${response.data.user_id}`);
+            if (response.data.person_id !== this.person_id) {
+              console.warn(`El carrito pertenece a otro usuario. Esperado: ${this.person_id}, Recibido: ${response.data.person_id}`);
               return;
             }
 
-            this.carritoId = response.data.id;
+            this.carritoId = response.data.person_id;
             console.log("Carrito ID obtenido:", this.carritoId);
             this.obtenerProductosEnCarrito();
           } else {

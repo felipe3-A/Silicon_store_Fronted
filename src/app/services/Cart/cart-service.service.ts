@@ -7,13 +7,13 @@ import { environment } from 'environments/environment';
   providedIn: 'root'
 })
 export class CartServiceService {
-  private baseUrl = `${environment.apiUrl}cart`; // Base URL ajustada
+  private baseUrl = `${environment.apiUrl}`; // Base URL ajustada
 
   constructor(private http: HttpClient) { }
 
   // Obtener el carrito de un usuario (el más reciente o activo)
-  obtenerCarrito(usuarioId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/validar/${usuarioId}`);
+  obtenerCarrito(person_id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}cart/validar/${person_id}`);
   }
 
   // Agregar producto a un carrito específico o al más reciente del usuario

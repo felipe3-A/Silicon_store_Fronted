@@ -1,17 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+h1,h2,h3,h4,h5,p,span,li,span,input,select,button,label,a,ul,select,option{
+  font-family: 'Poppins', sans-serif;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f0f0f0; /* gris claro de fondo */
+  color: #333; /* gris oscuro para texto */
+}
+
+/* Navbar */
+.navbar {
+  background-color: #a50021 !important; /* rojo carmesí */
+  font-weight: 600;
+}
+
+.navbar a {
+  color: white !important;
+  text-decoration: none;
+}
+
+/* Card de beneficios */
 .floating-info {
-  background: #f8f9fa;
-  border-left: 5px solid #0d6efd;
+  background: white;
+  border-left: 5px solid #a50021;
   border-radius: 0.75rem;
   transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
+
 .floating-info:hover {
   transform: translateY(-5px);
 }
+
+/* Card principal */
 .animated-card {
+  background: white;
   border-radius: 0.75rem;
   animation: fadeIn 0.5s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Botones */
+.btn-primary {
+  background-color: #a50021;
+  border-color: #a50021;
+}
+
+.btn-primary:hover {
+  background-color: #8a001c;
+  border-color: #8a001c;
+}
+
+.btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Inputs */
+.form-control, .form-select {
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+  font-size: 0.95rem;
+}
+
+/* Enlace */
+a.text-decoration-none {
+  color: #a50021;
+}
+
+a.text-decoration-none:hover {
+  text-decoration: underline;
+}
+
+/* Iconos de beneficios */
+.bi {
+  margin-right: 6px;
 }

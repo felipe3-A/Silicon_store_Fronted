@@ -107,7 +107,8 @@ data$: Observable<Item[]> = of([]);
     });
   }
 
-  ngOnInit() {
+  ngOnInit() {+
+    this.listarCategorias();
     // Filtrar los elementos del menú
     this.menuItems = ROUTES.filter((menuItem) => menuItem);
 
@@ -135,6 +136,8 @@ data$: Observable<Item[]> = of([]);
 
     this.dataservice.getAll().subscribe((data) => {
       this.listaDataInfo = data;
+
+      
     });
 
     // Obtener el estado de inicio de sesión almacenado
@@ -177,6 +180,8 @@ data$: Observable<Item[]> = of([]);
       item.total_quantity > 0 // Aquí filtramos los que tienen total_quantity mayor a 0
     );
   }
+  
+
   
 
   crearSlug(nombre: string): string {
@@ -239,15 +244,15 @@ data$: Observable<Item[]> = of([]);
   }
 
   listarCategorias(): void {
-    this.categoriaService.listarCategorias().subscribe(
-      (response) => {
-        this.categorias = response.data;
-        console.log("CategoriaS LISTADAS", response.data);
+    this.categoriaService.listarCategorias().subscribe({
+      next: (data) => {
+        this.categorias = data; // Asigna las categorías al array
+        console.log("Categorías cargadas:", this.categorias); // Imprime las categorías en la consola
       },
-      (error) => {
-        console.log("No se pudieron listar las Categorias", error);
-      }
-    );
+      error: (err) => {
+        console.error("Error al cargar las categorías:", err);
+      },
+    });
   }
 
   navigateToCategory(id_categoria: number): void {

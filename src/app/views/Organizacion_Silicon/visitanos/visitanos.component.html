@@ -1,0 +1,45 @@
+<div class="visit-card container mt-5">
+    <!-- Header -->
+    <div class="header bg-carmesi text-white text-center py-3 rounded-top animate-fade-slide">
+      <h4 class="m-0">📍 Visítanos</h4>
+    </div>
+  
+    <!-- Tarjeta principal -->
+    <div class="card shadow-lg p-4 rounded-bottom animate-fade-in">
+      <div class="row">
+        <!-- Mapa de Google -->
+        <div class="col-12 col-md-6 mb-4 mb-md-0">
+          <iframe 
+            class="w-100 h-100 rounded" 
+            style="min-height: 300px;"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.6068536643844!2d-76.61225078523808!3d2.442515998431923!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e308f65d8c4e30f%3A0xc0ebf179bb9c54d6!2sSILICON!5e0!3m2!1ses!2sco!4v1715112233725">
+          </iframe>
+        </div>
+  
+        <!-- Información de contacto -->
+        <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+          <h5 class="mb-3 text-carmesi">📌 Dirección</h5>
+          <p><i class="fas fa-map-marker-alt me-2"></i>Calle 6 # 15-35, Popayán, Colombia</p>
+  
+          <h5 class="mt-4 mb-3 text-carmesi">⏰ Horario de Atención</h5>
+          <ul class="list-unstyled">
+            <li><strong>Lunes a Viernes:</strong> 8:00 AM - 5:30 PM</li>
+            <li><strong>Sábados:</strong> 8:00 AM - 1:00 PM</li>
+            <li><strong>Domingos:</strong> Cerrado</li>
+          </ul>
+  
+          <!-- Botón de retorno -->
+          <div class="text-center mt-4">
+            <button class="btn btn-carmesi text-white px-4 animate-pulse" (click)="irATienda()">
+              <i class="bi bi-shop-window me-2"></i>Volver a la Tienda
+            </button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

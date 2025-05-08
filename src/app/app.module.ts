@@ -40,7 +40,7 @@ import { PedidosReparacionComponent } from './views/pedidos-reparacion/pedidos-r
 import { InfoSiliconComponent } from './views/info-silicon/info-silicon.component';
 import { ListapedidosReparacionComponent } from './views/listapedidos-reparacion/listapedidos-reparacion.component';
 import { ConsultarEstadoComponent } from './views/consultar-estado/consultar-estado.component';
-import { ContactosComponent } from './views/contactos/contactos.component';
+import { ContactosComponent } from './views/Organizacion_Silicon/contactos/contactos.component';
 import { VisitanosComponent } from './views/visitanos/visitanos.component';
 import { PoliticasComponent } from './views/politicas/politicas.component';
 import { ProductosCategoriasComponent } from './views/productos-categorias/productos-categorias.component';
@@ -148,8 +148,8 @@ export function tokenGetter() {
     CrearsubCaracteristicasComponent,
     CrearValoresComponent,
     WelcomeProductComponent,
-    DataInfoComponent
-    
+    DataInfoComponent,
+  
 
   ],
   providers: [

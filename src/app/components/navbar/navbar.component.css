@@ -479,15 +479,85 @@ button {
   /* Espaciado inferior */
 }
 
-.button-container {
-  display: flex;
-  /* Usar flexbox para alinear botones */
-  justify-content: center;
-  /* Centrar botones */
-  gap: 10px;
-  /* Espacio entre botones */
+.Login {
+  background-color: #2c2c2c; /* gris oscuro */
+  padding: 30px 20px;
+  border-radius: 10px;
+  display: inline-block;
 }
 
+.icono-usuario {
+  font-size: 50px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.contenedor-login {
+  height: 100px; /* Ajusta según lo necesites */
+  display: flex;
+  background-color: #007bff;
+}
+
+.seccion-usuario {
+  background-color: #3f3f3f; /* gris oscuro */
+  width: 50%;
+  height: auto;
+  color: white;
+  text-align: center;
+}
+
+.btn-return {
+  background-color: #dc143c;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+}
+
+.btn-return:hover {
+  background-color: #b01035;
+  color: white;
+}
+
+
+.seccion-usuario .icono-usuario {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.seccion-usuario .texto-ingresa {
+  font-size: 14px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.seccion-imagen {
+  background-color: #dc143c; /* rojo carmesí */
+  width: 300px;
+  height: auto;
+  left: 10px;
+  right: 10px;
+}
+
+.image_become {
+  max-height: 180px;
+padding: 15px;
+  object-fit: contain;
+}
+
+
+.texto-ingresa {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: white;
+  font-size: 20px;
+  margin: 0;
+}
+
+
+
+.image_become{
+  width: auto;
+}
 .btn {
   padding: 10px 20px;
   /* Espaciado interno de los botones */
