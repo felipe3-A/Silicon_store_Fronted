@@ -18,11 +18,12 @@ export class UnidadProductoComponent implements OnInit {
   mostrarZoom: boolean = false;
   mostrarLightbox: boolean = false;
   imagenActualIndex: number = 0;
-  mostrarDetalle: boolean=false;
-  productoSeleccionado:any=null;
+  mostrarDetalle: boolean = false;
+  productoSeleccionado: any = null;
   galeriaImagenes: string[] = [];
   itemSeleccionado: any;
-  imagenPrincipal: string ="https://media.istockphoto.com/id/1152189152/es/vector/icono-rojo-de-alerta.jpg?s=612x612&w=0&k=20&c=FTX2cd49ZhiXXyR-mMXT4vb2jxuInJVx7fcTOtQV37U=";
+  imagenPrincipal: string =
+    "https://media.istockphoto.com/id/1152189152/es/vector/icono-rojo-de-alerta.jpg?s=612x612&w=0&k=20&c=FTX2cd49ZhiXXyR-mMXT4vb2jxuInJVx7fcTOtQV37U=";
   esFavorito: boolean = false;
 
   constructor(
@@ -46,30 +47,50 @@ export class UnidadProductoComponent implements OnInit {
     this.listarProductos();
   }
 
-  listarProductos() {
-    this.productService.listarProductos().subscribe({
-      next: (productos: any[]) => {
-        this.productos = productos.filter(
-          (p) => p.deleted === 0 && p.total_quantity > 0
-        );
-  
-        this.productos.forEach((producto) => {
-          producto.imagen = producto.pic_filename
-            ? `http://localhost:8082/uploads/item_pics/${producto.pic_filename}`
-            : "assets/img/404.png";
-  
-          // 👇 Mostrar cantidad en consola
-          console.log(`🟢 Producto: ${producto.name}, Cantidad total: ${producto.total_quantity}`);
-        });
-  
-        console.log("📦 Productos cargados:", this.productos);
-      },
-      error: (err) => {
-        console.error("❌ Error al listar productos:", err);
-      },
-    });
-  }
-  
+listarProductos() {
+  this.productService.listarProductos().subscribe({
+    next: (productos: any[]) => {
+      this.productos = productos.filter(
+        (p) => p.deleted === 0 && p.total_quantity > 0
+      );
+
+      this.productos.forEach((producto) => {
+        producto.imagen = producto.pic_filename
+          ? `https://pos.silicon.com.co/items/pic_thumb/${producto.pic_filename}`
+          : "assets/img/404.png";
+
+        // 🔍 Mostrar todos los datos del producto en consola
+        console.log("🟢 Producto cargado:");
+        console.log(`🧾 ID: ${producto.item_id}`);
+        console.log(`📛 Nombre: ${producto.name}`);
+        console.log(`📦 Categoría: ${producto.category}`);
+        console.log(`🔢 Número: ${producto.item_number}`);
+        console.log(`🧾 Descripción: ${producto.description}`);
+        console.log(`💲 Precio costo: ${producto.cost_price}`);
+        console.log(`💰 Precio venta: ${producto.unit_price}`);
+        console.log(`📉 Reorden: ${producto.reorder_level}`);
+        console.log(`📥 Cantidad recepción: ${producto.receiving_quantity}`);
+        console.log(`📷 Nombre de imagen: ${producto.pic_filename}`);
+        console.log(`🖼️ URL imagen: ${producto.imagen}`);
+        console.log(`📦 Stock total: ${producto.total_quantity}`);
+        console.log(`🛠️ Serialized: ${producto.is_serialized}`);
+        console.log(`📤 Supplier ID: ${producto.supplier_id}`);
+        console.log(`📦 Qty por paquete: ${producto.qty_per_pack}`);
+        console.log(`📦 Nombre del paquete: ${producto.pack_name}`);
+        console.log(`📊 HSN Code: ${producto.hsn_code}`);
+        console.log("-----------------------------");
+      });
+
+      console.log("✅ Productos cargados correctamente.");
+    },
+    error: (err) => {
+      console.error("❌ Error al listar productos:", err);
+    },
+  });
+}
+
+
+
   abrirLightbox() {
     this.mostrarLightbox = true;
   }
@@ -100,15 +121,15 @@ export class UnidadProductoComponent implements OnInit {
     this.serviceImagen.listarProductoId(item_id).subscribe(
       (response) => {
         this.itemSeleccionado = response;
-  
+
         const tieneImagen = this.itemSeleccionado.pic_filename;
         this.imagenPrincipal = tieneImagen
-          ? `http://localhost:8082/uploads/item_pics/${this.itemSeleccionado.pic_filename}`
+          ? `https://pos.silicon.com.co/items/pic_thumb/${this.itemSeleccionado.pic_filename}`
           : "assets/img/404.png";
-  
+
         // Asignar imagen principal como primera de la galería
         this.galeriaImagenes = [this.imagenPrincipal];
-  
+
         // 🖼️ Llamar al método para obtener imágenes adicionales
         this.cargarGaleriaImagenes(item_id);
       },
@@ -121,7 +142,7 @@ export class UnidadProductoComponent implements OnInit {
     this.productoSeleccionado = producto;
     this.mostrarDetalle = true;
   }
-  
+
   cerrarDetalles(): void {
     this.mostrarDetalle = false;
   }
@@ -129,8 +150,8 @@ export class UnidadProductoComponent implements OnInit {
     this.serviceImagen.obtenerGaleriaPorItem(item_id).subscribe(
       (response) => {
         if (response?.imagenes_adicionales?.length > 0) {
-          const imagenes = response.imagenes_adicionales.map((nombre: string) =>
-            `http://localhost:8000/storage/${nombre}`
+          const imagenes = response.imagenes_adicionales.map(
+            (nombre: string) => `http://localhost:8000/storage/${nombre}`
           );
           // Agregarlas a la galería después de la principal
           this.galeriaImagenes.push(...imagenes);
@@ -141,14 +162,11 @@ export class UnidadProductoComponent implements OnInit {
       }
     );
   }
-  
-  
-  
 
   // Componente
   agregarAlCarrito(producto: any): void {
     const idUsuario = this.authService.getUserId();
-  
+
     if (!idUsuario) {
       Swal.fire({
         icon: "warning",
@@ -158,7 +176,7 @@ export class UnidadProductoComponent implements OnInit {
       });
       return;
     }
-  
+
     // ⚠️ Validar que haya unidades disponibles
     if (producto.total_quantity <= 0) {
       Swal.fire({
@@ -169,16 +187,16 @@ export class UnidadProductoComponent implements OnInit {
       });
       return;
     }
-  
+
     const productoData = {
       item_id: producto.item_id,
       person_id: Number(idUsuario),
       quantity: 1,
     };
-  
+
     console.log("Datos enviados al backend:", productoData);
     console.log("Id Person :", idUsuario);
-  
+
     Swal.fire({
       icon: "info",
       title: "Enviando al backend...",
@@ -189,7 +207,7 @@ export class UnidadProductoComponent implements OnInit {
         Swal.showLoading();
       },
     });
-  
+
     this.cartProductService.agregarProductoAlCarrito(productoData).subscribe({
       next: (response) => {
         Swal.fire({
@@ -204,13 +222,14 @@ export class UnidadProductoComponent implements OnInit {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: err?.error?.message || "Hubo un problema al agregar el producto al carrito.",
+          text:
+            err?.error?.message ||
+            "Hubo un problema al agregar el producto al carrito.",
           confirmButtonText: "Cerrar",
         });
       },
     });
   }
-  
 
   abrirZoom() {
     this.mostrarZoom = true;

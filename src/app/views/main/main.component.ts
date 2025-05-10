@@ -298,7 +298,7 @@ export class MainComponent implements OnInit, AfterViewInit {
         this.accesorios = productos.filter(p => p.deleted === 0 && p.total_quantity > 0);
         this.accesorios.forEach(producto => {
           producto.imagen = producto.pic_filename
-            ? `http://localhost:8082/uploads/item_pics/${producto.pic_filename}`
+            ? `https://pos.silicon.com.co/items/pic_thumb/${producto.pic_filename}`
             : "assets/img/404.png";
         });
       },
@@ -314,7 +314,7 @@ export class MainComponent implements OnInit, AfterViewInit {
         this.televisores = productos.filter(p => p.deleted === 0 && p.total_quantity > 0);
         this.televisores.forEach(producto => {
           producto.imagen = producto.pic_filename
-            ? `http://localhost:8082/uploads/item_pics/${producto.pic_filename}`
+            ? `https://pos.silicon.com.co/items/${producto.pic_filename}`
             : "assets/img/404.png";
         });
       },
@@ -348,7 +348,7 @@ export class MainComponent implements OnInit, AfterViewInit {
         // Asignar la URL de la imagen para cada producto
         this.productos.forEach((producto) => {
           producto.imagen = producto.pic_filename
-            ? `http://localhost:8082/uploads/item_pics/${producto.pic_filename}`
+            ? `https://pos.silicon.com.co/items/${producto.pic_filename}`
             : "assets/img/404.png";
         });
 

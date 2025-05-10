@@ -66,7 +66,7 @@ export class CartComponent implements OnInit {
   getImagenProducto(producto: any): string {
     const filename = producto.product.pic_filename;
     return filename
-      ? `http://localhost:8082/uploads/item_pics/${filename}`
+      ? `https://pos.silicon.com.co/items/pic_thumb/${filename}`
       : 'assets/img/404.png'; // imagen por defecto
   }
   
@@ -79,7 +79,7 @@ listarProductos() {
 
       this.productos.forEach((producto) => {
         producto.imagen = producto.pic_filename
-          ? `http://localhost:8082/uploads/item_pics/${producto.pic_filename}`
+          ? `https://pos.silicon.com.co/items/pic_thumb/${producto.pic_filename}`
           : "assets/img/404.png";
 
         // 👇 Mostrar cantidad en consola

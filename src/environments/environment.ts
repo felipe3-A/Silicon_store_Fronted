@@ -5,5 +5,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://store.silicon.com.co/api/' // URL base de tu backend
+  apiUrl: 'https://store.silicon.com.co/api/', // URL base de tu backend
+  posUrl : 'http://localhost:8082/'
+
 };

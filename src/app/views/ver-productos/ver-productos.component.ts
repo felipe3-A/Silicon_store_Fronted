@@ -50,7 +50,7 @@ export class VerProductosComponent implements OnInit {
         );
         this.productos.forEach((p) => {
           p.imagen = p.pic_filename
-            ? `http://localhost:8082/uploads/item_pics/${p.pic_filename}`
+            ? `https://pos.silicon.com.co/items/pic_thumb/${p.pic_filename}`
             : "assets/img/404.png";
         });
 

@@ -25,7 +25,6 @@
   </div>
 </div>
 
-// Nuestro contenido
 
 
 <div class="container-fluid mt-5">
@@ -150,86 +149,6 @@
     <button class="arrow right" (click)="scrollCarousel(1, 'televisores')">›</button>
   </div>
 </div>
-
-
-
-<!-- Contenedor de búsqueda y filtros -->
-<div class="container mb-4 px-4">
-  <div class="row align-items-center">
-    <div class="col-md-6 mb-2">
-      <input type="text" class="form-control" placeholder="Buscar por nombre o categoría" [(ngModel)]="filtroBusqueda"
-        (input)="aplicarFiltros()" />
-    </div>
-
-    <div class="col-md-4 mb-2">
-      <select class="form-select" [(ngModel)]="filtroCategoria" (change)="aplicarFiltros()">
-        <option value="">Todas las categorías</option>
-        <option *ngFor="let categoria of categorias" [value]="categoria.category">
-          {{ categoria.category }}
-        </option>
-      </select>
-    </div>
-
-    <div class="col-md-2 mb-2">
-      <button class="btn btn-outline-secondary w-100" (click)="resetFiltros()">
-        Limpiar filtros
-      </button>
-    </div>
-  </div>
-</div>
-
-<div class="fila3">
-  <h3 class="text-center"></h3>
-  <div class="row">
-    <div class="col-md-3 mb-4" *ngFor="let producto of productosFiltrados">
-      <div class="text-center card_product border shadow-sm rounded-3 p-3" style="cursor: pointer;">
-        <!-- Imagen del producto -->
-        <div (click)="verProducto(producto.item_id)">
-          <img [src]="producto.imagen" class="card-img-top img-fluid" alt="Imagen del producto">
-          <h6 class="card-title_2 mt-3">{{ producto.name }}</h6>
-
-          <!-- Categoría -->
-          <div class="price-container d-flex justify-content-center mt-2">
-            <p class="card-title_3 me-1">Categoría:</p>
-            <p class="card-title_4">{{ producto.category }}</p>
-
-
-          </div>
-
-
-          <!-- Estado de disponibilidad -->
-          <div class="mt-1">
-            <span *ngIf="producto.total_quantity === 1" class="badge bg-danger">¡Producto limitado!</span>
-            <span *ngIf="producto.total_quantity === 0" class="badge bg-warning">¡Producto errrror!</span>
-
-            <span *ngIf="producto.total_quantity > 1" class="badge bg-success">Producto disponible</span>
-          </div>
-
-
-          <!-- Precios -->
-          <div class="price-container d-flex justify-content-center align-items-center">
-            <span class="price-old text-muted text-decoration-line-through me-2">
-              ${{ producto.cost_price | number }}
-            </span>
-            <span class="price-new fw-bold">
-              ${{ producto.unit_price | number }}
-            </span>
-          </div>
-        </div>
-
-
-      </div>
-
-    </div>
-
-  </div>
-</div>
-
-
-
-
-
-
 
 
 <!-- Sección de servicios -->
