@@ -79,6 +79,14 @@ export class NavbarComponent implements OnInit {
     "Tu tienda de tecnología",
     "Experiencia y servicio",
   ];
+    carruselImgs: string[] = [
+    'assets/img/Carrusel_imagenes (1).png',
+    'assets/img/Carrusel_imagenes (2).png',
+    'assets/img/Carrusel_imagenes (3).png',
+    'assets/img/Carrusel_imagenes (4).png',
+    'assets/img/Carrusel_imagenes (5).png',
+    'assets/img/Carrusel_imagenes.png'
+  ];
   isLoginRoute: boolean = false;
   filtroCategoria: string = "";
   currentMessage: string = this.messages[0];

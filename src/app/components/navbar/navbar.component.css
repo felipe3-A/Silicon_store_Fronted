@@ -16,6 +16,36 @@
   /* Oculto por defecto */
 }
 
+/*Celulares en navbar*/
+@media screen and (max-width: 768px) {
+  .opciones_menu {
+    flex-direction: column !important;
+    align-items: center;
+  }
+
+  .buscador-responsive {
+    width: 100%;
+  }
+
+  .store img {
+    width: 100px;
+    height: auto;
+  }
+
+  .contenedor-login,
+  .seccion-usuario,
+  .seccion-imagen {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .fade-image {
+    display: none; /* Oculta las imágenes del carrusel en pantallas pequeñas si quieres */
+  }
+}
+/*Fin de nabar conmeu*/
+
 .autocomplete-container {
   position: relative;
   width: 300px;
